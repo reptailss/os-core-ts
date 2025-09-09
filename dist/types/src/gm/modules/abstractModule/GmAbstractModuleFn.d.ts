@@ -1,0 +1,38 @@
+import { GmAbstractModule, GmBodyElement, GmExport, GmFileWriteMode, GmModuleDirType, GmModuleFnProp, GmModulePropsType, IGmModuleClass, IGmModuleConstant, IGmModuleFn, IGmModuleType } from "../../core";
+export declare abstract class GmAbstractModuleFn extends GmAbstractModule implements IGmModuleFn {
+    moduleType: "fn";
+    private returnType;
+    private type;
+    private bodyElements;
+    private props;
+    private propsType;
+    private renderData;
+    private asyncType;
+    private fileWriteModeGm;
+    private dirType;
+    abstract getDirName(): string | null;
+    abstract getFileName(): string;
+    getTemplatePath(): string;
+    setType(type: string): this;
+    getType(): string;
+    setReturnType(returnType: string): this;
+    getReturnType(): string;
+    appendBodyElement(bodyElement: GmBodyElement): this;
+    prependBodyElement(bodyElement: GmBodyElement): this;
+    getBodyElements(): GmBodyElement[];
+    addProp(prop: GmModuleFnProp): this;
+    getProps(): GmModuleFnProp[];
+    setPropsType(type: GmModulePropsType): this;
+    getPropsType(): GmModulePropsType;
+    addRenderData<T>(key: string, value: T): this;
+    getRenderData<T>(key: string): T;
+    setAsyncType(type: 'sync' | 'async'): this;
+    getAsyncType(): "async" | "sync";
+    getExport(): GmExport;
+    getFileWriteMode(): GmFileWriteMode;
+    setDirType(dirType: GmModuleDirType): this;
+    getDirType(): GmModuleDirType;
+    setFileWriteMode(mode: GmFileWriteMode): this;
+    getFilePath(): string;
+    addChildModule(module: IGmModuleFn | IGmModuleConstant | IGmModuleType | IGmModuleClass): this;
+}

@@ -1,0 +1,28 @@
+export type AppErrors<T extends string | number> = {
+    CONNECT_TO_DB_ERROR: T;
+    HEADER_VALIDATION_ERROR: T;
+    VALIDATION_ERROR: T;
+    GET_MODEL_ERROR: T;
+    CREATE_ROW_ERROR: T;
+    CONNECT_TO_REDIS_ERROR: T;
+    UPDATE_ROW_ERROR: T;
+    DELETE_ROW_ERROR: T;
+    NOT_FOUND_ERROR: T;
+    INVALID_BEARER_TOKEN_ERROR: T;
+    STRUCTURE_ACCESS_ERROR: T;
+    ALREADY_EXISTS_ERROR: T;
+    SAVE_FILE_ERROR: T;
+    GET_FILE_BUFFER_ERROR: T;
+    DELETE_FILE_ERROR: T;
+    CONNECT_TO_AWS_S3_ERROR: T;
+    UNAUTHORIZED_ERROR: T;
+    SERVER_SIDE_ERROR: T;
+    DOMAIN_ACCESS_DENIED_ERROR: T;
+    OS_CORE_SAVE_ERROR: T;
+    EXTERNAL_REQUEST_FAILED_ERROR: T;
+};
+export type AppErrorKey = keyof AppErrors<any>;
+export type ErrorValue = string | {
+    key: string;
+    message: string;
+};

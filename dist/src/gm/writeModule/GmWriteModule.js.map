@@ -1,0 +1,1 @@
+{"version":3,"file":"GmWriteModule.js","sourceRoot":"","sources":["../../../../src/gm/writeModule/GmWriteModule.ts"],"names":[],"mappings":";;;AAAA,kCAAgD;AAGhD,MAAa,aAAa;IAGtB,YACI,MAAiB;QAEjB,MAAM,CAAC,IAAI,EAAE,CAAA;QACb,IAAI,CAAC,YAAY,GAAG,IAAI,mBAAY,CAAC,MAAM,CAAC,CAAA;IAChD,CAAC;IAEM,GAAG;QACN,IAAI,CAAC,YAAY,CAAC,GAAG,EAAE,CAAA;IAC3B,CAAC;CAEJ;AAdD,sCAcC"}

@@ -1,0 +1,38 @@
+import { GmAbstractModule, GmBodyElement, GmModuleClassMethodProp, GmModuleClassMethodPropDecorator, GmModulePropsType, IGmModuleClassMethod, IGmModuleClassMethodDecorator } from "../../core";
+export declare abstract class GmAbstractModuleClassMethod extends GmAbstractModule implements IGmModuleClassMethod {
+    moduleType: "classMethod";
+    private returnType;
+    private bodyElements;
+    private decorators;
+    private propDecorators;
+    private props;
+    private propsType;
+    private renderData;
+    private asyncType;
+    private scope;
+    getTemplatePath(): string;
+    setReturnType(returnType: string): this;
+    getReturnType(): string;
+    appendBodyElement(bodyElement: GmBodyElement): this;
+    getBodyElements(): GmBodyElement[];
+    prependBodyElement(bodyElement: GmBodyElement): this;
+    addProp(prop: GmModuleClassMethodProp): this;
+    appendPropDecorator(propDecorator: GmModuleClassMethodPropDecorator): this;
+    getPropDecorators(): GmModuleClassMethodPropDecorator[];
+    getProps(): GmModuleClassMethodProp[];
+    setPropsType(type: GmModulePropsType): this;
+    getPropsType(): GmModulePropsType;
+    addRenderData<T>(key: string, value: T): this;
+    getRenderData<T>(key: string): T;
+    appendDecorator(decorator: IGmModuleClassMethodDecorator, prepend?: boolean): this;
+    prependDecorator(decorator: IGmModuleClassMethodDecorator, prepend?: boolean): this;
+    getDecorators(): IGmModuleClassMethodDecorator[];
+    setMethodScope(scope: 'public' | 'private' | 'static'): this;
+    getMethodScope(): 'public' | 'private' | 'static';
+    setAsyncType(type: 'sync' | 'async'): this;
+    getAsyncType(): "async" | "sync";
+    renderMethodCall(): string;
+    private renderMethodCallProps;
+    private renderDefaultCallPropsType;
+    private renderObjectCallPropsType;
+}

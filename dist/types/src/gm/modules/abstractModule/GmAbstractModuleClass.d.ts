@@ -1,0 +1,33 @@
+import { GmAbstractModule, GmExport, GmFileWriteMode, GmModuleClassVar, GmModuleConstructorProp, GmModuleDirType, IGmModuleClass, IGmModuleClassDecorator, IGmModuleClassMethod, IGmModuleConstant, IGmModuleFn, IGmModuleType, IGmServiceClass, IGmServiceFn } from "../../core";
+export declare abstract class GmAbstractModuleClass extends GmAbstractModule implements IGmModuleClass {
+    moduleType: "class";
+    private constructorProps;
+    private methods;
+    private decorators;
+    private vars;
+    private elementsBeforeClass;
+    private fileWriteModeGm;
+    private dirType;
+    abstract getDirName(): string | null;
+    abstract getFileName(): string;
+    getTemplatePath(): string;
+    addConstructorProp(constructorProp: GmModuleConstructorProp): this;
+    getConstructorProps(): GmModuleConstructorProp[];
+    addMethod(method: IGmModuleClassMethod): this;
+    getMethods(): IGmModuleClassMethod[];
+    getMethodByIndex(index: number): IGmModuleClassMethod;
+    addDecorator(decorator: IGmModuleClassDecorator): this;
+    getDecorators(): IGmModuleClassDecorator[];
+    addService(service: IGmServiceFn | IGmServiceClass): this;
+    getExport(): GmExport;
+    getFileWriteMode(): GmFileWriteMode;
+    setDirType(dirType: GmModuleDirType): this;
+    getDirType(): GmModuleDirType;
+    setFileWriteMode(mode: GmFileWriteMode): this;
+    getFilePath(): string;
+    addChildModule(module: IGmModuleFn | IGmModuleConstant | IGmModuleType | IGmModuleClass): this;
+    addVar(gmVar: GmModuleClassVar): this;
+    getVars(): GmModuleClassVar[];
+    addElementBeforeClass(value: string): this;
+    getElementsBeforeClass(): string[];
+}
