@@ -1,0 +1,27 @@
+export const ERROR_CODES: {
+    value: string,
+    label: string
+}[] = [
+    {value: 'connect_to_db_error', label: 'connect to db error'},
+    {value: 'header_validation_error', label: 'header validation error'},
+    {value: 'validation_error', label: 'validation error'},
+    {value: 'get_model_error', label: 'get model error'},
+    {value: 'create_row_error', label: 'create row error'},
+    {value: 'connect_to_redis_error', label: 'connect to redis error'},
+    {value: 'update_row_error', label: 'update row error'},
+    {value: 'delete_row_error', label: 'delete row error'},
+    {value: 'not_found_error', label: 'not found error'},
+    {value: 'invalid_bearer_token', label: 'invalid bearer token'},
+    {value: 'access_token_not_valid_response', label: 'access token not valid response'},
+    {value: 'structure_access_error', label: 'structure access error'},
+    {value: 'already_exists_error', label: 'already exists error'},
+    {value: 'save_file_error', label: 'save file error'},
+    {value: 'delete_file_error', label: 'delete file error'},
+    {value: 'connect_to_aws_s3_error', label: 'connect to aws s3 error'},
+    {value: 'unauthorized_error', label: 'unauthorized error'},
+    {value: 'domain_access_denied_error', label: 'domain access denied error'},
+    {value: 'server_side_error', label: 'server side error'},
+    {value: 'os_core_save_error', label: 'os core save error'},
+    {value: 'get_file_buffer_error', label: 'get file buffer error'},
+    {value: 'external_request_failed_error', label: 'external request failed error'},
+]

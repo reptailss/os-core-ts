@@ -1,0 +1,139 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@appRequest": [
+        "src/appRequest/index"
+      ],
+      "@appRouter": [
+        "src/appRouter/index"
+      ],
+      "@access": [
+        "src/access/index"
+      ],
+      "@app": [
+        "src/app/index"
+      ],
+      "@appConfig": [
+        "src/appConfig/index"
+      ],
+      "@appError": [
+        "src/appError/index"
+      ],
+      "@appModule": [
+        "src/appModule/index"
+      ],
+      "@appResponse": [
+        "src/appResponse/index"
+      ],
+      "@auth": [
+        "src/auth/index"
+      ],
+      "@clientPackages": [
+        "src/clientPackages/index"
+      ],
+      "@controllers": [
+        "src/controllers/index"
+      ],
+      "@cron": [
+        "src/cron/index"
+      ],
+      "@dashboard": [
+        "src/dashboard/index"
+      ],
+      "@dashboard/core": [
+        "src/dashboard/core"
+      ],
+      "@db": [
+        "src/db/index"
+      ],
+      "@decorators": [
+        "src/decorators/index"
+      ],
+      "@decorators/core": [
+        "src/decorators/core"
+      ],
+      "@db/core": [
+        "src/db/core"
+      ],
+      "@domain": [
+        "src/domain/index"
+      ],
+      "@files": [
+        "src/files/index"
+      ],
+      "@gm": [
+        "src/gm/index"
+      ],
+      "@gm/core": [
+        "src/gm/core"
+      ],
+      "@health": [
+        "src/health/index"
+      ],
+      "@health/core": [
+        "src/health/core"
+      ],
+      "@helpers": [
+        "src/helpers/index"
+      ],
+      "@logger": [
+        "src/logger/index"
+      ],
+      "@logger/core": [
+        "src/logger/core"
+      ],
+      "@modules": [
+        "src/modules/index"
+      ],
+      "@model/core": [
+        "src/model/core"
+      ],
+      "@model": [
+        "src/model/index"
+      ],
+      "@pagination": [
+        "src/pagination/index"
+      ],
+      "@params": [
+        "src/params/index"
+      ],
+      "@redis": [
+        "src/redis/index"
+      ],
+      "@responseFormat": [
+        "src/responseFormat/index"
+      ],
+      "@routerBuilder": [
+        "src/routerBuilder/index"
+      ],
+      "@services": [
+        "src/services/index"
+      ],
+      "@structureServiceEndpoints": [
+        "src/structureServiceEndpoints/index"
+      ],
+      "@structureServiceEndpoints/core": [
+        "src/structureServiceEndpoints/core"
+      ],
+      "@swagger": [
+        "src/swagger/index"
+      ],
+      "@swagger/core": [
+        "src/swagger/core"
+      ],
+      "@systemRoutes": [
+        "src/systemRoutes/index"
+      ],
+      "@validator": [
+        "src/validator/index"
+      ],
+      "@validator/core": [
+        "src/validator/core"
+      ],
+      "@os-core-ts": [
+        "index"
+      ]
+    }
+  }
+}

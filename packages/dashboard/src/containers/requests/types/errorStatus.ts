@@ -1,0 +1,1 @@
+export type RequestErrorStatus = 'error' | 'notError' | 'all'

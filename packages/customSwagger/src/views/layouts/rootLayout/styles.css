@@ -1,0 +1,15 @@
+
+
+.root-layout-header {
+    background-color: #1b1b1b;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.root-layout-content-wrapper{
+    display: flex;
+    align-items: center;
+    gap: 20px
+}

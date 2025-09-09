@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "module": "ESNext",
+    "target": "es5",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
+    "downlevelIteration": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": false,
+    "isolatedModules": true,
+    "noEmit": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "resolveJsonModule": true,
+    "declarationDir": "dist/types",
+    "preserveConstEnums": true,
+    "checkJs": false,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@baseTypes/*": ["src/baseTypes/*"],
+      "@ui/*": ["src/ui/*"],
+      "@plugins/*": ["src/plugins/*"],
+      "@views/*": ["src/views/*"],
+      "@swaggerCustom/*": ["src/swaggerCustom/*"],
+      "@spec/*": ["src/spec/*"],
+      "@helpers/*": ["src/helpers/*"],
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

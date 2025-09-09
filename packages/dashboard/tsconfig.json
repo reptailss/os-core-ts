@@ -1,0 +1,96 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "module": "ESNext",
+    "target": "es5",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
+    "downlevelIteration": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": false,
+    "isolatedModules": true,
+    "noEmit": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "resolveJsonModule": true,
+    "declarationDir": "dist/types",
+    "preserveConstEnums": true,
+    "checkJs": false,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@ui/*": [
+        "./src/ui/*"
+      ],
+      "@views/*": [
+        "./src/views/*"
+      ],
+      "@baseTypes/*": [
+        "./src/baseTypes/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@resources/*": [
+        "./src/resources/*"
+      ],
+      "@containers/*": [
+        "./src/containers/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ],
+      "@constants/*": [
+        "./src/constants/*"
+      ],
+      "@context/*": [
+        "./src/context/*"
+      ],
+      "@packages/*": [
+        "./src/packages/*"
+      ],
+      "@baseStyles/*": [
+        "./src/baseStyles/*"
+      ],
+      "@appContext/*": [
+        "./src/appContext/*"
+      ],
+      "@viewContext/*": [
+        "./src/viewContext/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}
