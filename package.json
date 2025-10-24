@@ -15,7 +15,7 @@
     "type-check": "tsc --noEmit"
   },
   "files": [
-    "dist"
+    "dist","static","commands","templates"
   ],
   "bin": {
     "os-core-ts": "cli.js"
