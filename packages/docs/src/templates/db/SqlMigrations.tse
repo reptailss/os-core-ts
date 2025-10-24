@@ -1,0 +1,39 @@
+import{{{ModelSqlColumn}},{{ModelSqlColumns}},{{SqIndex}}} from 'os-core-ts'
+
+export class SqlMigrations {
+    renameColumn(oldColumnName: string, newColumnName: string): Promise<void>
+
+    updateColumn(columnName: string, column: {{ModelSqlColumn}}): Promise<void>
+
+    removeColumns(columns: string[]): Promise<void>,
+
+    addColumns(columns: {{ModelSqlColumns}}): Promise<void>,
+
+    getColumns<Row extends object>(): Promise<{{ModelSqlColumns}}
+
+    getTableName(): string
+
+    addAssociationHasMany<ReferenceRow extends object>(props:{
+        tableName: string
+        referenceColumnKey: keyof ReferenceRow
+        onDelete?: 'RESTRICT' | 'SET NULL' | 'CASCADE'
+        referencedColumnPrimaryKey?: string
+    }):Promise<void>
+
+    addAssociationHasOne<ReferenceRow extends object>(props:{
+        tableName: string
+        referenceColumnKey: keyof ReferenceRow
+        onDelete?: 'RESTRICT' | 'SET NULL' | 'CASCADE'
+        referencedColumnPrimaryKey?: string
+    }):Promise<void>
+
+    addAssociationBelongsTo<ReferenceRow extends object>(props:{
+        tableName: string
+        referenceColumnKey: keyof ReferenceRow
+        referencedColumnPrimaryKey?: string
+    }):Promise<void>
+
+    addIndex<Row extends object>( index: {{SqIndex}}<Row>):Promise<void>
+
+    deleteIndex(indexName:string):Promise<void>
+}

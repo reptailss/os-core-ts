@@ -8,8 +8,8 @@ export type MobileAppLogsResponse = {
 }
 
 export  type GetMobileAppLogsParams = {
-	dateStart: string
-	dateEnd: string,
+	dateStart: Date
+	dateEnd: Date,
 	page: number
 	perPage: number
 	order: 'asc' | 'desc'

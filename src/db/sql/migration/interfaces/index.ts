@@ -1,43 +1,43 @@
-import {ModelSqlColumn, ModelSqlColumns} from '@model'
 import {IDbConnectionSql} from '@db'
-import {SqIndex} from '@model/core'
+import {EntityColumn} from '@entity'
+import {SqIndex} from '@repository/core'
 
 
 export interface ISqlMigrations {
     renameColumn(oldColumnName: string, newColumnName: string): Promise<void>
 
-    updateColumn(columnName: string, column: ModelSqlColumn<unknown, unknown>): Promise<void>
+    updateColumn(columnName: string, column: EntityColumn): Promise<void>
 
     removeColumns(columns: string[]): Promise<void>,
 
-    addColumns(columns: ModelSqlColumns<any>): Promise<void>,
+    addColumns<Entity>(columns: Record<keyof Entity, EntityColumn>): Promise<void>,
 
-    getColumns<Row extends object>(): Promise<ModelSqlColumns<Row>>
+    getColumns<Entity extends object>(): Promise<Record<keyof Entity, EntityColumn>>
 
     getTableName(): string
 
 
-    addAssociationHasMany<ReferenceRow extends object>(props:{
+    addAssociationHasMany<ReferenceEntity extends object>(props:{
         tableName: string
-        referenceColumnKey: keyof ReferenceRow
+        referenceColumnKey: keyof ReferenceEntity
         onDelete?: 'RESTRICT' | 'SET NULL' | 'CASCADE'
-        referencedColumnPrimaryKey?: string
+        referencedColumnPrimaryNumberKey?: string
     }):Promise<void>
 
-    addAssociationHasOne<ReferenceRow extends object>(props:{
+    addAssociationHasOne<ReferenceEntity extends object>(props:{
         tableName: string
-        referenceColumnKey: keyof ReferenceRow
+        referenceColumnKey: keyof ReferenceEntity
         onDelete?: 'RESTRICT' | 'SET NULL' | 'CASCADE'
-        referencedColumnPrimaryKey?: string
+        referencedColumnPrimaryNumberKey?: string
     }):Promise<void>
 
-    addAssociationBelongsTo<ReferenceRow extends object>(props:{
+    addAssociationBelongsTo<ReferenceEntity extends object>(props:{
         tableName: string
-        referenceColumnKey: keyof ReferenceRow
-        referencedColumnPrimaryKey?: string
+        referenceColumnKey: keyof ReferenceEntity
+        referencedColumnPrimaryNumberKey?: string
     }):Promise<void>
 
-    addIndex<Row extends object>( index: SqIndex<Row>):Promise<void>
+    addIndex<Entity extends object>( index: SqIndex<Entity>):Promise<void>
 
     deleteIndex(indexName:string):Promise<void>
 }

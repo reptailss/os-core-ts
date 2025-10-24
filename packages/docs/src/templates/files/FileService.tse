@@ -1,0 +1,38 @@
+export class FileService {
+
+    static async save(options: {
+        fileNameS3: string
+        fileNameLocal: string
+        dirPathLocal?: string
+        buffer: Buffer
+        mimetype: string
+    }): Promise<{filePath: string}>
+    static async save(options: {
+        fileName: string
+        dirPathLocal?: string
+        buffer: Buffer
+        mimetype: string
+    }): Promise<{filePath: string}>
+
+    static async delete({filePath}: {
+        filePath: string
+    }): Promise<{result: boolean}>
+
+    static async checkAwsS3(): Promise<boolean>
+
+    static async getFileBufferByUrl(url: string): Promise<{
+        buffer: Buffer
+        mimetype: string
+        format: string
+    }>
+
+    static async deleteFilesOnError<Result = any>({
+                                                      cb,
+                                                      filePaths,
+                                                      errorMessage,
+                                                      errorKey,
+                                                  }: {
+        filePaths: string[]
+        cb: () => Promise<Result>
+    }): Promise<Result>
+}

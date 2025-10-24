@@ -3,9 +3,10 @@ import {TransformServerMeta} from "@containers/requests/types/transform";
 import {getSystemStatusRequests} from "@packages/systemStatus/containers/requests/api/getRequests";
 import {transformRequestsData} from "@containers/requests/helpers/transformRequestsData";
 import {GetSystemStatusRequest} from "@packages/systemStatus/containers/requests/types/events";
+import {SystemEndpoint} from "@packages/systemStatus/containers/endpoints/types";
 
 
-export function useGetSystemStatusRequests(): {
+export function useGetSystemStatusRequests(systemEndpoints: SystemEndpoint[]): {
     isLoading: boolean,
     requests: TransformServerMeta[],
     getRequests: GetSystemStatusRequest,
@@ -18,8 +19,8 @@ export function useGetSystemStatusRequests(): {
     const getRequests: GetSystemStatusRequest = useCallback(async (props) => {
         try {
             setIsLoading(true)
-            const res = await getSystemStatusRequests(props)
-            setTotalPage(res?.all_pages)
+            const res = await getSystemStatusRequests(props,systemEndpoints)
+            setTotalPage(res?.all_pages || 1)
             const serverRequests = transformRequestsData(res)
             setRequests(serverRequests?.requests)
             setIsLoading(false)
@@ -27,9 +28,10 @@ export function useGetSystemStatusRequests(): {
         } catch (error) {
             setRequests([])
             setIsLoading(false)
+            setTotalPage(1)
             return []
         }
-    }, [])
+    }, [systemEndpoints])
 
 
     return {

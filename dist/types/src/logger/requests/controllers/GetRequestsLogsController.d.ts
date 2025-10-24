@@ -1,9 +1,8 @@
-import { FullUserInfo } from "../../../auth";
-import { GetRequestsLogsService, ServerMeta } from "../../core";
+import { FullUserDto } from "../../../auth";
+import { ServerMeta } from "../../core";
 export declare class GetRequestsLogsController {
     private readonly getRequestsLogsService;
-    constructor(getRequestsLogsService?: GetRequestsLogsService);
-    getLogs(userInfo: FullUserInfo): Promise<{
+    getLogs(userDto: FullUserDto): Promise<{
         rows: ServerMeta[];
         paths: string[];
     }>;

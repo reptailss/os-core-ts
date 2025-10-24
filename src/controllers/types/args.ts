@@ -8,10 +8,9 @@ export type  ArgControllerEndpoint =
     QueryParamsArgControllerEndpoint |
     BodyArgControllerEndpoint |
     FormDataArgControllerEndpoint |
-    ParamsArgControllerEndpoint |
-    AuthArgControllerEndpoint |
-    PtpClientAuthArgControllerEndpoint |
-    PtpCoreAuthArgControllerEndpoint |
+    UserArgControllerEndpoint |
+    PtpClientUserArgControllerEndpoint |
+    PtpCoreUserArgControllerEndpoint |
     PaginationQueryParamsArgControllerEndpoint |
     DomainArgControllerEndpoint |
     AppResponseArgControllerEndpoint |
@@ -21,46 +20,39 @@ export type  ArgControllerEndpoint =
     ParamNumArgControllerEndpoint |
     QueryParamNumArgControllerEndpoint |
     QueryParamDateArgControllerEndpoint |
-    SystemAuthArgControllerEndpoint |
+    SystemUserArgControllerEndpoint |
     LegalEntityIdByDomainArgControllerEndpoint |
-    RedirectArgControllerEndpoint |
     ParamArgControllerEndpoint |
-    HeadersArgControllerEndpoint |
-    DeleteOldFileIfNullDecArgControllerEndpoint |
-    DashboardAccessDecArgControllerEndpoint |
-    HeaderArgControllerEndpoint |
+    DeleteOldFileIfNullArgControllerEndpoint |
+    DashboardUserDecArgControllerEndpoint |
+    HeaderParamArgControllerEndpoint |
     LocaleArgControllerEndpoint |
     SetResponseStatusArgControllerEndpoint |
-    CustomArgControllerEndpoint<any>
+    CustomArgControllerEndpoint<any> |
+    SetHeaderFnDecArgControllerEndpoint |
+    BodyParamArgControllerEndpoint |
+    BodyParamNumArgControllerEndpoint |
+    AppFormDataParamArgControllerEndpoint |
+    AppFormDataParamNumArgControllerEndpoint
 
 
-interface HeadersArgControllerEndpoint {
-    key: 'Headers'
-    _parameterIndex: number
-    schema?: SchemaValidator | SchemaValidatorRefineEffect
-}
 
-export interface HeaderArgControllerEndpoint {
-    key: 'Header'
+export interface HeaderParamArgControllerEndpoint {
+    key: 'HeaderParam'
     fieldKey: string
     _parameterIndex: number
     schema?: SchemaValidator | SchemaValidatorRefineEffect
     required: boolean
 }
 
-interface RedirectArgControllerEndpoint {
-    key: 'Redirect'
-    _parameterIndex: number
-}
 
-
-interface AppResponseArgControllerEndpoint {
+export interface AppResponseArgControllerEndpoint {
     key: 'AppResponse'
     _parameterIndex: number
 }
 
 
-interface DeleteOldFileIfNullDecArgControllerEndpoint {
+export interface DeleteOldFileIfNullArgControllerEndpoint {
     key: 'DeleteOldFileIfNull'
     _parameterIndex: number
     fileKey?: string
@@ -102,15 +94,24 @@ export interface BodyArgControllerEndpoint {
     schema: SchemaValidator | SchemaValidatorRefineEffect,
 }
 
-interface ParamsArgControllerEndpoint {
-    key: 'Params'
-    _parameterIndex: number
-    schema: SchemaValidator | SchemaValidatorRefineEffect,
-    
-}
 
 export interface ParamArgControllerEndpoint {
     key: 'Param'
+    _parameterIndex: number
+    schema?: SchemaValidator<string | number | Date | undefined> | SchemaValidatorRefineEffect<string | number | Date | undefined>
+    fieldKey: string,
+    required?: boolean
+}
+
+export interface BodyParamArgControllerEndpoint {
+    key: 'BodyParam'
+    _parameterIndex: number
+    schema?: SchemaValidator<string | number | Date | undefined | unknown> | SchemaValidatorRefineEffect<string | number | Date | undefined | unknown>
+    fieldKey: string,
+    required?: boolean
+}
+export interface AppFormDataParamArgControllerEndpoint {
+    key: 'AppFormDataParam'
     _parameterIndex: number
     schema?: SchemaValidator<string | number | Date | undefined> | SchemaValidatorRefineEffect<string | number | Date | undefined>
     fieldKey: string,
@@ -125,6 +126,21 @@ export interface ParamNumArgControllerEndpoint {
     required?: boolean
 }
 
+export interface BodyParamNumArgControllerEndpoint {
+    key: 'BodyParamNum'
+    _parameterIndex: number
+    schema?: SchemaValidator<number | undefined> | SchemaValidatorRefineEffect<number | undefined>
+    fieldKey: string,
+    required?: boolean
+}
+
+export interface AppFormDataParamNumArgControllerEndpoint {
+    key: 'AppFormDataParamNum'
+    _parameterIndex: number
+    schema?: SchemaValidator<number | undefined> | SchemaValidatorRefineEffect<number | undefined>
+    fieldKey: string,
+    required?: boolean
+}
 export interface FormDataArgControllerEndpoint {
     key: 'FormData'
     _parameterIndex: number
@@ -148,26 +164,26 @@ export interface AppFilesArgControllerEndpoint {
     formats?: string[]
 }
 
-interface AuthArgControllerEndpoint {
-    key: 'Auth'
+export interface UserArgControllerEndpoint {
+    key: 'User'
     _parameterIndex: number
 }
 
-interface PtpClientAuthArgControllerEndpoint {
-    key: 'PtpClientAuth'
+export interface PtpClientUserArgControllerEndpoint {
+    key: 'PtpClientUser'
     roles?: Array<'admin'>
     _parameterIndex: number
 }
 
 
-interface PtpCoreAuthArgControllerEndpoint {
-    key: 'PtpCoreAuth'
+export interface PtpCoreUserArgControllerEndpoint {
+    key: 'PtpCoreUser'
     roles?: Array<'admin'>
     _parameterIndex: number
 }
 
-interface SystemAuthArgControllerEndpoint {
-    key: 'SystemAuth'
+export interface SystemUserArgControllerEndpoint {
+    key: 'SystemUser'
     _parameterIndex: number
 }
 
@@ -194,7 +210,7 @@ export interface CustomArgControllerEndpoint<Output> {
 }
 
 
-interface LegalEntityIdByDomainArgControllerEndpoint {
+export interface LegalEntityIdByDomainArgControllerEndpoint {
     key: 'LegalEntityIdByDomain'
     _parameterIndex: number
 }
@@ -207,7 +223,13 @@ export interface PaginationQueryParamsArgControllerEndpoint<Row extends object =
 }
 
 
-interface DashboardAccessDecArgControllerEndpoint {
-    key: 'DashboardAccessDec'
+export interface DashboardUserDecArgControllerEndpoint {
+    key: 'DashboardUser'
+    _parameterIndex: number
+}
+
+
+export interface SetHeaderFnDecArgControllerEndpoint {
+    key: 'SetHeaderFn'
     _parameterIndex: number
 }

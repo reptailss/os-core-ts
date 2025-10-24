@@ -1,0 +1,16 @@
+export class PtpAdminChecker {
+	static async coreOrClient( props: {
+		openUserId: number
+		domain: string
+	}): Promise<'ptp-core' | 'ptp-client'>
+
+	static async coreOrClientAndDomainIfNotCore( props: {
+		openUserId: number
+		domain: string
+		apiAccessKey: string
+		apiSecretKey: string
+	}): Promise<{
+		ptpGroupId: number
+		ptpGroupCityId: number
+	}>
+}

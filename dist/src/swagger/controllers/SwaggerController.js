@@ -20,8 +20,8 @@ const _clientPackages_1 = require("../../clientPackages");
 const _systemRoutes_1 = require("../../systemRoutes");
 const core_1 = require("../core");
 let SwaggerController = class SwaggerController {
-    constructor(getSwaggerService = new core_1.GetSwaggerService()) {
-        this.getSwaggerService = getSwaggerService;
+    constructor() {
+        this.getSwaggerService = new core_1.GetSwaggerService();
     }
     async getSwagger() {
         return this.getSwaggerService.getSwagger();
@@ -52,43 +52,42 @@ let SwaggerController = class SwaggerController {
 };
 exports.SwaggerController = SwaggerController;
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.GetDec)(_systemRoutes_1.SYSTEM_ROUTES.swagger.swaggerSpec),
+    (0, _decorators_1.Get)(_systemRoutes_1.SYSTEM_ROUTES.swagger.swaggerSpec),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SwaggerController.prototype, "getSwagger", null);
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.SendFileByPathDec)(_systemRoutes_1.SYSTEM_ROUTES.swagger.bundleJs),
+    (0, _decorators_1.SendFileByPath)(_systemRoutes_1.SYSTEM_ROUTES.swagger.bundleJs),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], SwaggerController.prototype, "getClientBundle", null);
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.SendFileByPathDec)(_systemRoutes_1.SYSTEM_ROUTES.swagger.favicon),
+    (0, _decorators_1.SendFileByPath)(_systemRoutes_1.SYSTEM_ROUTES.swagger.favicon),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], SwaggerController.prototype, "getClientFavicon", null);
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.SendFileDec)(_systemRoutes_1.SYSTEM_ROUTES.swagger.index),
+    (0, _decorators_1.SendFile)(_systemRoutes_1.SYSTEM_ROUTES.swagger.index),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SwaggerController.prototype, "getClientHtml", null);
 exports.SwaggerController = SwaggerController = __decorate([
-    (0, _decorators_1.ControllerDec)(),
-    __metadata("design:paramtypes", [core_1.GetSwaggerService])
+    (0, _decorators_1.Controller)()
 ], SwaggerController);
 //# sourceMappingURL=SwaggerController.js.map

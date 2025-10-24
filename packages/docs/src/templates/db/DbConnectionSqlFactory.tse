@@ -1,0 +1,12 @@
+import {{{IDbConnectionSql}}} from 'os-core-ts'
+
+export class DbConnectionSqlFactory {
+
+    static getStatic(): {{IDbConnectionSql}}
+
+    static async getDynamicByDomain(props: {
+        domain: string
+    }): Promise<{{IDbConnectionSql}}>
+
+}
+

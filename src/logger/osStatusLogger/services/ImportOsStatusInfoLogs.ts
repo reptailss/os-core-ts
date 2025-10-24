@@ -9,10 +9,9 @@ import {SystemEndpointsHelper, SystemRequestHelper} from '@helpers'
 let osStatusOsInfo: OsStatusLoggerInfo[] = []
 
 export class ImportOsStatusInfoLogsService {
-
-    constructor(private readonly getOsStatusOsInfoService: GetOsStatusOsInfoService = new GetOsStatusOsInfoService()) {
-    }
-
+    
+    private readonly getOsStatusOsInfoService: GetOsStatusOsInfoService = new GetOsStatusOsInfoService()
+    
     public async saveAndImport(): Promise<void> {
         try {
             const info = await this.getOsStatusOsInfoService.getOsInfo()

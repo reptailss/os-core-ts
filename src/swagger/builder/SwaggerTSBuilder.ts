@@ -40,20 +40,17 @@ const DEFAULT_ARGS_BUILD_SWAGGER: Args = {
 
 
 export class SwaggerTSBuilder {
+    
     private swaggerConfig!: SwaggerConfig
-    
-    constructor(
-        private readonly swaggerConfigBuilder: SwaggerConfigBuilder = new SwaggerConfigBuilder(),
-        private readonly swaggerTSControllersBuilder: SwaggerTSControllersBuilder = new SwaggerTSControllersBuilder(),
-    ) {
-    }
-    
+    private readonly swaggerConfigBuilder: SwaggerConfigBuilder = new SwaggerConfigBuilder()
+    private readonly swaggerTSControllersBuilder: SwaggerTSControllersBuilder = new SwaggerTSControllersBuilder()
+   
     
     public async buildFromControllers(): Promise<boolean> {
         const swaggerConfig = await this.swaggerConfigBuilder.getOrCreateSwaggerConfig()
         this.swaggerConfig = swaggerConfig
         this.swaggerConfigBuilder.saveToBuildFile(swaggerConfig)
-        this.swaggerTSControllersBuilder.buildAndSaveToFile(swaggerConfig?.appDir)
+        this.swaggerTSControllersBuilder.buildAndSaveToFile(swaggerConfig?.appDir, swaggerConfig?.modulesDir)
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 this.buildAndSaveSchema(swaggerConfig?.appDir)
@@ -63,7 +60,7 @@ export class SwaggerTSBuilder {
     }
     
     
-    private buildAndSaveSchema(appDirPath?:string) {
+    private buildAndSaveSchema(appDirPath?: string) {
         
         const program = programFromConfig(
             'tsconfig.json',

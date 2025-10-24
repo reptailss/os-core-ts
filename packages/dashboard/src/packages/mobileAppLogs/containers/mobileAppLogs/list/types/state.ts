@@ -2,10 +2,10 @@ import {SetStateFn} from "@baseTypes/state";
 import {MobileAppLog} from "@packages/mobileAppLogs/containers/mobileAppLogs/types";
 
 export type MobileAppLogsListState = {
-	dateStart: string
-	setDateStart: SetStateFn<string>
-	dateEnd: string
-	setDateEnd: SetStateFn<string>
+	dateStart: Date
+	setDateStart: SetStateFn<Date>
+	dateEnd: Date
+	setDateEnd: SetStateFn<Date>
 	order: 'asc' | 'desc'
 	setOrder: SetStateFn<'asc' | 'desc' >
 	orderBy: keyof MobileAppLog | null

@@ -5,29 +5,30 @@ const _appConfig_1 = require("../../appConfig");
 const _db_1 = require("../../db");
 const _redis_1 = require("../../redis");
 const _files_1 = require("../../files");
+const _logger_1 = require("../../logger");
 class ReadinessService {
     async getReadiness() {
-        let readinessDto = {};
+        let readinessInfo = {};
         if (_appConfig_1.APP_CONFIG_OS_CORE.sql.hasSql) {
-            readinessDto.mysql = await this.checkSqlDbReadiness();
+            readinessInfo.mysql = await this.checkSqlDbReadiness();
         }
         if (_appConfig_1.APP_CONFIG_OS_CORE.redis.hasRedis) {
             const res = await this.checkRedisReadiness();
-            readinessDto = Object.assign(Object.assign({}, readinessDto), res);
+            readinessInfo = Object.assign(Object.assign({}, readinessInfo), res);
         }
         if (_appConfig_1.APP_CONFIG_OS_CORE.noSql.hasNoSql) {
-            readinessDto.mongo_db = 'success';
+            readinessInfo.mongo_db = 'success';
         }
         if (_appConfig_1.APP_CONFIG_OS_CORE.awsS3.hasUploadToS3) {
-            readinessDto.aws = await this.checkAwsS3();
+            readinessInfo.aws = await this.checkAwsS3();
         }
         const response = {
             status: 'ok',
             code: 200,
-            info: readinessDto,
+            info: readinessInfo,
         };
-        for (const key in readinessDto) {
-            const status = readinessDto[key];
+        for (const key in readinessInfo) {
+            const status = readinessInfo[key];
             if (status === 'error') {
                 response.status = 'bad';
                 response.code = 500;
@@ -51,15 +52,15 @@ class ReadinessService {
         return 'success';
     }
     ;
-    async checkDynamicDbSql(databaseName) {
+    async checkDynamicDbSql() {
+        if (!_appConfig_1.APP_CONFIG_OS_CORE.sql.readinessDynamicSqlDatabaseName) {
+            _logger_1.appLogger.error('Not found readiness dynamic sql database name in env');
+            return 'error';
+        }
         try {
-            const connection = _db_1.DbConnectionSqlFactory.getDynamicByDatabaseName({
-                databaseName: databaseName || _appConfig_1.APP_CONFIG_OS_CORE.sql.readinessDynamicSqlDatabaseName,
-            });
-            if (!connection) {
-                return 'error';
-            }
+            const connection = _db_1.DbConnectionSqlFactory.getForCheckReadiness();
             await connection.checkConnection();
+            await connection.close();
             return 'success';
         }
         catch (e) {

@@ -2,10 +2,10 @@ import {SetStateFn} from "@baseTypes/state";
 import {ActionLog, ActionLogType} from "@packages/actionsLogger/containers/actionsLogs/types";
 
 export type ActionsLogsListState = {
-    dateStart: string
-    setDateStart: SetStateFn<string>
-    dateEnd: string
-    setDateEnd: SetStateFn<string>
+    dateStart: Date
+    setDateStart: SetStateFn<Date>
+    dateEnd: Date
+    setDateEnd: SetStateFn<Date>
     order: 'asc' | 'desc'
     setOrder: SetStateFn<'asc' | 'desc'>
     orderBy: keyof ActionLog

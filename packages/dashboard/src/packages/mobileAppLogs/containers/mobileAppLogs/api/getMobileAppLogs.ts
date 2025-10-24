@@ -2,12 +2,9 @@ import {apiRequestWithAuth} from '@helpers/query/apiRequestWithAuth'
 import {serialize} from '@helpers/query/serialize';
 import {getRootApiUrl} from '@helpers/apiUrl/getRootApiUrl';
 import {GetMobileAppLogsParams, MobileAppLogsResponse} from "@packages/mobileAppLogs/containers/mobileAppLogs/types";
+import moment from 'moment';
 
 
-function transformDateFormat(dateStr: string): string {
-	const [day, month, year] = dateStr.split('/');
-	return `${year}-${month}-${day}`
-}
 
 export const getMobileAppLogsApi = async ({
 											  dateStart,
@@ -20,8 +17,8 @@ export const getMobileAppLogsApi = async ({
 										  }: GetMobileAppLogsParams): Promise<MobileAppLogsResponse> => {
 	return await apiRequestWithAuth<MobileAppLogsResponse>({
 		url: `${getRootApiUrl()}api/event-list?` + serialize({
-			date_start: transformDateFormat(dateStart),
-			date_end: transformDateFormat(dateEnd),
+			date_start: moment(dateStart).format('YYYY-MM-DD'),
+			date_end: moment(dateEnd).format('YYYY-MM-DD'),
 			page,
 			per_page: perPage,
 			...(orderBy ? {

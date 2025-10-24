@@ -28,13 +28,23 @@ class FormDataArgsEndpointsHandler {
                     hasArgs = true;
                 }
             }
+            if (arg.key === 'AppFormDataParamNum') {
+                if (!hasArgs) {
+                    hasArgs = true;
+                }
+            }
+            if (arg.key === 'AppFormDataParam') {
+                if (!hasArgs) {
+                    hasArgs = true;
+                }
+            }
         });
         if (!hasArgs) {
             return null;
         }
         return fileArgs;
     }
-    async handleFormDataArgs({ fileArgs, res, req, }) {
+    async handleFormDataArgs(fileArgs, req, res) {
         return new Promise((resolve, reject) => {
             try {
                 if (!(fileArgs === null || fileArgs === void 0 ? void 0 : fileArgs.length)) {

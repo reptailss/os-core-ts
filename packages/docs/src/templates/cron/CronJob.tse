@@ -1,0 +1,19 @@
+
+export class CronJob  {
+    constructor(props: {
+        cronTime: string | Date | DateTime
+        onTick: () => void
+        onComplete?: CronCommand | null
+        start?: boolean
+        timeZone?: string
+        context?: any
+        runOnInit?: boolean
+        utcOffset?: string | number
+        unrefTimeout?: boolean
+    })
+
+    public start(): void
+
+    public stop(): void
+
+}

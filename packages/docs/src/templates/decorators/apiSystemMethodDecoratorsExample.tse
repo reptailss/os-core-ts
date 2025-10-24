@@ -1,0 +1,51 @@
+import {{{Controller}},{{SystemGet}},{{SystemPost}},{{SystemPut}},{{SystemDelete}},{{AppError}}} from 'os-core-ts'
+
+type User = {
+	name: string
+	age: string
+}
+
+@{{Controller}}()
+class UserController {
+
+	private user: User | null = null
+
+	@{{SystemGet}}('/get-user')
+	public getUser(): User {
+		if (!this.user) {
+			throw new {{AppError}}('Not Found', {
+				errorKey: 'NOT_FOUND_ERROR',
+			})
+		}
+		return this.user
+	}
+
+	@{{SystemPost}}('/save-user')
+	public saveUser(user: User): User {
+		this.user = user
+
+		return this.user
+	}
+
+	@{{SystemPut}}('/update-user-name')
+	public updateUserName(userName: string): User {
+		if (!this.user) {
+			throw new {{AppError}}('Not Found', {
+				errorKey: 'NOT_FOUND_ERROR',
+			})
+		}
+		this.user = {
+			age: this.user.age,
+			name: userName,
+		}
+
+		return this.user
+	}
+
+	@{{SystemDelete}}('/delete-user')
+	public deleteUser(): boolean {
+		this.user = null
+
+		return true
+	}
+}

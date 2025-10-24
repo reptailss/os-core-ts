@@ -45,33 +45,33 @@ let DashboardController = class DashboardController {
 };
 exports.DashboardController = DashboardController;
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.SendFileByPathDec)(_systemRoutes_1.SYSTEM_ROUTES.dashboard.bundleJs),
+    (0, _decorators_1.SendFileByPath)(_systemRoutes_1.SYSTEM_ROUTES.dashboard.bundleJs),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], DashboardController.prototype, "getClientBundle", null);
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.SendFileByPathDec)(_systemRoutes_1.SYSTEM_ROUTES.dashboard.favicon),
+    (0, _decorators_1.SendFileByPath)(_systemRoutes_1.SYSTEM_ROUTES.dashboard.favicon),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], DashboardController.prototype, "getClientFavicon", null);
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.SendFileDec)(_systemRoutes_1.SYSTEM_ROUTES.dashboard.index),
+    (0, _decorators_1.SendFile)(_systemRoutes_1.SYSTEM_ROUTES.dashboard.index),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], DashboardController.prototype, "getClientHtml", null);
 exports.DashboardController = DashboardController = __decorate([
-    (0, _decorators_1.ControllerDec)()
+    (0, _decorators_1.Controller)()
 ], DashboardController);
 //# sourceMappingURL=DashboardController.js.map

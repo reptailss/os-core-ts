@@ -1,6 +1,6 @@
 import { ArgControllerEndpoint } from "..";
 import { SwaggerBaseInfo } from "../../swagger/core";
-export type Controller = {
+export type ControllerMeta = {
     endpoints: (ControllerEndpoint | SystemControllerEndpoint | SendFileControllerEndpoint)[];
     swaggerOptions?: ControllerSwaggerOptions;
     importStructureServiceEndpoints?: Record<string, {

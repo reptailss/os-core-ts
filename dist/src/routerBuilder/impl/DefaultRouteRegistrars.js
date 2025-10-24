@@ -83,11 +83,7 @@ class DefaultRouteRegistrars {
     }
     getFormDataControllerHandler(args) {
         return async (req, res, next) => {
-            const errors = await formDataArgsEndpointsHandler.handleFormDataArgs({
-                fileArgs: args,
-                req,
-                res,
-            });
+            const errors = await formDataArgsEndpointsHandler.handleFormDataArgs(args, req, res);
             if (errors) {
                 const errorProps = _appError_1.AppErrorHelper.getAppErrorCodeAndStatus({
                     errorCode: errors.errorKey,

@@ -23,4 +23,5 @@ __exportStar(require("./osStatusLogger/appModules/osStatusLoggerAppModule"), exp
 __exportStar(require("./osStatusLogger/cron/OsStatusLogsCron"), exports);
 __exportStar(require("./osStatusLogger/services/SaveOsStatusServicesRegistryService"), exports);
 __exportStar(require("./actionsSystemLog/services/SaveActionSystemServicesRegistryService"), exports);
+__exportStar(require("./actionsSystemLog/interfaces"), exports);
 //# sourceMappingURL=index.js.map

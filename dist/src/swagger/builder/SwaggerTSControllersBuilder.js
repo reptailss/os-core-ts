@@ -33,18 +33,18 @@ const core_1 = require("../core");
 const fs_1 = __importDefault(require("fs"));
 const ts = __importStar(require("typescript"));
 const DECORATOR_METHODS_NAMES = [
-    'PostDec',
-    'GetDec',
-    'DeleteDec',
-    'PutDec',
-    'SystemPostDec',
-    'SystemGetDec',
-    'SystemDeleteDec',
-    'SystemPutDec',
+    'Post',
+    'Get',
+    'Delete',
+    'Put',
+    'SystemPost',
+    'SystemGet',
+    'SystemDelete',
+    'SystemPut',
 ];
 class SwaggerTSControllersBuilder {
-    buildAndSaveToFile(appDirPath) {
-        this.saveResponseAndParamsToFile(this.getResponseAndParams(appDirPath), appDirPath);
+    buildAndSaveToFile(appDirPath, modulesDir) {
+        this.saveResponseAndParamsToFile(this.getResponseAndParams(appDirPath, modulesDir), appDirPath);
     }
     deleteFromFile(appDirPath) {
         const { dirPath } = core_1.SwaggerHelper.getTSResultAndParamsPaths(appDirPath);
@@ -55,12 +55,13 @@ class SwaggerTSControllersBuilder {
             console.log(error);
         }
     }
-    getResponseAndParams(appDirPath) {
+    getResponseAndParams(appDirPath, modulesDir) {
         const rootDir = appDirPath || 'src';
-        return this.generateFileByMethods(this.extractControllersBuildTsSchema(this.getFilePaths(appDirPath), path_1.default.join(process.cwd(), ...rootDir.split('/'), 'modules')));
+        return this.generateFileByMethods(this.extractControllersBuildTsSchema(this.getFilePaths(appDirPath, modulesDir), path_1.default.join(process.cwd(), ...rootDir.split('/'), modulesDir || 'modules')));
     }
-    getFilePaths(appDirPath) {
-        const controllersFilesPattern = appDirPath ? [`${appDirPath}/modules/**/controllers/**/*.ts`] : ['src/modules/**/controllers/**/*.ts'];
+    getFilePaths(appDirPath, modulesDir) {
+        const modules = modulesDir || 'modules';
+        const controllersFilesPattern = appDirPath ? [`${appDirPath}/${modules}/**/controllers/**/*.ts`] : [`src/${modules}/**/controllers/**/*.ts`];
         return [].concat(...controllersFilesPattern.map((f) => glob_1.default.sync(f))).map((value) => {
             while (value.substr(0, 2) === './') {
                 value = value.substr(2);
@@ -77,8 +78,8 @@ class SwaggerTSControllersBuilder {
                     const className = node.name.text;
                     const classDecorators = ts.getDecorators(node) || [];
                     const hasControllerDec = classDecorators.some((decorator) => {
-                        return this.isDecoratorNamed(decorator, 'ControllerDec') ||
-                            this.isDecoratorNamed(decorator, 'SystemControllerDec');
+                        return this.isDecoratorNamed(decorator, 'Controller') ||
+                            this.isDecoratorNamed(decorator, 'SystemController');
                     });
                     if (hasControllerDec) {
                         const methods = [];

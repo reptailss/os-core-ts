@@ -6,11 +6,7 @@ import {
 } from "@packages/systemStatus/containers/osInfoLogs/api/helpers/buildSystemOsInfoLogsFilters";
 import {GetSystemStatusOsLogsProps} from "@packages/systemStatus/containers/osInfoLogs/types/getLogs";
 import {getRootApiUrl} from '@helpers/apiUrl/getRootApiUrl';
-
-function transformDateFormat(dateStr: string): string {
-    const [day, month, year] = dateStr.split('/');
-    return `${year}-${month}-${day}`
-}
+import moment from 'moment'
 
 
 export const getSystemStatusOsInfoLogs = async ({
@@ -25,8 +21,8 @@ export const getSystemStatusOsInfoLogs = async ({
 
     return await apiRequestWithAuth<ResponseSystemOsLog>({
         url: `${getRootApiUrl()}os-info-logs/list?` + serialize({
-            date_start: transformDateFormat(dateStart),
-            date_end: transformDateFormat(dateEnd),
+            date_start: moment(dateStart).format('YYYY-MM-DD'),
+            date_end: moment(dateEnd).format('YYYY-MM-DD'),
             page,
             per_page: perPage,
             order: {

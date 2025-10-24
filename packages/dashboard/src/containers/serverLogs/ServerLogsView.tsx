@@ -23,8 +23,8 @@ const ROWS_PER_PAGE = 200
 interface Props {
     isLoading?: boolean,
     refetch?: (prop: {
-        dateStart: string,
-        dateEnd: string
+        dateStart: Date,
+        dateEnd: Date
     }) => Promise<void>,
     logs: ServerLog[],
 }

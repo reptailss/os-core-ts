@@ -6,7 +6,7 @@ import {
 } from '@controllers'
 import {AppErrorKey, ErrorValue} from '@appError'
 import multer from 'multer'
-import {AppFile} from '@files'
+import {IAppFile} from '@files'
 import {AppRequest} from '@appRequest'
 import {AppResponse} from '@appResponse'
 
@@ -29,6 +29,8 @@ export class FormDataArgsEndpointsHandler implements IFormDataArgsEndpointsHandl
             AppFileArgControllerEndpoint |
             AppFilesArgControllerEndpoint
         > = []
+        
+    
         let hasArgs = false
         args.forEach((arg, index) => {
             if (arg.key === 'AppFile') {
@@ -48,6 +50,16 @@ export class FormDataArgsEndpointsHandler implements IFormDataArgsEndpointsHandl
                     hasArgs = true
                 }
             }
+            if (arg.key === 'AppFormDataParamNum') {
+                if (!hasArgs) {
+                    hasArgs = true
+                }
+            }
+            if (arg.key === 'AppFormDataParam') {
+                if (!hasArgs) {
+                    hasArgs = true
+                }
+            }
         })
         if (!hasArgs) {
             return null
@@ -56,18 +68,14 @@ export class FormDataArgsEndpointsHandler implements IFormDataArgsEndpointsHandl
         return fileArgs
     }
     
-    public async handleFormDataArgs({
-                                        fileArgs,
-                                        res,
-                                        req,
-                                    }: {
+    public async handleFormDataArgs(
         fileArgs: Array<
             AppFileArgControllerEndpoint |
             AppFilesArgControllerEndpoint
-        >
+        >,
         req: AppRequest,
         res: AppResponse,
-    }): Promise<ErrorHandler | null> {
+    ): Promise<ErrorHandler | null> {
         
         return new Promise((resolve, reject) => {
             try {
@@ -211,7 +219,7 @@ export class FormDataArgsEndpointsHandler implements IFormDataArgsEndpointsHandl
                                     field.formats.length >= 1 &&
                                     files?.length >= 1
                                 ) {
-                                    files.forEach((file: AppFile) => {
+                                    files.forEach((file: IAppFile) => {
                                         if (!field.formats?.includes(file.mimetype)) {
                                             errorHandler = {
                                                 message: 'Error validation',

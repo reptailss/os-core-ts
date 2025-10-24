@@ -10,14 +10,14 @@ const {
 
 
 export function useGetRequestDateRangeState():{
-    dateStart: string
-    dateEnd: string
-    setDateStart: SetStateFn<string>
-    setDateEnd: SetStateFn<string>
+    dateStart: Date
+    dateEnd: Date
+    setDateStart: SetStateFn<Date>
+    setDateEnd: SetStateFn<Date>
 } {
 
-    const [dateStart, setDateStart] = useState<string>(initialDateStart)
-    const [dateEnd, setDateEnd] = useState<string>(initialDateEnd)
+    const [dateStart, setDateStart] = useState<Date>(initialDateStart)
+    const [dateEnd, setDateEnd] = useState<Date>(initialDateEnd)
 
     return {
         dateStart,

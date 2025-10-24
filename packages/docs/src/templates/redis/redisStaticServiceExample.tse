@@ -1,0 +1,56 @@
+import {{{RedisStaticService}}} from 'os-core-ts'
+
+async function saveUserName(userId: number, userName: string): Promise<void> {
+	await {{RedisStaticService}}.setValue(`user:${userId}:name`, userName)
+}
+
+async function getUserName(userId: number): Promise<string | null> {
+	return {{RedisStaticService}}.getValue(`user:${userId}:name`)
+}
+
+async function deleteUserName(userId: number): Promise<number> {
+	return {{RedisStaticService}}.deleteValue(`user:${userId}:name`)
+}
+
+type UserProfile = {
+	name: string
+	age: number
+	email: string
+	birthday: Date
+}
+
+async function saveUserProfile({
+								   userProfile,
+								   userId,
+							   }: {
+	userProfile: UserProfile
+	userId: number
+}): Promise<void> {
+	await {{RedisStaticService}}.setMapValue(`user:${userId}:profile`, {
+		name: userProfile.name,
+		age: userProfile.age.toString(),
+		email: userProfile.email,
+		birthday: userProfile.birthday.toISOString(),
+	})
+}
+
+async function getUserProfile(userId: number): Promise<UserProfile | null> {
+	const res = await {{RedisStaticService}}.getMapValue(`user:${userId}:profile`)
+	if (!res) {
+		return null
+	}
+	return {
+		name: res.name,
+		email: res.email,
+		age: Number(res.age),
+		birthday: new Date(res.birthday),
+	}
+}
+
+async function getUserEmail(userId:number): Promise<string | null> {
+	return {{RedisStaticService}}.getMapValueByFieldKey(`user:${userId}:profile`, 'email')
+}
+
+async function deleteUserEmail(userId:number): Promise<number> {
+	return {{RedisStaticService}}.deleteMapValue(`user:${userId}:profile`, 'email')
+}

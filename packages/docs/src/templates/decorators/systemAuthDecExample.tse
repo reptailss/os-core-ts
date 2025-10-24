@@ -1,0 +1,12 @@
+import {{{Controller}},{{Get}},{{UserInfo}},{{SystemAuthDec}}} from 'os-core-ts'
+
+@{{Controller}}()
+export class UserController {
+
+	@{{Get}}('/get-user-name')
+	public getUserName(
+		@{{SystemAuthDec}} userInfo: {{UserInfo}},
+	): string {
+		return userInfo.user_name
+	}
+}

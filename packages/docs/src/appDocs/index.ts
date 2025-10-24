@@ -1,0 +1,64 @@
+import {Docs} from '@docs/impl/Docs'
+import {accessDocModule} from '@appDocs/modules/access'
+import {apiServicesDocModule} from '@appDocs/modules/apiServices'
+import {appConfigDocModule} from '@appDocs/modules/appConfig'
+import {appErrorDocModule} from '@appDocs/modules/appError'
+import {appModuleDocModule} from '@appDocs/modules/appModule'
+import {appResponseDocModule} from '@appDocs/modules/appResponse'
+import {authDocModule} from '@appDocs/modules/auth'
+import {clientPackagesDocModule} from '@appDocs/modules/clientPackages'
+import {cronDocModule} from '@appDocs/modules/cron'
+import {dbDocModule} from '@appDocs/modules/db'
+import {accessDecoratorsDocModule} from '@appDocs/modules/decorators/accessDecoratorsDocModule'
+import {apiDecoratorsDocModule} from '@appDocs/modules/decorators/apiDecoratorsDocModule'
+import {authDecoratorsDocModule} from '@appDocs/modules/decorators/authDecoratorsDocModule'
+import {domainDocModule} from '@appDocs/modules/domain'
+import {envDocModule} from '@appDocs/modules/env'
+import {redisDocModule} from '@appDocs/modules/redis'
+import {userInfoDocModule} from '@appDocs/modules/userInfo'
+import {requestDecoratorsDocModule} from '@appDocs/modules/decorators/requestDecoratorsDocModule'
+import {validatorDocModule} from '@appDocs/modules/validator'
+import {domainDecoratorsDocModule} from '@appDocs/modules/decorators/domainDecoratorsDocModule'
+import {structureDecoratorsDocModule} from '@appDocs/modules/decorators/structureDecoratorsDocModule'
+import {filesDocModule} from '@appDocs/modules/files'
+import {helpersDocModule} from '@appDocs/modules/helpers'
+import {appDocModule} from '@appDocs/modules/app'
+import {loggerDocModule} from '@appDocs/modules/logger'
+import {modelSqlDocModule} from '@appDocs/modules/modelSql'
+
+
+export const appDocsJson = new Docs()
+    .appendModule(envDocModule)
+    .appendModule(appConfigDocModule)
+    .appendModule(appDocModule)
+    .appendModule(appModuleDocModule)
+    
+    .appendModule(apiDecoratorsDocModule)
+    .appendModule(requestDecoratorsDocModule)
+    .appendModule(authDecoratorsDocModule)
+    .appendModule(accessDecoratorsDocModule)
+    .appendModule(domainDecoratorsDocModule)
+    .appendModule(structureDecoratorsDocModule)
+    
+    .appendModule(accessDocModule)
+    .appendModule(authDocModule)
+    .appendModule(userInfoDocModule)
+    
+    .appendModule(validatorDocModule)
+    
+    .appendModule(appErrorDocModule)
+    .appendModule(domainDocModule)
+    
+    .appendModule(dbDocModule)
+    .appendModule(modelSqlDocModule)
+    
+    .appendModule(loggerDocModule)
+    .appendModule(redisDocModule)
+    .appendModule(cronDocModule)
+    .appendModule(clientPackagesDocModule)
+    .appendModule(appResponseDocModule)
+    .appendModule(filesDocModule)
+    .appendModule(helpersDocModule)
+    
+    .appendModule(apiServicesDocModule)
+    .getJson()

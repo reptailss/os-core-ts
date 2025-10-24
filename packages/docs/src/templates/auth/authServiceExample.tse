@@ -1,0 +1,31 @@
+import {{{AuthService}}} from 'os-core-ts'
+const logs: {
+	open_user_id: number
+	action: string
+}[] = []
+
+async function logUserAction(token: string, action: string): Promise<void> {
+	const userInfo = await {{AuthService}}.checkTokenAndGetUserInfo(token)
+	logs.push({
+		open_user_id: userInfo.open_user_id,
+		action,
+	})
+}
+
+async function getSystemUserIdByToken(token: string): Promise<number> {
+	const userInfo = await {{AuthService}}.checkSystemTokenAndGetUserInfo(token)
+	logs.push({
+		open_user_id: userInfo.open_user_id,
+		action: 'GET',
+	})
+	return userInfo.open_user_id
+}
+
+async function getUserFamilyNameByToken(token: string): Promise<string> {
+	const userInfo = await {{AuthService}}.getFullUserInfoByToken(token)
+	logs.push({
+		open_user_id: userInfo.id,
+		action: 'GET',
+	})
+	return userInfo.family_name
+}

@@ -9,31 +9,41 @@ import AppContextProvider from '@appContext/AppContextProvider'
 import SystemStatusRoutes from "@packages/systemStatus/routes/SystemStatusRoutes";
 import {useGetSystemStatusNavigation} from "@packages/systemStatus/navigations/hooks/useGetSystemStatusNavigation";
 import ViewContextProvider from "@viewContext/ViewContextProvider";
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
+import {ukUA as pickerUkUA} from "@mui/x-date-pickers/locales/ukUA";
+import moment from 'moment'
 
+
+moment.locale('uk')
 
 const SystemStatusApp = () => {
-
-    const navigations = useGetSystemStatusNavigation()
-
-    return (
-        <AppTheme>
-            <CssBaseline/>
-            <ViewContextProvider>
-                <AppContextProvider
-                    navigations={navigations}
-                >
-                    <AuthContextProvider>
-                        <Auth>
-                            <RootLayout>
-                                <SystemStatusRoutes/>
-                            </RootLayout>
-                        </Auth>
-                    </AuthContextProvider>
-                </AppContextProvider>
-            </ViewContextProvider>
-
-        </AppTheme>
-    )
+	
+	const navigations = useGetSystemStatusNavigation()
+	
+	return (
+		<AppTheme>
+			<CssBaseline/>
+			<LocalizationProvider
+				dateAdapter={AdapterMoment}
+				localeText={pickerUkUA.components.MuiLocalizationProvider.defaultProps.localeText}
+			>
+				<ViewContextProvider>
+					<AppContextProvider
+						navigations={navigations}
+					>
+						<AuthContextProvider>
+							<Auth>
+								<RootLayout>
+									<SystemStatusRoutes/>
+								</RootLayout>
+							</Auth>
+						</AuthContextProvider>
+					</AppContextProvider>
+				</ViewContextProvider>
+			</LocalizationProvider>
+		</AppTheme>
+	)
 }
 
 export default SystemStatusApp

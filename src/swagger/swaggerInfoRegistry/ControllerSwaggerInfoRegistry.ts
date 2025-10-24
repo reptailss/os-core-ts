@@ -1,5 +1,5 @@
 import {ControllersMethodSwaggerInfo, ControllerSwaggerInfo} from '@swagger/core'
-import {Controller, ControllersHelper} from '@controllers'
+import {ControllerMeta, ControllersHelper} from '@controllers'
 
 
 const swaggerInfo: ControllerSwaggerInfo[] = []
@@ -10,7 +10,7 @@ export class ControllerSwaggerInfoRegistry {
                                   controllers,
                                   baseSwaggerTag,
                               }: {
-        controllers: Controller[]
+        controllers: ControllerMeta[]
         baseSwaggerTag?: string
     }): void {
         controllers.forEach(controller => {
@@ -25,7 +25,7 @@ export class ControllerSwaggerInfoRegistry {
                    controller,
                    baseSwaggerTag,
                }: {
-        controller: Controller
+        controller: ControllerMeta
         baseSwaggerTag?: string,
     }): void {
         if (!controller.endpoints?.length) {
@@ -62,10 +62,9 @@ export class ControllerSwaggerInfoRegistry {
                 isSystemController: endpoint.type === 'system',
             })
         })
-        
         swaggerInfo.push({
             methods,
-            className: controller.name,
+            className: controller.constructor.name,
         })
     }
     

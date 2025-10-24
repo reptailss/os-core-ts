@@ -8,8 +8,8 @@ const _appError_1 = require("../../../appError");
 const _helpers_1 = require("../../../helpers");
 let osStatusOsInfo = [];
 class ImportOsStatusInfoLogsService {
-    constructor(getOsStatusOsInfoService = new core_1.GetOsStatusOsInfoService()) {
-        this.getOsStatusOsInfoService = getOsStatusOsInfoService;
+    constructor() {
+        this.getOsStatusOsInfoService = new core_1.GetOsStatusOsInfoService();
     }
     async saveAndImport() {
         try {

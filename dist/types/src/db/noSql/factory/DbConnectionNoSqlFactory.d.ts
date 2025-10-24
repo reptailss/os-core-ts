@@ -1,7 +1,4 @@
-import { DbNoSqlOptions, IDbConnectionNoSql } from "../..";
+import { IDbConnectionNoSql } from "../..";
 export declare class DbConnectionNoSqlFactory {
-    static getDynamicByDatabaseName({ databaseName, optionsDb, }: {
-        databaseName: string;
-        optionsDb?: Partial<DbNoSqlOptions>;
-    }): Promise<IDbConnectionNoSql>;
+    static getStaticByDatabaseName(databaseName: string): IDbConnectionNoSql;
 }

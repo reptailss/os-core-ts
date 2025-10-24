@@ -61,7 +61,7 @@ exports.APP_CONFIG_OS_CORE = {
     },
     logger: {
         hasRequestConsoleLogger: process.env.INIT_HAS_CONSOLE_LOGGER_REQUESTS === '1',
-        hasSendActionSystemLogger: process.env.INIT_HAS_SEND_ACTION_SYSTEM_LOGGER !== '0',
+        hasSendActionSystemLogger: process.env.INIT_HAS_SEND_ACTION_SYSTEM_LOGGER === '1',
         hasSendOsStatusLogs: ((_b = process.env.INIT_URL_OS_STATUS_SERVICE) === null || _b === void 0 ? void 0 : _b.length) >= 1,
     },
     urls: {
@@ -69,19 +69,7 @@ exports.APP_CONFIG_OS_CORE = {
         authServiceUrl: process.env.INIT_URL_AUTH_SERVICE || null,
         actionsSystemLoggerServiceUrl: process.env.INIT_URL_TO_ACTIONS_SYSTEM_LOGGER_SERVICE || null,
         structureAccessServiceUrl: process.env.INIT_URL_STRUCTURE_ACCESS_SERVICE || null,
-        structureBmsServiceUrl: process.env.INIT_URL_STRUCTURE_SERVICE || null,
-        warehouseSettingsServiceUrl: process.env.INIT_URL_WAREHOUSE_SETTINGS_SERVICE || null,
-        ordersServiceUrl: process.env.INIT_URL_ORDERS_SERVICE || null,
         osStatusServiceUrl: process.env.INIT_URL_OS_STATUS_SERVICE || null,
-        sociumUsersServiceUrl: process.env.INIT_URL_SOCIUM_USERS_SERVICE || null,
-        bmsUsersServiceUrl: process.env.INIT_URL_BMS_USERS_SERVICE || null,
-        cashbackProgramServiceUrl: process.env.INIT_URL_CASHBACK_PROGRAM_SERVICE || null,
-        paymentMethodsServiceUrl: process.env.INIT_URL_PAYMENT_METHODS_SERVICE || null,
-        warehouseProductsServiceUrl: process.env.INIT_URL_WAREHOUSE_PRODUCTS_SERVICE || null,
-        mobAppSettingsServiceUrl: process.env.INIT_URL_MOB_APP_SETTINGS_SERVICE || null,
-        ptpUsersServiceUrl: process.env.INIT_URL_PTP_USERS_SERVICE || null,
-        ptpCoreUsersServiceUrl: process.env.INIT_URL_PTP_CORE_USERS_SERVICE || null,
-        ptpCoreGroupsServiceUrl: process.env.INIT_URL_PTP_CORE_GROUPS_SERVICE || null,
     },
     awsS3: {
         bucket: process.env.INIT_AWS_S3_BUCKET || '',

@@ -1,5 +1,5 @@
 export declare class SwaggerTSControllersBuilder {
-    buildAndSaveToFile(appDirPath?: string): void;
+    buildAndSaveToFile(appDirPath?: string, modulesDir?: string): void;
     deleteFromFile(appDirPath?: string): void;
     private getResponseAndParams;
     private getFilePaths;

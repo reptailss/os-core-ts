@@ -13,8 +13,8 @@ const {
 export function useGetSystemStatusServerLogs(): {
     isLoading: boolean,
     refetch: (prop: {
-        dateStart: string,
-        dateEnd: string
+        dateStart: Date,
+        dateEnd: Date
     }) => Promise<void>,
     logs: ServerLog[],
 } {
@@ -44,8 +44,8 @@ export function useGetSystemStatusServerLogs(): {
                                            dateEnd,
                                            dateStart,
                                        }: {
-        dateStart: string,
-        dateEnd: string
+        dateStart: Date,
+        dateEnd: Date
     }) => {
         try {
             setIsLoading(true)

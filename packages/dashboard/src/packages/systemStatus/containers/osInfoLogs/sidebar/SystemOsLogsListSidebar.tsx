@@ -26,8 +26,8 @@ const SystemOsLogsListSidebar = ({
                                   dateStart,
                                   dateEnd,
                               }: {
-        dateStart: string,
-        dateEnd: string
+        dateStart: Date,
+        dateEnd: Date
     }) => {
         systemOsLogsListState.setDateStart(dateStart)
         systemOsLogsListState.setDateEnd(dateEnd)
@@ -50,11 +50,7 @@ const SystemOsLogsListSidebar = ({
         cb(value)
         systemOsLogsListState.setPage(1)
     }
-
-    useEffect(() => {
-        onFetchSystemOsInfoLogs()
-    }, [])
-
+    
     return (
         <Stack
             direction={direction || 'row'}
@@ -67,7 +63,6 @@ const SystemOsLogsListSidebar = ({
                 initialDateStart={systemOsLogsListState.dateStart}
                 initialDateEnd={systemOsLogsListState.dateEnd}
                 onSave={onSaveDate}
-                format={'DD/MM/YYYY'}
             />
 
             <SelectSystemStatusServices
@@ -80,6 +75,7 @@ const SystemOsLogsListSidebar = ({
                 onClick={onFetchSystemOsInfoLogs}
                 variant={'contained'}
                 sx={sx.btn}
+                fullWidth
             >
                 Пошук
             </Button>

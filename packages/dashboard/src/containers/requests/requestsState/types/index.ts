@@ -6,10 +6,10 @@ import {RequestErrorStatus} from "@containers/requests/types/errorStatus";
 export interface RequestsState {
     targetEndpoints: string[],
     setTargetEndpoints: SetStateFn<string[]>,
-    dateStartRequests: string,
-    setDateStartRequests: SetStateFn<string>,
-    dateEndRequests: string,
-    setDateEndRequests: SetStateFn<string>
+    dateStartRequests: Date,
+    setDateStartRequests: SetStateFn<Date>,
+    dateEndRequests: Date,
+    setDateEndRequests: SetStateFn<Date>
 }
 
 export interface RequestsListState {
@@ -32,8 +32,11 @@ export interface RequestsListState {
     setErrorStatus: (errorStatus: RequestErrorStatus) => void,
     targetEndpoints:string[],
     setTargetEndpoints:SetStateFn<string[]>,
-    dateStart: string
-    dateEnd: string
-    setDateStart: SetStateFn<string>
-    setDateEnd: SetStateFn<string>
+    dateStart: Date
+    dateEnd: Date
+    setDateStart: SetStateFn<Date>
+    setDateEnd: SetStateFn<Date>
+    where:string | undefined
+    setWhere:(value:string | undefined)=>void
 }
+

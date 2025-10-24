@@ -1,0 +1,16 @@
+import {{{PtpAdminChecker}}} from 'os-core-ts'
+async function logUserAccessType(openUserId: number, domain: string): Promise<void> {
+	const type = await {{PtpAdminChecker}}.coreOrClient({ openUserId, domain })
+	console.log(`User ${openUserId} is assigned to: ${type}`)
+}
+
+async function getClientGroupCityId(props: {
+	openUserId: number
+	domain: string
+	apiAccessKey: string
+	apiSecretKey: string
+}): Promise<number> {
+	const result = await {{PtpAdminChecker}}.coreOrClientAndDomainIfNotCore(props)
+
+	return result.ptpGroupCityId
+}

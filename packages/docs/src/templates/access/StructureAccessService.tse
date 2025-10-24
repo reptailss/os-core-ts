@@ -1,0 +1,26 @@
+
+export class StructureAccessService {
+
+    static async checkAccess(props: {
+        service: string
+        endpoint: string
+        legalEntityId: number
+        openUserId: number
+    }): Promise<void>
+
+    static async checkAccessByPluginApiKey(props: {
+        service: string
+        endpoint: string
+        legalEntityId: number
+        pluginApiKey: string
+    }): Promise<void>
+
+    static async checkAccessByPluginApiKeyOrUserId(props: {
+        service: string
+        endpoint: string
+        legalEntityId: number
+        openUserId?: number
+        pluginApiKey?: string
+    }): Promise<void>
+
+}

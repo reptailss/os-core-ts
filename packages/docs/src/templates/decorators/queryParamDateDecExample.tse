@@ -1,0 +1,25 @@
+import {{{Controller}},{{Get}},{{QueryParamDateDec}},{{QueryParamDateDec}},{{Validator}}} from 'os-core-ts'
+type Event = {
+	date_start:Date
+	date_end:Date
+}
+
+const events:Event[] = []
+
+@{{Controller}}()
+export class EventsController {
+	@{{Post}}('/create')
+	public createEvent(
+		@{{QueryParamDateDec}}('date_start', {{Validator}}.date().optional()) dateEnd: Date | undefined,
+		@{{QueryParamDateDec}}('date_end') dateStart: Date,
+	): Event {
+
+		const event:Event = {
+			date_start: dateStart,
+			date_end: dateEnd || new Date(),
+		}
+		events.push(event)
+
+		return  event
+	}
+}

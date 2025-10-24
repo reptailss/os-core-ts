@@ -1,0 +1,24 @@
+import {{{AppError}}} from 'os-core-ts'
+
+function checkIsAdmin(role: string): void {
+	if (role !== 'admin') {
+		throw new {{AppError}}('User must be an admin', {
+			errorCode: 'NOT_ADMIN',
+			statusCode: 403,
+		});
+	}
+}
+
+function validateAge(age: number): void {
+    if (age < 69) {
+        throw new {{AppError}}('Validation error', {
+            errorKey:'VALIDATION_ERROR',
+            errors:[
+                {
+                    key:'age',
+                    message:'Must be < 69'
+                },
+            ]
+        });
+    }
+}

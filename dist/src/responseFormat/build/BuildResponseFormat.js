@@ -17,7 +17,18 @@ class BuildResponseFormat {
         };
     }
     static pagination(paginationValues, { errors, customFields, } = {}) {
-        return Object.assign({ page: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.page, all_pages: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.all_pages, all_rows: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.all_rows, per_page: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.per_page, rows: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.rows, error: false, errors: errors || [] }, (customFields || {}));
+        if (!customFields) {
+            return {
+                page: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.page,
+                all_pages: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.all_pages,
+                all_rows: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.all_rows,
+                per_page: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.per_page,
+                rows: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.rows,
+                error: false,
+                errors: errors || [],
+            };
+        }
+        return Object.assign({ page: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.page, all_pages: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.all_pages, all_rows: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.all_rows, per_page: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.per_page, rows: paginationValues === null || paginationValues === void 0 ? void 0 : paginationValues.rows, error: false, errors: errors || [] }, customFields);
     }
     static mutateRow(id) {
         return {
@@ -38,9 +49,6 @@ class BuildResponseFormat {
             count,
             import_count: importCount,
         };
-    }
-    static custom(data) {
-        return data;
     }
 }
 exports.BuildResponseFormat = BuildResponseFormat;

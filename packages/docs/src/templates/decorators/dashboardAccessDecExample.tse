@@ -1,0 +1,11 @@
+import {{{Controller}},{{Get}},{{DashboardAccessDec}},{{FullUserInfo}}} from 'os-core-ts'
+@{{Controller}}()
+export class UserController {
+
+    @{{Get}}('/get-user-name')
+    public getUserName(
+        @{{DashboardAccessDec}} userInfo: {{FullUserInfo}},
+    ): string {
+        return userInfo.name
+    }
+}

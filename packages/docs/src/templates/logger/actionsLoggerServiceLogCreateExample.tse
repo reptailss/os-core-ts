@@ -1,0 +1,43 @@
+import {{{ActionsLoggerService}}, {{AuthDec}}, {{Controller}}, {{ParamDec}}, {{Post}}, {{UserInfo}}} from 'os-core-ts'
+
+
+type User = {
+	name: string
+	id: number
+}
+const users: User[] = []
+
+@{{Controller}}()
+export class UsersController {
+
+	constructor(private readonly actionsLoggerService = new {{ActionsLoggerService}}()) {
+	}
+
+	@{{Post}}('/create/:user_name')
+	public async createUser(
+		@{{AuthDec}} userInfo: {{UserInfo}},
+		@{{ParamDec}}('user_name') userName: string,
+	): Promise<User> {
+
+		const newUser: User = {
+			name: userName,
+			id: userInfo.open_user_id,
+		}
+		users.push(newUser)
+
+		await this.actionsLoggerService.logCreateAction({
+			value: newUser,
+			rowId: newUser.id,
+			openUserId: userInfo.open_user_id,
+			config: {
+				tableName: 'users',
+				dbType: 'mysql',
+				database: 'socium',
+			},
+		})
+
+		return newUser
+	}
+
+
+}

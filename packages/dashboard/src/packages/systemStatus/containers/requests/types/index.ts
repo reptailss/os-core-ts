@@ -11,14 +11,16 @@ export type SystemStatusServerRequestsResponse = ServerRequestsData & {
 }
 
 export  type GetSystemStatusServerRequestsParams =  {
-    dateStart: string
-    dateEnd: string,
+    dateStart: Date
+    dateEnd: Date
     page: number
     perPage: number
-    order: 'asc' | 'desc',
-    orderBy: keyof ServerMeta,
-    targetEndpoints: string[],
-    statusCodes: (string | number)[],
-    errorStatus: RequestErrorStatus,
+    order: 'asc' | 'desc'
+    orderBy: keyof ServerMeta
+    targetEndpoints: string[]
+    statusCodes: (string | number)[]
+    errorStatus: RequestErrorStatus
     errorCodes: string[]
+    where:string | undefined
 }
+

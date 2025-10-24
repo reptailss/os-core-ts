@@ -92,30 +92,11 @@ declare namespace multer {
     }
 }
 
-
-declare global {
-    const gmRenderModuleConstant: IGmRenderModuleConstant
-    const gmRenderModuleFn: IGmRenderModuleFn
-    const gmRenderModuleClassMethod: IGmRenderModuleClassMethod
-    const gmRenderModuleClass: IGmRenderModuleClass
-    const gmRenderModuleType: IGmRenderModuleType
-}
-
 export {}
 
 declare module '*.txt' {
 }
 
-declare module '*.ejs' {
-    const template: (data: {
-        gmRenderModuleConstant: IGmRenderModuleConstant
-        gmRenderModuleFn: IGmRenderModuleFn
-        gmRenderModuleClassMethod: IGmRenderModuleClassMethod
-        gmRenderModuleClass: IGmRenderModuleClass
-        gmRenderModuleType: IGmRenderModuleType
-    }) => string
-    export default template
-}
 
 declare module 'express-serve-static-core' {
     interface Response {

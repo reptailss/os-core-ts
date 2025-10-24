@@ -46,6 +46,11 @@ class OsInfoService {
                     os_used: Math.round(osTotal - osFree),
                     pr_used: this.calcMemory(process.memoryUsage().rss),
                 },
+                server_time: {
+                    utc: new Date().toISOString(),
+                    local: new Date().toString(),
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                }
             };
         }
         catch (error) {

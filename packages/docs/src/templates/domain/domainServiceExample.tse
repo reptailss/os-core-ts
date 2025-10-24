@@ -1,0 +1,5 @@
+import {{{DomainService}}} from 'os-core-ts'
+async function logDbNameByDomain(domain: string): Promise<void> {
+	const dbName = await {{DomainService}}.getDatabaseNameByDomain(domain)
+	console.log(`domain:${domain} database name: ${dbName}`)
+}

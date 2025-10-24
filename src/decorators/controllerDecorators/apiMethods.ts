@@ -1,6 +1,6 @@
 import {RegisterApiMethodsDecorators} from '@decorators/core'
 
-export function PostDec(path: string) {
+export function Post(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -12,7 +12,7 @@ export function PostDec(path: string) {
     }
 }
 
-export function PutDec(path: string) {
+export function Put(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -24,7 +24,7 @@ export function PutDec(path: string) {
     }
 }
 
-export function GetDec(path: string) {
+export function Get(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -36,7 +36,7 @@ export function GetDec(path: string) {
     }
 }
 
-export function DeleteDec(path: string) {
+export function Delete(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -49,7 +49,7 @@ export function DeleteDec(path: string) {
 }
 
 
-export function SystemPostDec(path: string) {
+export function SystemPost(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -61,7 +61,7 @@ export function SystemPostDec(path: string) {
     }
 }
 
-export function SystemPutDec(path: string) {
+export function SystemPut(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -73,7 +73,7 @@ export function SystemPutDec(path: string) {
     }
 }
 
-export function SystemGetDec(path: string) {
+export function SystemGet(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -85,7 +85,7 @@ export function SystemGetDec(path: string) {
     }
 }
 
-export function SystemDeleteDec(path: string) {
+export function SystemDelete(path: string) {
     return function(target: any, propertyKey: string) {
         RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -98,7 +98,7 @@ export function SystemDeleteDec(path: string) {
 }
 
 
-export function SendFileByPathDec(path: string, options: {
+export function SendFileByPath(path: string, options: {
     root?: string
 } = {}) {
     return function(target: any, propertyKey: string) {
@@ -108,11 +108,12 @@ export function SendFileByPathDec(path: string, options: {
             target,
             propertyKey,
             type: 'sendFileByPath',
+            options,
         })
     }
 }
 
-export function SendFileDec(path: string, options: {
+export function SendFile(path: string, options: {
     root?: string
 } = {}) {
     return function(target: any, propertyKey: string) {
@@ -122,6 +123,7 @@ export function SendFileDec(path: string, options: {
             target,
             propertyKey,
             type: 'sendFile',
+            options,
         })
     }
 }

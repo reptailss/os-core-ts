@@ -15,22 +15,23 @@ const {
 
 interface Props {
     refetch: (prop: {
-        dateStart: string,
-        dateEnd: string
+        dateStart: Date,
+        dateEnd: Date
     }) => Promise<void>,
     sx?: SxStyle
 }
 
 const RefetchLogs = ({refetch, sx}: Props) => {
 
-    const [dateStart, setDateStart] = useState<string>(initialDateStart)
-    const [dateEnd, setDateEnd] = useState<string>(initialDateEnd)
+    const [dateStart, setDateStart] = useState<Date>(initialDateStart)
+    const [dateEnd, setDateEnd] = useState<Date>(initialDateEnd)
 
     const onSave: OnSaveDatePickerRangeCB = async ({
                                                        dateStart,
                                                        dateEnd,
                                                    }) => {
-
+        setDateStart(dateStart)
+        setDateEnd(dateEnd)
         await refetch({
             dateStart,
             dateEnd,
@@ -54,7 +55,6 @@ const RefetchLogs = ({refetch, sx}: Props) => {
                 initialDateStart={dateStart}
                 initialDateEnd={dateEnd}
                 onSave={onSave}
-                format={'DD/MM/YYYY'}
             />
 
             <IconButton

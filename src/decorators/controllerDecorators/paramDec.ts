@@ -2,7 +2,7 @@ import {SchemaValidator, SchemaValidatorRefineEffect} from '@validator'
 import {ControllerDecoratorsBuilder, DecoratorParam} from '@decorators/core'
 
 type Values = string | undefined
-export const ParamDec = <Value extends Values>(
+export const Param = <Value extends Values>(
     key: string,
     schema?: SchemaValidator<Value> | SchemaValidatorRefineEffect<Value>,
 ): DecoratorParam<
@@ -28,7 +28,7 @@ export const ParamDec = <Value extends Values>(
 }
 
 
-export const ParamOptionalDec = <Value extends Values>(
+export const ParamOptional = <Value extends Values>(
     key: string,
     schema?: SchemaValidator<Value> | SchemaValidatorRefineEffect<Value>,
 ): DecoratorParam<

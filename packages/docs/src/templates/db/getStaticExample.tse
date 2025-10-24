@@ -1,0 +1,8 @@
+import {{{DbConnectionSqlFactory}}} form 'os-core-ts'
+
+const dbConnectionSql = DbConnectionSqlFactory.getStatic()
+
+async function checkExistsUsersTable():Promise<boolean> {
+	return await dbConnectionSql.tableExists('users')
+}
+

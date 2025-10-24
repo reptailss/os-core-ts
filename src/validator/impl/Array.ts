@@ -1,5 +1,5 @@
 import {z} from 'zod'
-import {SchemaValidator} from '@validator'
+import {SchemaValidator, SchemaValidatorRefineEffect} from '@validator'
 import {
     ArrayValidator,
     SafeParseResultZodValidator,
@@ -13,7 +13,7 @@ import {ZodArray} from 'zod/lib/types'
 
 
 export class ArrayValidatorIml<
-    T extends SchemaValidator,
+    T extends SchemaValidator | SchemaValidatorRefineEffect,
 > extends ZodValidatorImp<
     T['_value'][],
     ZodArray<any>

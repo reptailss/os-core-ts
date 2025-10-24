@@ -1,26 +1,25 @@
-import {ControllerDec, DashboardAccessDec, GetDec, SwaggerInfoDec} from '@decorators'
+import {Controller, DashboardUser, Get, SwaggerInfo} from '@decorators'
 import {SYSTEM_ROUTES} from '@systemRoutes'
-import {FullUserInfo} from '@auth'
+import {FullUserDto} from '@auth'
 import {GetRequestsLogsService, ServerMeta} from '@logger/core'
 import {RequestsLogsRoutesRegistry} from '@logger'
 
-@ControllerDec()
+@Controller()
 export class GetRequestsLogsController {
-
-    constructor(private readonly getRequestsLogsService: GetRequestsLogsService = new GetRequestsLogsService()) {
-    }
-
-    @SwaggerInfoDec({
+    
+    private readonly getRequestsLogsService: GetRequestsLogsService = new GetRequestsLogsService()
+    
+    @SwaggerInfo({
         disable: true,
     })
-    @GetDec(SYSTEM_ROUTES.osRequestsInfo.index)
+    @Get(SYSTEM_ROUTES.osRequestsInfo.index)
     public async getLogs(
-        @DashboardAccessDec userInfo: FullUserInfo,
+        @DashboardUser() userDto: FullUserDto,
     ): Promise<{
         rows: ServerMeta[]
         paths: string[]
     }> {
-
+        
         const rows = await this.getRequestsLogsService.getRequestsLogs()
         return {
             rows,

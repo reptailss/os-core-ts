@@ -6,10 +6,10 @@ const _logger_1 = require("../..");
 const core_1 = require("../../core");
 const _helpers_1 = require("../../../helpers");
 class ImportOsStatusRequestLogsService {
-    constructor(getRequestsLogsService = new core_1.GetRequestsLogsService(), clearRequestsLogsService = new core_1.ClearRequestsLogsService(), createRequestLogsService = new core_1.CreateRequestLogsService()) {
-        this.getRequestsLogsService = getRequestsLogsService;
-        this.clearRequestsLogsService = clearRequestsLogsService;
-        this.createRequestLogsService = createRequestLogsService;
+    constructor() {
+        this.getRequestsLogsService = new core_1.GetRequestsLogsService();
+        this.clearRequestsLogsService = new core_1.ClearRequestsLogsService();
+        this.createRequestLogsService = new core_1.CreateRequestLogsService();
         this.BATCH_SIZE = 150;
     }
     async import() {

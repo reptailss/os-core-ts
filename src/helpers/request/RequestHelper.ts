@@ -164,12 +164,6 @@ export class RequestHelper {
         if (props.params) {
             res.push(`Request params:${JSON.stringify(props.params)}`)
         }
-        if (props.headers) {
-            res.push(`Request headers:${JSON.stringify(props.headers)}`)
-        }
-        if (props.body) {
-            res.push(`Request body:${props.body}`)
-        }
         return res
     }
     

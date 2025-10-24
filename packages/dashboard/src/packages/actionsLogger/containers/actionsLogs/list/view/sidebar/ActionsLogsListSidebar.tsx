@@ -27,8 +27,8 @@ const ActionsLogsListSidebar = ({
                                   dateStart,
                                   dateEnd,
                               }: {
-        dateStart: string,
-        dateEnd: string
+        dateStart: Date,
+        dateEnd: Date
     }) => {
         actionsLogsListState.setDateStart(dateStart)
         actionsLogsListState.setDateEnd(dateEnd)
@@ -58,10 +58,6 @@ const ActionsLogsListSidebar = ({
         actionsLogsListState.setPage(1)
     }
 
-    useEffect(() => {
-        onFetchRequests()
-    }, [])
-
     return (
         <Stack
             direction={'column'}
@@ -72,7 +68,6 @@ const ActionsLogsListSidebar = ({
                 initialDateStart={actionsLogsListState.dateStart}
                 initialDateEnd={actionsLogsListState.dateEnd}
                 onSave={onSaveDate}
-                format={'DD/MM/YYYY'}
             />
 
             <SelectActionLogType

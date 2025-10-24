@@ -1,20 +1,20 @@
 import {APP_CONFIG_OS_CORE} from '@appConfig'
 import {AppError, AppErrorHelper} from '@appError'
-import {S3} from 'aws-sdk'
+import {DeleteObjectCommand, HeadBucketCommand, PutObjectCommand, S3Client} from '@aws-sdk/client-s3'
 
 import path from 'path'
 import fs from 'fs/promises'
 import mime from 'mime'
 import {appLogger} from '@logger'
 
-let s3: S3 | null = null
+let s3Client: S3Client | null = null
 
-const getS3 = (): S3 => {
-    if (s3) {
-        return s3
+const getS3 = (): S3Client => {
+    if (s3Client) {
+        return s3Client
     }
     
-    s3 = new S3({
+    s3Client = new S3Client({
         region: APP_CONFIG_OS_CORE.awsS3.region,
         credentials: {
             accessKeyId: APP_CONFIG_OS_CORE.awsS3.accessKey,
@@ -22,7 +22,7 @@ const getS3 = (): S3 => {
         },
     })
     
-    return s3
+    return s3Client
 }
 
 export class FileService {
@@ -83,39 +83,29 @@ export class FileService {
         })
     }
     
-    static saveFileToAwsS3({
-                               buffer,
-                               fileName,
-                               mimetype,
-                           }: {
+    static async saveFileToAwsS3({
+                                     buffer,
+                                     fileName,
+                                     mimetype,
+                                 }: {
         buffer: Buffer
         fileName: string
         mimetype: string
     }): Promise<{filePath: string}> {
-        return new Promise(async (resolve, reject) => {
-            
-            const s3 = getS3()
-            
-            const params: S3.Types.PutObjectRequest = {
-                Bucket: APP_CONFIG_OS_CORE.awsS3.bucket,
-                Key: fileName,
-                Body: buffer,
-                ContentType: mimetype,
-            }
-            
-            
-            s3.upload(params, (error, data) => {
-                if (error) {
-                    reject(new AppError('os-core:Error upload file s3.' + error.message + error.message, {
-                        errorKey: 'DELETE_FILE_ERROR',
-                    }))
-                }
-                
-                resolve({
-                    filePath: data?.Location || '',
-                })
-            })
+        const s3 = getS3()
+        
+        const command = new PutObjectCommand({
+            Bucket: APP_CONFIG_OS_CORE.awsS3.bucket,
+            Key: fileName,
+            Body: buffer,
+            ContentType: mimetype,
         })
+        
+        await s3.send(command)
+        
+        const location = `https://${APP_CONFIG_OS_CORE.awsS3.bucket}.s3.${APP_CONFIG_OS_CORE.awsS3.region}.amazonaws.com/${fileName}`
+        
+        return {filePath: location}
     }
     
     static async saveFileToLocal({
@@ -160,26 +150,24 @@ export class FileService {
         return this.deleteFileFromLocal(filePath)
     }
     
-    static deleteFileFromAwsS3(filePath: string): Promise<{result: boolean}> {
-        return new Promise(async (resolve, reject) => {
-            const params: S3.Types.PutObjectRequest = {
-                Bucket: APP_CONFIG_OS_CORE.awsS3.bucket,
-                Key: filePath?.split('.com/').pop() || '',
-            }
+    static async deleteFileFromAwsS3(filePath: string): Promise<{result: boolean}> {
+        try {
             const s3 = getS3()
+            const key = filePath.split('.com/').pop() || ''
             
-            s3.deleteObject(params, (error, data) => {
-                if (error) {
-                    reject(new AppError('os-core:Error delete file s3. ' + error.message, {
-                        errorKey: 'DELETE_FILE_ERROR',
-                    }))
-                }
-                
-                resolve({
-                    result: data?.DeleteMarker || false,
-                })
+            const command = new DeleteObjectCommand({
+                Bucket: APP_CONFIG_OS_CORE.awsS3.bucket,
+                Key: key,
             })
-        })
+            
+            await s3.send(command)
+            return {result: true}
+        } catch (error:any) {
+            appLogger.error('error delete s3 file')
+            throw new AppError('os-core: Error deleting file from s3. ' + typeof error.message === 'string' ?  error.message : '', {
+                errorKey: 'DELETE_FILE_ERROR',
+            })
+        }
     }
     
     static async deleteFileFromLocal(filePath: string): Promise<{result: boolean}> {
@@ -200,12 +188,14 @@ export class FileService {
     static async checkAwsS3(): Promise<boolean> {
         try {
             const s3 = getS3()
-            
-            await s3.headBucket({Bucket: APP_CONFIG_OS_CORE.awsS3.bucket}).promise()
+            const command = new HeadBucketCommand({
+                Bucket: APP_CONFIG_OS_CORE.awsS3.bucket,
+            })
+            await s3.send(command)
             return true
         } catch (error) {
-            appLogger.error('os-core: Error connection aws s3', error)
-            throw new AppError('os-core: Error connection aws s3', {
+            appLogger.error('os-core: Error connecting to aws s3', error)
+            throw new AppError('os-core: Error connecting to aws s3', {
                 errorKey: 'CONNECT_TO_AWS_S3_ERROR',
             })
         }

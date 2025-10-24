@@ -2,7 +2,7 @@ import {ArgControllerEndpoint} from '@controllers'
 import {SwaggerBaseInfo} from '@swagger/core'
 
 
-export type Controller = {
+export type ControllerMeta = {
     endpoints: (
         ControllerEndpoint |
         SystemControllerEndpoint |

@@ -1,25 +1,21 @@
-import {ControllerDec, DashboardAccessDec, GetDec, SwaggerInfoDec} from '@decorators'
-import {FullUserInfo} from '@auth'
+import {Controller, DashboardUser, Get, SwaggerInfo} from '@decorators'
+import {FullUserDto} from '@auth'
 import {ReadinessService} from '@health/core'
 import {OsInfo, OsInfoService, ReadinessInfo} from '@health'
 import {SYSTEM_ROUTES} from '@systemRoutes'
 
-@ControllerDec()
+@Controller()
 export class HealthController {
-
-    constructor(
-        private readonly osInfoService = new OsInfoService(),
-        private readonly readinessService = new ReadinessService(),
-    ) {
-    }
-
-
-    @SwaggerInfoDec({
+    
+    private readonly osInfoService: OsInfoService = new OsInfoService()
+    private readonly readinessService: ReadinessService = new ReadinessService()
+    
+    @SwaggerInfo({
         disable: true,
     })
-    @GetDec(SYSTEM_ROUTES.health.liveness)
+    @Get(SYSTEM_ROUTES.health.liveness)
     public liveness(
-        @DashboardAccessDec user: FullUserInfo,
+        @DashboardUser() userDto: FullUserDto,
     ): {
         status: 'ok'
         code: 200
@@ -29,23 +25,23 @@ export class HealthController {
             code: 200,
         }
     }
-
-    @SwaggerInfoDec({
+    
+    @SwaggerInfo({
         disable: true,
     })
-    @GetDec(SYSTEM_ROUTES.health.osStatus)
+    @Get(SYSTEM_ROUTES.health.osStatus)
     public async osStatus(
-        @DashboardAccessDec user: FullUserInfo,
+        @DashboardUser() userDto: FullUserDto,
     ): Promise<OsInfo> {
         return this.osInfoService.getOsInfo()
     }
-
-    @SwaggerInfoDec({
+    
+    @SwaggerInfo({
         disable: true,
     })
-    @GetDec(SYSTEM_ROUTES.health.readiness)
+    @Get(SYSTEM_ROUTES.health.readiness)
     public async readiness(
-        @DashboardAccessDec user: FullUserInfo,
+        @DashboardUser() userDto: FullUserDto,
     ): Promise<{
         code: 200 | 500
         status: 'ok' | 'bad'

@@ -1,0 +1,9 @@
+import {{{AuthService}}} from 'os-core-ts'
+async function logUser(token:string,domain:string):Promise<void>{
+    const userInfo = await {{PtpClientAuthService}}.checkTokenAndGetUserInfo({
+        token,
+        domain
+    })
+
+    console.log(`User name:${userInfo.user_name}. Is admin:${userInfo.is_admin}`)
+}

@@ -4,10 +4,8 @@ import {OsStatusLoggerInfo} from '@logger/core'
 
 
 export class GetOsStatusOsInfoService {
-
-    constructor(private readonly osInfoService = new OsInfoService()) {
-    }
-
+    private readonly osInfoService = new OsInfoService()
+    
     public async getOsInfo(): Promise<OsStatusLoggerInfo> {
         const osInfo = await this.osInfoService.getOsInfo()
         return {

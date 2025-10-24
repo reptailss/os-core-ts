@@ -1,71 +1,66 @@
-import {ModelSqlColumn, ModelSqlColumns, IModelSql, SettingsLoadModelSql} from '@model'
-import {SqlAssociation, SqlIndexes} from '@model/core'
+import {SqlAssociation} from '@repository/core'
+import {EntityColumn} from '@entity'
 
+export interface ISqlAssociationModel<Row extends object> {
+    _getRawModel(): any
+    
+    hasOne(model: ISqlAssociationModel<object>, options: {
+        foreignKey: string
+        as: string
+        onDelete?: 'RESTRICT' | 'SET_NULL' | 'CASCADE'
+    }): this
+    
+    hasMany(model: ISqlAssociationModel<object>, options: {
+        foreignKey: string
+        as: string
+        onDelete?: 'RESTRICT' | 'SET_NULL' | 'CASCADE'
+    }): this
+    
+    belongsTo(model: ISqlAssociationModel<object>, options: {
+        foreignKey: string
+        as: string
+    }): this
+    
+    getIncludes(): Record<string, SqlAssociation<any>>
+}
 
 export interface IDbConnectionSql {
-    defineModel<
-        Row extends object,
-        Includes extends Record<string, SqlAssociation<any>> = {},
-        RowPrimaryKey extends string = 'id',
-        RowDateAddKey extends (string | null) = 'date_add',
-        RowDateUpdateKey extends (string | null) = 'date_update',
-    >(
-        tableName: string,
-        columns: ModelSqlColumns<
-            Row,
-            RowPrimaryKey,
-            RowDateAddKey,
-            RowDateUpdateKey
-        >,
-        options?: SettingsLoadModelSql<
-            RowPrimaryKey,
-            RowDateAddKey,
-            RowDateUpdateKey
-        >,
-        includes?: Includes,
-        indexes?:SqlIndexes<
-            Row,
-            RowPrimaryKey,
-            RowDateAddKey,
-            RowDateUpdateKey
-        >
-    ): IModelSql<
-        Row,
-        Includes,
-        RowPrimaryKey,
-        RowDateAddKey,
-        RowDateUpdateKey
-    >
-
+    
+    cashedKey:string
+    
     close(): Promise<void>,
-
-    syncModels(): Promise<void>,
-
+    
+    syncRepositories(): Promise<void>,
+    
     checkConnection(): Promise<void>,
-
+    
     query<Row extends object>(
         value: string,
         options?: {
             replacements?: Record<string, string | number | string[] | number[] | undefined>
         },
     ): Promise<Row[]>,
-
+    
     tableExists(tableName: string): Promise<boolean>,
-
-    getColumnsTable<Row extends object>(tableName: string): Promise<ModelSqlColumns<Row>>,
-
+    
+    getColumnsTable<Entity extends object>(tableName: string): Promise<Record<keyof Entity, EntityColumn>>,
+    
     renameColumn(tableName: string, oldName: string, newName: string): Promise<void>,
-
-    addColumn(tableName: string, columnName: string, column: ModelSqlColumn<any, any>): Promise<void>,
-
-    changeColumn(tableName: string, columnName: string, column: ModelSqlColumn<any, any>): Promise<void>,
-
+    
+    addColumn(tableName: string, columnName: string, column: EntityColumn): Promise<void>,
+    
+    changeColumn(tableName: string, columnName: string, column: EntityColumn): Promise<void>,
+    
     removeColumn(tableName: string, columnName: string): Promise<void>,
-
+    
     dropTable(tableName: string): Promise<void>,
-
-    createTable<Row extends object>(tableName: string, columns: ModelSqlColumns<Row>): Promise<void>,
-
+    
+    createTable<Entity extends object>(tableName: string, columns: Record<keyof Entity, EntityColumn>): Promise<void>,
+    
+    addModelForAssociation(tableName: string, associationModel: ISqlAssociationModel<any>): this
+    
+    sequelize: any
+    
 }
 
 

@@ -10,11 +10,13 @@ import {useRequestsContext} from "@containers/requests/context/hooks/useRequests
 
 interface Props {
     requestsListState: RequestsListState,
+    errorCodes:string[]
 
 }
 
 const DashboardServiceHeadSidebarRequestList = ({
-                                                    requestsListState
+                                                    requestsListState,
+                                                    errorCodes
                                                 }: Props) => {
 
     const {refetchRequests} = useRequestsContext()
@@ -45,6 +47,7 @@ const DashboardServiceHeadSidebarRequestList = ({
             <SelectErrorCodes
                 value={requestsListState.errorCodes}
                 onChange={(value) => onChangeWithResetPage(value, requestsListState.setErrorCodes)}
+                errorCodes={errorCodes}
             />
 
             <SelectErrorStatus

@@ -23,16 +23,19 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 /// <reference types="mongoose/types/inferrawdoctype" />
-import { NoSqlIndexes } from "../../../model";
 import { Connection, Model } from 'mongoose';
+import { NoSqlIndexes } from "../../../repository/core";
+import { Entity } from "../../../entity";
 type MongooseModel<T extends object> = Model<T>;
-export declare class DbConnectionNoSqIndexes {
-    initIndexesMongoose: <Row extends object, RowDateAddKey extends string = "date_add", RowDateUpdateKey extends string = "date_update">({ indexes, model, dbConnection, collectionName, }: {
-        indexes?: NoSqlIndexes<Row, RowDateAddKey, RowDateUpdateKey> | undefined;
-        model: MongooseModel<Row>;
+export declare class DbConnectionNoSqIndexes<ClassEntity extends object> {
+    private readonly entity;
+    constructor(entity: ClassEntity);
+    initIndexesMongoose({ indexes, model, dbConnection, collectionName, }: {
+        indexes: NoSqlIndexes<ClassEntity>;
+        model: MongooseModel<Entity<ClassEntity>>;
         dbConnection: Connection;
         collectionName: string;
-    }) => Promise<void>;
+    }): Promise<void>;
     private getKeyByColumns;
 }
 export {};

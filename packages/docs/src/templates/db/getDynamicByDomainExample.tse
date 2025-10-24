@@ -1,0 +1,8 @@
+import {{{DbConnectionSqlFactory}}} form 'os-core-ts'
+
+async function checkExistsDynamicUsersTable(domain:string):Promise<boolean> {
+	const dbConnectionSql = await {{DbConnectionSqlFactory}}.getDynamicByDomain({
+		domain
+	})
+	return await dbConnectionSql.tableExists('users')
+}

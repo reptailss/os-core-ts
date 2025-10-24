@@ -19,10 +19,10 @@ const _systemRoutes_1 = require("../../../systemRoutes");
 const _validator_1 = require("../../../validator");
 const dateSchema = _validator_1.Validator.date();
 let GetConsoleLogsController = class GetConsoleLogsController {
-    constructor(getConsoleLogsService = new core_1.GetConsoleLogsService()) {
-        this.getConsoleLogsService = getConsoleLogsService;
+    constructor() {
+        this.getConsoleLogsService = new core_1.GetConsoleLogsService();
     }
-    getLogs(dateStart, dateEnd, userInfo) {
+    getLogs(dateStart, dateEnd, userDto) {
         return this.getConsoleLogsService.getLogs({
             dateStart,
             dateEnd,
@@ -31,20 +31,19 @@ let GetConsoleLogsController = class GetConsoleLogsController {
 };
 exports.GetConsoleLogsController = GetConsoleLogsController;
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.GetDec)(_systemRoutes_1.SYSTEM_ROUTES.osLogs.index),
-    __param(0, (0, _decorators_1.QueryParamDec)('date_start', dateSchema)),
-    __param(1, (0, _decorators_1.QueryParamDec)('date_end', dateSchema)),
-    __param(2, _decorators_1.DashboardAccessDec),
+    (0, _decorators_1.Get)(_systemRoutes_1.SYSTEM_ROUTES.osLogs.index),
+    __param(0, (0, _decorators_1.QueryParam)('date_start', dateSchema)),
+    __param(1, (0, _decorators_1.QueryParam)('date_end', dateSchema)),
+    __param(2, (0, _decorators_1.DashboardUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Date,
         Date, Object]),
     __metadata("design:returntype", Promise)
 ], GetConsoleLogsController.prototype, "getLogs", null);
 exports.GetConsoleLogsController = GetConsoleLogsController = __decorate([
-    (0, _decorators_1.ControllerDec)(),
-    __metadata("design:paramtypes", [core_1.GetConsoleLogsService])
+    (0, _decorators_1.Controller)()
 ], GetConsoleLogsController);
 //# sourceMappingURL=GetConsoleLogsController.js.map

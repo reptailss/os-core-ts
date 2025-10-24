@@ -1,7 +1,7 @@
-import { UserInfo } from "..";
-export type PtpCoreUserInfo = UserInfo & {
+import { UserDto } from "..";
+export type PtpCoreUserDto = UserDto & {
     is_admin: boolean;
 };
-export type PtpClientUserInfo = UserInfo & {
+export type PtpClientUserDto = UserDto & {
     is_admin: boolean;
 };

@@ -1,0 +1,113 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "module": "ESNext",
+    "target": "es5",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
+    "downlevelIteration": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": false,
+    "isolatedModules": true,
+    "noEmit": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "resolveJsonModule": true,
+    "declarationDir": "dist/types",
+    "preserveConstEnums": true,
+    "checkJs": false,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@appDocs/*": [
+        "./src/appDocs/*"
+      ],
+
+
+      "@docJson/*": [
+        "./src/docJson/*"
+      ],
+
+      "@docBlocks/*": [
+        "./src/docs/docBlocks/*"
+      ],
+      "@docModule/*": [
+        "./src/docs/docModule/*"
+      ],
+      "@docs/*": [
+        "./src/docs/docs/*"
+      ],
+      "@docPage/*": [
+        "./src/docs/docPage/*"
+      ],
+
+
+      "@appClient/*": [
+        "./src/client/appClient/*"
+      ],
+      "@helpers/*": [
+        "./src/client/helpers/*"
+      ],
+      "@hooks/*": [
+        "./src/client/hooks/*"
+      ],
+      "@layouts/*": [
+        "./src/client/layouts/*"
+      ],
+      "@docsList/*": [
+        "./src/client/containers/docsList/*"
+      ],
+      "@docsSearch/*": [
+        "./src/client/containers/docsSearch/*"
+      ],
+      "@pages/*": [
+        "./src/client/pages/*"
+      ],
+      "@routes/*": [
+        "./src/client/routes/*"
+      ],
+      "@sx": [
+        "./src/client/system/sx/index.ts"
+      ],
+      "@state": [
+        "./src/client/system/state/index.ts"
+      ],
+      "@theme/*": [
+        "./src/client/theme/*"
+      ],
+      "@ui/*": [
+        "./src/client/ui/*"
+      ],
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

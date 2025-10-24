@@ -1,0 +1,15 @@
+import {{{Controller}},{{Get}},{{HeaderDec}},{{Validator}}} from 'os-core-ts'
+@{{Controller}}()
+export class AccountsController {
+	@{{Get}}('/log-keys')
+	public logKeys(
+		@{{HeaderDec}}('token') token: string,
+		@{{HeaderDec}}('api_key', {{Validator}}.string().optional()) apiKey: string | undefined,
+	): boolean {
+		console.log(`user token:${token}`)
+		if (apiKey) {
+			console.log(`api key:${apiKey}`)
+		}
+		return true
+	}
+}

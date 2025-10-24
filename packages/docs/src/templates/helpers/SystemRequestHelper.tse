@@ -1,0 +1,54 @@
+export class SystemRequestHelper {
+    static get<Data>({
+                         url,
+                         headers,
+                         params,
+                         serviceKey,
+                     }: {
+        url: string
+        serviceKey: string
+        headers?: Record<string, string>
+        params?: Params
+    }): Promise<Data>
+
+    static post<Data>({
+                          url,
+                          headers,
+                          body,
+                          params,
+                          serviceKey,
+                      }: {
+        url: string
+        serviceKey: string
+        headers?: Record<string, string>
+        body?: string | FormData
+        params?: Params
+    }): Promise<Data>
+
+    static put<Data>({
+                         url,
+                         headers,
+                         body,
+                         params,
+                         serviceKey,
+                     }: {
+        url: string
+        serviceKey: string
+        headers?: Record<string, string>
+        body?: string | FormData
+        params?: Params
+    }): Promise<Data>
+
+    static delete<Data>({
+                            url,
+                            headers,
+                            params,
+                            serviceKey,
+                        }: {
+        url: string,
+        serviceKey: string,
+        headers?: Record<string, string>;
+        params?: Params
+    }): Promise<Data>
+
+}

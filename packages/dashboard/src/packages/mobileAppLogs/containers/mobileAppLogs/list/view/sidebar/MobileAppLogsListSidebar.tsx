@@ -25,8 +25,8 @@ const MobileAppLogsListSidebar = ({
 								  dateStart,
 								  dateEnd,
 							  }: {
-		dateStart: string,
-		dateEnd: string
+		dateStart: Date,
+		dateEnd: Date
 	}) => {
 		mobileAppLogsListState.setDateStart(dateStart)
 		mobileAppLogsListState.setDateEnd(dateEnd)
@@ -64,10 +64,9 @@ const MobileAppLogsListSidebar = ({
 				initialDateStart={mobileAppLogsListState.dateStart}
 				initialDateEnd={mobileAppLogsListState.dateEnd}
 				onSave={onSaveDate}
-				format={'DD/MM/YYYY'}
 			/>
 			<Typography>
-				Where
+				Where(Натисність пробіл для відображення полів)
 			</Typography>
 			
 			<WhereEditorMobileAppLogs

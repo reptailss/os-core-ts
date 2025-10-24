@@ -3,4 +3,5 @@ export type SwaggerConfig = {
     description?: string;
     hasAuth?: boolean;
     appDir?: string;
+    modulesDir?: string;
 };

@@ -1,0 +1,71 @@
+a:hover, a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+.primary {
+    color: #0894e2;
+    font-weight: 700;
+}
+
+.link {
+    color: #f1455f;
+    transition: all .3s;
+    font-weight: 600;
+
+}
+
+.link:hover {
+    color: #0894e2;
+    cursor: pointer;
+
+}
+
+.example-text {
+    color: #0894e2;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.active-text {
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.link-code {
+    color: #c73860;
+}
+
+* {
+    scroll-padding-top: 35px;
+}
+
+* {
+    scroll-behavior: smooth;
+}
+
+
+*::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 12px;
+
+    background-color: rgba(255, 255, 255, .5);
+    height: 12px;
+}
+
+.blue-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #c0ebfe;
+    border-radius: 4px;
+    width: 8px;
+    height: 77px;
+    padding-right: 5px;
+}
+
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(77, 77, 77, 255);
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: rgba(255, 255, 255, .5);
+}

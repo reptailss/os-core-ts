@@ -9,10 +9,6 @@ type ErrorHandler = {
 };
 export declare class FormDataArgsEndpointsHandler implements IFormDataArgsEndpointsHandler {
     getFormDataEndpointArgs(args: ArgControllerEndpoint[]): Array<AppFileArgControllerEndpoint | AppFilesArgControllerEndpoint> | null;
-    handleFormDataArgs({ fileArgs, res, req, }: {
-        fileArgs: Array<AppFileArgControllerEndpoint | AppFilesArgControllerEndpoint>;
-        req: AppRequest;
-        res: AppResponse;
-    }): Promise<ErrorHandler | null>;
+    handleFormDataArgs(fileArgs: Array<AppFileArgControllerEndpoint | AppFilesArgControllerEndpoint>, req: AppRequest, res: AppResponse): Promise<ErrorHandler | null>;
 }
 export {};

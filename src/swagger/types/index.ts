@@ -58,12 +58,15 @@ export type ParameterSwagger = {
     $ref?: string
     schema?: {
         $ref?: string
+        allOf?: ParameterSwagger[]
     },
     properties?: PropertiesParameterSwagger
     allOf?: ParameterSwagger[]
     anyOf?: ParameterSwagger[]
     description?: string
 }
+
+
 
 export type PropertiesParameterSwagger = Record<string, ParameterSwagger>
 

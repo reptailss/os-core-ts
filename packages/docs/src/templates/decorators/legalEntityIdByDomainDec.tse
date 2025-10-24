@@ -1,0 +1,15 @@
+import {{{Controller}}, {{Get}}, {{LegalEntityIdByDomainDec}}} from 'os-core-ts'
+
+@{{Controller}}()
+export class UserController {
+	@{{Get}}('/get-le-id-by-domain')
+	public getUserName(
+		@{{LegalEntityIdByDomainDec}} leId: number,
+	): {
+		legal_entity_id: number
+	} {
+		return {
+			legal_entity_id: leId,
+		}
+	}
+}

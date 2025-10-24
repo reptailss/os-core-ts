@@ -5,12 +5,10 @@ const {resolve} = require('path')
 
 
 const gSwagger = `ts-node ${resolve(__dirname, 'dist', 'commands', 'gSwagger.js')}`
-const gCrudModule = `ts-node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`
 
 
 const commands = {
     'g-swagger': gSwagger,
-    'g-crud': gCrudModule,
 }
 
 const args = process.argv.slice(2)

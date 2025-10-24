@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { SchemaValidator } from "..";
+import { SchemaValidator, SchemaValidatorRefineEffect } from "..";
 import { ArrayValidator, SafeParseResultZodValidator, SchemaValidatorType, ValidateResult, ZodValidatorImp } from "../core";
 import { ZodArray } from 'zod/lib/types';
-export declare class ArrayValidatorIml<T extends SchemaValidator> extends ZodValidatorImp<T['_value'][], ZodArray<any>> implements ArrayValidator<T> {
+export declare class ArrayValidatorIml<T extends SchemaValidator | SchemaValidatorRefineEffect> extends ZodValidatorImp<T['_value'][], ZodArray<any>> implements ArrayValidator<T> {
     readonly _value: T['_value'][];
     private hasParseJsonIfString;
     constructor(schema: T);

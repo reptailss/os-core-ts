@@ -1,0 +1,14 @@
+import {{{Controller}}, {{Get}}, {{DomainDec}}} from 'os-core-ts'
+@{{Controller}}()
+export class DomainController {
+	@{{Get}}('/get-domain')
+	public getDomain(
+		@{{DomainDec}} domain: string
+	): {
+		domain: string
+	} {
+		return {
+			domain,
+		}
+	}
+}

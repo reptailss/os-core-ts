@@ -1,38 +1,38 @@
 import { IDbConnectionSql, ISqlMigrations } from "../../..";
-import { ModelSqlColumn, ModelSqlColumns } from "../../../../model";
-import { SqIndex } from "../../../../model/core";
+import { EntityColumn } from "../../../../entity";
+import { SqIndex } from "../../../../repository/core";
 export declare class SqlMigrations implements ISqlMigrations {
     private readonly dbConnection;
     private readonly tableName;
     constructor(dbConnection: IDbConnectionSql, tableName: string);
     renameColumn(oldColumnName: string, newColumnName: string): Promise<void>;
-    addColumns<Row extends object>(columns: ModelSqlColumns<Row>): Promise<void>;
+    addColumns<Entity extends object>(columns: Record<keyof Entity, EntityColumn>): Promise<void>;
     removeColumns<Row extends object>(columns: (keyof Row)[]): Promise<void>;
-    updateColumn(columnName: string, column: ModelSqlColumn<unknown, unknown>): Promise<void>;
-    getColumns<Row extends object>(): Promise<ModelSqlColumns<Row>>;
+    updateColumn(columnName: string, column: EntityColumn): Promise<void>;
+    getColumns<Entity extends object>(): Promise<Record<keyof Entity, EntityColumn>>;
     getTableName(): string;
     deleteAssociation({ tableName, referenceColumnKey, }: {
         tableName: string;
         referenceColumnKey: string;
     }): Promise<void>;
-    addAssociationBelongsTo<ReferenceRow extends object>({ tableName: referencedTable, referenceColumnKey, referencedColumnPrimaryKey, }: {
+    addAssociationBelongsTo<ReferenceEntity extends object>({ tableName: referencedTable, referenceColumnKey, referencedColumnPrimaryNumberKey, }: {
         tableName: string;
-        referenceColumnKey: keyof ReferenceRow;
-        referencedColumnPrimaryKey?: string;
+        referenceColumnKey: keyof ReferenceEntity;
+        referencedColumnPrimaryNumberKey?: string;
     }): Promise<void>;
-    addAssociationHasOne<ReferenceRow extends object>({ tableName: referencedTable, referenceColumnKey, onDelete, referencedColumnPrimaryKey, }: {
+    addAssociationHasOne<ReferenceEntity extends object>({ tableName: referencedTable, referenceColumnKey, onDelete, referencedColumnPrimaryNumberKey, }: {
         tableName: string;
-        referenceColumnKey: keyof ReferenceRow;
+        referenceColumnKey: keyof ReferenceEntity;
         onDelete?: 'RESTRICT' | 'SET NULL' | 'CASCADE';
-        referencedColumnPrimaryKey?: string;
+        referencedColumnPrimaryNumberKey?: string;
     }): Promise<void>;
-    addAssociationHasMany<ReferenceRow extends object>({ tableName: childTable, referenceColumnKey, onDelete, referencedColumnPrimaryKey, }: {
+    addAssociationHasMany<ReferenceEntity extends object>({ tableName: childTable, referenceColumnKey, onDelete, referencedColumnPrimaryNumberKey, }: {
         tableName: string;
-        referenceColumnKey: keyof ReferenceRow;
+        referenceColumnKey: keyof ReferenceEntity;
         onDelete?: 'RESTRICT' | 'SET NULL' | 'CASCADE';
-        referencedColumnPrimaryKey?: string;
+        referencedColumnPrimaryNumberKey?: string;
     }): Promise<void>;
     deleteIndex(indexName: string): Promise<void>;
-    addIndex<Row extends object>(index: SqIndex<Row>): Promise<void>;
+    addIndex<Entity extends object>(index: SqIndex<Entity>): Promise<void>;
     private ensureTablesExist;
 }

@@ -1,0 +1,16 @@
+import {{{Controller}},{{Get}},{{AppModule}}} from 'os-core-ts'
+@{{Controller}}()
+class UserController {
+    
+    @{{Get}}('/count')
+    public getUsersCount():number{
+        return 10
+    }
+}
+
+export const userAppModule = new {{AppModule}}({
+    controllers:[UserController],
+    swaggerInfo:{
+        tag:'Users'
+    }
+})

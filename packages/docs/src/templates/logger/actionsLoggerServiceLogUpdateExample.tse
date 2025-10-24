@@ -1,0 +1,52 @@
+import {{{ActionsLoggerService}}, {{AuthDec}}, {{Controller}}, {{ParamDec}}, {{Put}}, {{UserInfo}}, {{AppError}}} from 'os-core-ts'
+
+
+type User = {
+	name: string
+	id: number
+}
+let users: User[] = []
+
+@{{Controller}}()
+export class UsersController {
+
+	constructor(private readonly actionsLoggerService = new {{ActionsLoggerService}}()) {
+	}
+
+	@{{Put}}('/update/:user_id/:user_name')
+	public async updateUser(
+		@{{AuthDec}} userInfo: {{UserInfo}},
+		@{{ParamDec}}('user_name') userName: string,
+		@{{ParamDec}}('user_id') userId: number,
+	): Promise<User> {
+
+		const oldUser = users.find((user) => user.id === userId)
+		if (!oldUser) {
+			throw new {{AppError}}('User not found', {
+				errorKey: 'NOT_FOUND_ERROR',
+			})
+		}
+		const newUser: User = {
+			name: userName,
+			id: userId,
+		}
+
+		users = users.map((user)=>user.id === userId ? newUser : user)
+
+		await this.actionsLoggerService.logUpdateAction({
+			oldValue: oldUser,
+			newValue:newUser,
+			rowId: newUser.id,
+			openUserId: userInfo.open_user_id,
+			config: {
+				tableName: 'users',
+				dbType: 'mysql',
+				database: 'socium',
+			},
+		})
+
+		return newUser
+	}
+
+
+}

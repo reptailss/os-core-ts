@@ -1,0 +1,13 @@
+import {{{Controller}},{{Get}},{{HeaderOptionalDec}}} from 'os-core-ts'
+@{{Controller}}()
+export class UsersController {
+	@Get('/check-user')
+	public checkUser(
+		@{{HeaderOptionalDec}}('token') token: string | undefined,
+	): boolean {
+		if (!token) {
+			return 'not found token'
+		}
+		return true
+	}
+}

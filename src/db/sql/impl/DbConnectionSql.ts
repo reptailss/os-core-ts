@@ -1,35 +1,52 @@
 import {Sequelize} from 'sequelize'
-import {DbSqlOptions, IDbConnectionSql} from '@db'
-import {ModelSqlColumn, ModelSqlColumns, IModelSql, SettingsLoadModelSql} from '@model'
-import {SqlAssociation, SqlIndexes} from '@model/core'
+import {DbConnectionSqlConfig, IDbConnectionSql, ISqlAssociationModel} from '@db'
 import {AppError} from '@appError'
-import {DbConnectionModelSqlColumnsHelper, ModelSql} from '@db/core'
+import {DbConnectionSqlColumnsHelper} from '@db/core'
 import {appLogger} from '@logger'
+import {EntityColumn} from '@entity'
+import {SqlAssociation} from '@repository/core'
 
 
 export class DbConnectionSql implements IDbConnectionSql {
-    private sequelize: Sequelize
-    private modelsSql: Record<string, IModelSql<any>> = {}
-
-
-    constructor(dbOptions: DbSqlOptions) {
-        this.sequelize = new Sequelize(dbOptions.dbDatabase, dbOptions.dbUsername, dbOptions.dbPassword, {
-            dialect: dbOptions.dialect,
-            host: dbOptions.host,
-            port: dbOptions.port,
-            timezone: dbOptions.timezone,
-            logging: false,
-            dialectOptions: {
-                charset: dbOptions.charset,
-            },
-        })
+    public cashedKey: string
+    public sequelize: Sequelize
+    private associationModels: Record<string, ISqlAssociationModel<any>> = {}
+    
+    
+    constructor(dbOptions: DbConnectionSqlConfig | {
+        storage: string
+        dialect: 'sqlite'
+        logging: boolean
+    }) {
+        if ('storage' in dbOptions) {
+            this.sequelize = new Sequelize({
+                dialect: dbOptions.dialect,
+                logging: false,
+                storage: dbOptions?.storage,
+            })
+            this.cashedKey = 'in-memory'
+        } else {
+            this.sequelize = new Sequelize(dbOptions.dbDatabase, dbOptions.dbUsername, dbOptions.dbPassword, {
+                dialect: dbOptions.dialect,
+                host: dbOptions.host,
+                port: dbOptions.port,
+                timezone: dbOptions.timezone,
+                logging: false,
+                dialectOptions: {
+                    charset: dbOptions.charset,
+                },
+                storage: dbOptions?.storage,
+            })
+            this.cashedKey = dbOptions.dbDatabase
+        }
+        
     }
-
-
+    
+    
     private getQueryInterface() {
         return this.sequelize.getQueryInterface()
     }
-
+    
     public async query<T>(value: string, options: {
         replacements: Record<string, string | number>
     }): Promise<T[]> {
@@ -39,84 +56,35 @@ export class DbConnectionSql implements IDbConnectionSql {
         }
         return res[0] as T[]
     }
-
-    public async syncModels(): Promise<void> {
+    
+    public async syncRepositories(): Promise<void> {
         this.addAssociations()
         await this.sequelize.sync()
-
+        
     }
-
+    
     public async close(): Promise<void> {
         await this.sequelize.close()
     }
-
-    public defineModel<
-        Row extends object,
-        Includes extends Record<string, SqlAssociation<any>> = {},
-        RowPrimaryKey extends string = 'id',
-        RowDateAddKey extends (string | null) = 'date_add',
-        RowDateUpdateKey extends (string | null) = 'date_update',
-    >(
-        tableName: string,
-        columns: ModelSqlColumns<
-            Row,
-            RowPrimaryKey,
-            RowDateAddKey,
-            RowDateUpdateKey
-        >,
-        options?: SettingsLoadModelSql<
-            RowPrimaryKey,
-            RowDateAddKey,
-            RowDateUpdateKey
-        >,
-        includes?: Includes,
-        indexes?:SqlIndexes<
-            Row,
-            RowPrimaryKey,
-            RowDateAddKey,
-            RowDateUpdateKey
-        >
-    ): IModelSql<
-        Row,
-        Includes,
-        RowPrimaryKey,
-        RowDateAddKey,
-        RowDateUpdateKey
-    > {
-        const model = new ModelSql<
-            Row,
-            Includes,
-            RowPrimaryKey,
-            RowDateAddKey,
-            RowDateUpdateKey
-        >(
-            this.sequelize,
-            tableName,
-            columns,
-            options,
-            includes,
-            indexes,
-        )
-        this.modelsSql[tableName] = model as IModelSql<any>
-        return model
-    }
-
+    
     public async tableExists(tableName: string): Promise<boolean> {
         return this.getQueryInterface().tableExists(tableName)
     }
-
-    public async getColumnsTable<Row extends object>(tableName: string): Promise<ModelSqlColumns<Row>> {
+    
+    public async getColumnsTable<Entity extends object>(tableName: string): Promise<
+        Record<keyof Entity, EntityColumn>
+    > {
         const columns = await this.getQueryInterface().describeTable(tableName)
-
-        const newColumns: ModelSqlColumns<any> = {} as ModelSqlColumns<Row>
+        
+        const newColumns: Record<keyof Entity, EntityColumn> = {} as Record<keyof Entity, EntityColumn>
         for (const columnName in columns) {
             const column = columns[columnName]
-            newColumns[columnName] = DbConnectionModelSqlColumnsHelper.transformDescribeSequelizeColumnToBase(column)
+            newColumns[columnName as keyof Entity] = DbConnectionSqlColumnsHelper.transformDescribeSequelizeColumnToEntity(column)
         }
-
+        
         return newColumns
     }
-
+    
     public async renameColumn(
         tableName: string,
         oldName: string,
@@ -124,32 +92,32 @@ export class DbConnectionSql implements IDbConnectionSql {
     ) {
         await this.getQueryInterface().renameColumn(tableName, oldName, newName)
     }
-
+    
     public async addColumn(
         tableName: string,
         columnName: string,
-        column: ModelSqlColumn<any, any>,
+        column: EntityColumn,
     ): Promise<void> {
         await this.getQueryInterface().addColumn(
             tableName,
             columnName,
-            DbConnectionModelSqlColumnsHelper.columnBaseToSequelizeColumn(column),
+            DbConnectionSqlColumnsHelper.entityColumnToSequelizeColumn(column, this.sequelize.getDialect()),
         )
     }
-
+    
     public async removeColumn(tableName: string, columnName: string): Promise<void> {
         await this.getQueryInterface().removeColumn(tableName, columnName)
     }
-
-    public async changeColumn(tableName: string, columnName: string, column: ModelSqlColumn<any, any>): Promise<void> {
-
+    
+    public async changeColumn(tableName: string, columnName: string, column: EntityColumn): Promise<void> {
+        
         await this.getQueryInterface().changeColumn(
             tableName,
             columnName,
-            DbConnectionModelSqlColumnsHelper.columnBaseToSequelizeColumn(column),
+            DbConnectionSqlColumnsHelper.entityColumnToSequelizeColumn(column, this.sequelize.getDialect()),
         )
     }
-
+    
     public async checkConnection(): Promise<void> {
         try {
             await this.sequelize.authenticate()
@@ -160,53 +128,60 @@ export class DbConnectionSql implements IDbConnectionSql {
             })
         }
     }
-
+    
     public async dropTable(tableName: string): Promise<void> {
         const queryInterface = this.getQueryInterface()
         await queryInterface.dropTable(tableName)
     }
-
-    public async createTable<Row extends object>(tableName: string, columns: ModelSqlColumns<Row>): Promise<void> {
+    
+    public async createTable<Entity extends object>(
+        tableName: string,
+        columns: Record<keyof Entity, EntityColumn>,
+    ): Promise<void> {
         await this.getQueryInterface().createTable(
             tableName,
-            DbConnectionModelSqlColumnsHelper.transformBaseColumnToSequelize(columns),
+            DbConnectionSqlColumnsHelper.transformEntityColumnsToSequelize(columns, this.sequelize.getDialect()),
         )
     }
-
+    
+    public addModelForAssociation(tableName: string, associationModel: ISqlAssociationModel<any>) {
+        this.associationModels[tableName] = associationModel
+        return this
+    }
+    
     private addAssociations() {
-        for (const tableName in this.modelsSql) {
-            const model = this.modelsSql[tableName]
-            const includes = model.getIncludes()
+        for (const tableName in this.associationModels) {
+            const repository = this.associationModels[tableName]
+            const includes = repository.getIncludes()
             if (!includes) {
                 continue
             }
             for (const key in includes) {
-                //@ts-ignore
-                const associationIncludeSql: SqlAssociation<any> = model._includes[key] as SqlAssociation<any>
-
-                const referenceModel = this.modelsSql[associationIncludeSql.tableName]
+                const associationIncludeSql: SqlAssociation<any> = repository.getIncludes()[key]
+                
+                const referenceModel = this.associationModels[associationIncludeSql.tableName]
                 if (!referenceModel) {
                     continue
                 }
                 switch (associationIncludeSql.type) {
                     case 'hasOne': {
-                        model.hasOne(referenceModel, {
+                        repository.hasOne(referenceModel, {
                             foreignKey: associationIncludeSql.referenceColumnKey as string,
                             as: key,
-                            onDelete:associationIncludeSql.onDelete || 'RESTRICT'
+                            onDelete: associationIncludeSql.onDelete || 'RESTRICT',
                         })
                         break
                     }
                     case 'hasMany': {
-                        model.hasMany(referenceModel, {
+                        repository.hasMany(referenceModel, {
                             foreignKey: associationIncludeSql.referenceColumnKey as string,
                             as: key,
-                            onDelete:associationIncludeSql.onDelete || 'RESTRICT'
+                            onDelete: associationIncludeSql.onDelete || 'RESTRICT',
                         })
                         break
                     }
                     case 'belongsTo': {
-                        model.belongsTo(referenceModel, {
+                        repository.belongsTo(referenceModel, {
                             foreignKey: associationIncludeSql.referenceColumnKey as string,
                             as: key,
                         })

@@ -1,0 +1,24 @@
+import { {{DiToken}},{{DiLifetime}},{{DiFactory}} } from 'os-core-ts'
+
+type Provider<T = unknown> = {
+    provider: {{DiToken}}<T>
+    lifetime?: {{DiLifetime}}
+    useClass?: any
+    useValue?: any
+    useFactory?: {{DiFactory}}
+} | {{DiToken}}<T>
+
+export class AppModule implements IAppModule {
+    public controllers: {new(...props: any): any}[] = []
+    public swaggerInfo?: {
+        tag?: string
+    }
+    
+    constructor(props: {
+        controllers: {new(...props: any): any}[],
+        swaggerInfo?: {
+            tag?: string
+        },
+        providers?: Provider[]
+    })
+}

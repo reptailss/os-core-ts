@@ -1,0 +1,13 @@
+import { {{AppErrorKey}} } from 'os-core-ts'
+
+export class AppError extends Error{
+    constructor(
+        message: string,
+        props: {
+            statusCode?: number
+            errorCode?: string
+            errorKey?: AppErrorKey
+            errors?: {{ErrorValue}}[]
+        }
+    )
+}

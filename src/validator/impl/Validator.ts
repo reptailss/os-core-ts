@@ -1,4 +1,4 @@
-import {SchemaValidator} from '@validator'
+import {SchemaValidator, SchemaValidatorRefineEffect} from '@validator'
 import {
     ArrayValidator,
     ArrayValidatorIml,
@@ -55,7 +55,7 @@ export class Validator {
         return new EnumValidatorImpl(value)
     }
 
-    static array<Value extends SchemaValidator>(value: Value): ArrayValidator<Value> {
+    static array<Value extends (SchemaValidator | SchemaValidatorRefineEffect)>(value: Value): ArrayValidator<Value> {
         return new ArrayValidatorIml(value)
     }
 

@@ -56,6 +56,13 @@ class RedisDynamicService {
             return false;
         }
     }
+    static async close() {
+        if (!redisClient) {
+            return;
+        }
+        redisClient.disconnect();
+        redisClient = null;
+    }
     static async getRedisDynamicClient() {
         if (!redisClient) {
             const newRedisClient = await this.getNewRedisClient();

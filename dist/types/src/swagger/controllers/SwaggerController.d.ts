@@ -1,7 +1,6 @@
-import { GetSwaggerService, Swagger } from "../core";
+import { Swagger } from "../core";
 export declare class SwaggerController {
     private readonly getSwaggerService;
-    constructor(getSwaggerService?: GetSwaggerService);
     getSwagger(): Promise<Swagger>;
     getClientBundle(): string;
     getClientFavicon(): string;

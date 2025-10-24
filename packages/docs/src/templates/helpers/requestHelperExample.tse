@@ -1,0 +1,10 @@
+async function getNews(): Promise<{
+	name: string
+}[]> {
+	const response = await RequestHelper.get<{
+		news: {name: string}[]
+	}>({
+		url: 'http://news.con/users/save',
+	})
+	return response.news
+}

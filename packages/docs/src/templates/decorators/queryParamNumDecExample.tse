@@ -1,0 +1,17 @@
+import {{{Controller}},{{Get}},{{QueryParamNumDec}},{{Validator}}} from 'os-core-ts'
+@{{Controller}}()
+export class AccountsController {
+	@{{Get}}('/accounts/users/get-info')
+	public getUserInfo(
+		@{{QueryParamNumDec}}('user_id') userId: number,
+		@{{QueryParamNumDec}}('account_id', {{Validator}}.number().optional()) accountId: number | undefined,
+	): {
+	    user_id:number
+	    message:string
+	} {
+		return  {
+		    user_id:userId,
+		    message:`user account id:${accountId || 'unknown'}, user name:${userName}`
+		}
+	}
+}

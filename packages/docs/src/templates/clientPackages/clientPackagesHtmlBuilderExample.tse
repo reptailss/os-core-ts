@@ -1,0 +1,25 @@
+import{{{ClientPackagesHtmlBuilder}}} from 'os-core-ts'
+
+const originalHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OneSoft my-package</title>
+  <link rel="icon" href="/my-package/favicon.ico">
+</head>
+<body>
+  <script src="/my-package/main.js"></script>
+</body>
+</html>
+`
+
+const htmlBuilder = new {{ClientPackagesHtmlBuilder}}({
+  html: originalHtml,
+  packageName: 'my-package',
+})
+
+const finalHtml = htmlBuilder
+  .addServicePrefixToScriptsBundle()
+  .addServiceNameToTitle()
+  .getHtml()

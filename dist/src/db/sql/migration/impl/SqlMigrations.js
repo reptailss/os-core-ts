@@ -142,10 +142,10 @@ class SqlMigrations {
             });
         }
     }
-    async addAssociationBelongsTo({ tableName: referencedTable, referenceColumnKey, referencedColumnPrimaryKey, }) {
-        await this.addAssociationHasOne({ tableName: referencedTable, referenceColumnKey, referencedColumnPrimaryKey });
+    async addAssociationBelongsTo({ tableName: referencedTable, referenceColumnKey, referencedColumnPrimaryNumberKey, }) {
+        await this.addAssociationHasOne({ tableName: referencedTable, referenceColumnKey, referencedColumnPrimaryNumberKey });
     }
-    async addAssociationHasOne({ tableName: referencedTable, referenceColumnKey, onDelete, referencedColumnPrimaryKey = 'id', }) {
+    async addAssociationHasOne({ tableName: referencedTable, referenceColumnKey, onDelete, referencedColumnPrimaryNumberKey = 'id', }) {
         const columnName = referenceColumnKey;
         const constraintName = `fk_${this.tableName}_${referencedTable}_${columnName}`;
         await this.ensureTablesExist(this.tableName, referencedTable);
@@ -154,7 +154,7 @@ class SqlMigrations {
             ALTER TABLE \`${this.tableName}\`
                 ADD CONSTRAINT \`${constraintName}\`
                     FOREIGN KEY (\`${columnName}\`)
-                        REFERENCES \`${referencedTable}\` (\`${referencedColumnPrimaryKey}\`)
+                        REFERENCES \`${referencedTable}\` (\`${referencedColumnPrimaryNumberKey}\`)
                 ${onDeleteClause};
         `;
         try {
@@ -167,7 +167,7 @@ class SqlMigrations {
             });
         }
     }
-    async addAssociationHasMany({ tableName: childTable, referenceColumnKey, onDelete, referencedColumnPrimaryKey = 'id', }) {
+    async addAssociationHasMany({ tableName: childTable, referenceColumnKey, onDelete, referencedColumnPrimaryNumberKey = 'id', }) {
         const columnName = referenceColumnKey;
         const constraintName = `fk_${childTable}_${this.tableName}_${columnName}`;
         await this.ensureTablesExist(childTable, this.tableName);
@@ -176,7 +176,7 @@ class SqlMigrations {
             ALTER TABLE \`${childTable}\`
                 ADD CONSTRAINT \`${constraintName}\`
                     FOREIGN KEY (\`${columnName}\`)
-                        REFERENCES \`${this.tableName}\` (\`${referencedColumnPrimaryKey}\`)
+                        REFERENCES \`${this.tableName}\` (\`${referencedColumnPrimaryNumberKey}\`)
                 ${onDeleteClause};
         `;
         try {
@@ -216,7 +216,12 @@ class SqlMigrations {
         }).join(', ');
         try {
             await this.dbConnection.query(`
-                CREATE ${uniqueStr} INDEX \`${indexName}\` ON \`${this.tableName}\` ${usingStr} (${cols});
+                CREATE
+                ${uniqueStr} INDEX \`${indexName}\` ON \`${this.tableName}\`
+                ${usingStr}
+                (
+                ${cols}
+                );
             `);
         }
         catch (error) {

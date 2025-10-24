@@ -1,0 +1,4 @@
+import {AppRequest} from 'os-core-ts'
+export class DomainHelper {
+	static getDomainFromReq(request: AppRequest): string
+}

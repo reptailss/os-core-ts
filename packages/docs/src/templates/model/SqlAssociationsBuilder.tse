@@ -1,0 +1,24 @@
+import {{{SqlAssociationBelongsTo}}, {{SqlAssociationHasMany}}, {{SqlAssociationHasOne}}} from 'os-core-ts'
+
+export class SqlAssociationsBuilder {
+
+    public static belongsTo<
+        ReferenceRow extends object,
+        RootRow extends object
+    >( props: {
+        tableName: string
+        referenceColumnKey: keyof RootRow
+    }): {{SqlAssociationBelongsTo}}<ReferenceRow, RootRow>
+
+    public static hasMany<ReferenceRow extends object>( props: {
+        tableName: string
+        referenceColumnKey: keyof ReferenceRow
+        onDelete?: 'RESTRICT' | 'SET_NULL' | 'CASCADE'
+    }): {{SqlAssociationHasMany}}<ReferenceRow>
+
+    public static hasOne<ReferenceRow extends object>( props: {
+        tableName: string
+        referenceColumnKey: keyof ReferenceRow
+        onDelete?: 'RESTRICT' | 'SET_NULL' | 'CASCADE'
+    }): {{SqlAssociationHasOne}}<ReferenceRow>
+}

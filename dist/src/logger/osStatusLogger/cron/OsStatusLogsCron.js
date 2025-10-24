@@ -6,9 +6,9 @@ const core_1 = require("../../core");
 const _appConfig_1 = require("../../../appConfig");
 const _logger_1 = require("../..");
 class OsStatusLogsCron {
-    constructor(importOsStatusRequestLogsService = new core_1.ImportOsStatusRequestLogsService(), importOsStatusInfoLogsService = new core_1.ImportOsStatusInfoLogsService()) {
-        this.importOsStatusRequestLogsService = importOsStatusRequestLogsService;
-        this.importOsStatusInfoLogsService = importOsStatusInfoLogsService;
+    constructor() {
+        this.importOsStatusRequestLogsService = new core_1.ImportOsStatusRequestLogsService();
+        this.importOsStatusInfoLogsService = new core_1.ImportOsStatusInfoLogsService();
         this.importOsStatusRequestLogsJob = new _cron_1.CronJob({
             cronTime: '*/30 * * * *',
             onTick: async () => {

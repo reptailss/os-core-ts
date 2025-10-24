@@ -64,19 +64,7 @@ type AppConfigOSCore = {
         authServiceUrl: string | null;
         structureAccessServiceUrl: string | null;
         actionsSystemLoggerServiceUrl: string | null;
-        warehouseSettingsServiceUrl: string | null;
-        ordersServiceUrl: string | null;
         osStatusServiceUrl: string | null;
-        structureBmsServiceUrl: string | null;
-        sociumUsersServiceUrl: string | null;
-        bmsUsersServiceUrl: string | null;
-        cashbackProgramServiceUrl: string | null;
-        mobAppSettingsServiceUrl: string | null;
-        paymentMethodsServiceUrl: string | null;
-        warehouseProductsServiceUrl: string | null;
-        ptpUsersServiceUrl: string | null;
-        ptpCoreUsersServiceUrl: string | null;
-        ptpCoreGroupsServiceUrl: string | null;
     };
     awsS3: {
         hasUploadToS3: boolean;

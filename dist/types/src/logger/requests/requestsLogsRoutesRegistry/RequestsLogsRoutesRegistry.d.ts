@@ -1,6 +1,6 @@
-import { Controller } from "../../../controllers";
+import { ControllerMeta } from "../../../controllers";
 export declare class RequestsLogsRoutesRegistry {
-    static addFromControllers(controllers: Controller[]): void;
-    static add(controller: Controller): void;
+    static addFromControllers(controllers: ControllerMeta[]): void;
+    static add(controller: ControllerMeta): void;
     static getRoutePaths(): string[];
 }

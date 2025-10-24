@@ -18,56 +18,55 @@ const core_1 = require("../core");
 const _health_1 = require("..");
 const _systemRoutes_1 = require("../../systemRoutes");
 let HealthController = class HealthController {
-    constructor(osInfoService = new _health_1.OsInfoService(), readinessService = new core_1.ReadinessService()) {
-        this.osInfoService = osInfoService;
-        this.readinessService = readinessService;
+    constructor() {
+        this.osInfoService = new _health_1.OsInfoService();
+        this.readinessService = new core_1.ReadinessService();
     }
-    liveness(user) {
+    liveness(userDto) {
         return {
             status: 'ok',
             code: 200,
         };
     }
-    async osStatus(user) {
+    async osStatus(userDto) {
         return this.osInfoService.getOsInfo();
     }
-    async readiness(user) {
+    async readiness(userDto) {
         return await this.readinessService.getReadiness();
     }
 };
 exports.HealthController = HealthController;
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.GetDec)(_systemRoutes_1.SYSTEM_ROUTES.health.liveness),
-    __param(0, _decorators_1.DashboardAccessDec),
+    (0, _decorators_1.Get)(_systemRoutes_1.SYSTEM_ROUTES.health.liveness),
+    __param(0, (0, _decorators_1.DashboardUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Object)
 ], HealthController.prototype, "liveness", null);
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.GetDec)(_systemRoutes_1.SYSTEM_ROUTES.health.osStatus),
-    __param(0, _decorators_1.DashboardAccessDec),
+    (0, _decorators_1.Get)(_systemRoutes_1.SYSTEM_ROUTES.health.osStatus),
+    __param(0, (0, _decorators_1.DashboardUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], HealthController.prototype, "osStatus", null);
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.GetDec)(_systemRoutes_1.SYSTEM_ROUTES.health.readiness),
-    __param(0, _decorators_1.DashboardAccessDec),
+    (0, _decorators_1.Get)(_systemRoutes_1.SYSTEM_ROUTES.health.readiness),
+    __param(0, (0, _decorators_1.DashboardUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], HealthController.prototype, "readiness", null);
 exports.HealthController = HealthController = __decorate([
-    (0, _decorators_1.ControllerDec)(),
-    __metadata("design:paramtypes", [Object, Object])
+    (0, _decorators_1.Controller)()
 ], HealthController);
 //# sourceMappingURL=HealthController.js.map

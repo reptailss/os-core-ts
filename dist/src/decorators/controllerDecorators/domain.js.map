@@ -1,0 +1,1 @@
+{"version":3,"file":"domain.js","sourceRoot":"","sources":["../../../../src/decorators/controllerDecorators/domain.ts"],"names":[],"mappings":";;;AAAA,kCAA4E;AAK5E,SAAgB,MAAM;IAClB,OAAO,CAAC,MAAM,EAAE,YAAY,EAAE,eAAe,EAAE,EAAE;QAC7C,kCAA2B,CAAC,cAAc,CAAC;YACvC,MAAM;YACN,YAAY;YACZ,GAAG,EAAE;gBACD,eAAe;gBACf,GAAG,EAAE,QAAQ;aAChB;SACJ,CAAC,CAAA;IACN,CAAC,CAAA;AACL,CAAC;AAXD,wBAWC"}

@@ -1,33 +1,33 @@
-import {ControllerDec, SendFileByPathDec, SendFileDec, SwaggerInfoDec} from '@decorators'
+import {Controller, SendFileByPath, SendFile, SwaggerInfo} from '@decorators'
 import path from 'path'
 import fs from 'fs/promises'
 import {ClientPackagesHtmlBuilder} from '@clientPackages'
 import {SYSTEM_ROUTES} from '@systemRoutes'
 
 
-@ControllerDec()
+@Controller()
 export class DashboardController {
 
-    @SwaggerInfoDec({
+    @SwaggerInfo({
         disable: true,
     })
-    @SendFileByPathDec(SYSTEM_ROUTES.dashboard.bundleJs)
+    @SendFileByPath(SYSTEM_ROUTES.dashboard.bundleJs)
     public getClientBundle(): string {
         return this.getFilePath('main.js')
     }
 
-    @SwaggerInfoDec({
+    @SwaggerInfo({
         disable: true,
     })
-    @SendFileByPathDec(SYSTEM_ROUTES.dashboard.favicon)
+    @SendFileByPath(SYSTEM_ROUTES.dashboard.favicon)
     public getClientFavicon(): string {
         return this.getFilePath('favicon.ico')
     }
 
-    @SwaggerInfoDec({
+    @SwaggerInfo({
         disable: true,
     })
-    @SendFileDec(SYSTEM_ROUTES.dashboard.index)
+    @SendFile(SYSTEM_ROUTES.dashboard.index)
     public async getClientHtml(): Promise<string> {
         const html = await fs.readFile(
             this.getFilePath('index.html'), {

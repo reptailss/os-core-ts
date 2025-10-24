@@ -18,10 +18,10 @@ const _systemRoutes_1 = require("../../../systemRoutes");
 const core_1 = require("../../core");
 const _logger_1 = require("../..");
 let GetRequestsLogsController = class GetRequestsLogsController {
-    constructor(getRequestsLogsService = new core_1.GetRequestsLogsService()) {
-        this.getRequestsLogsService = getRequestsLogsService;
+    constructor() {
+        this.getRequestsLogsService = new core_1.GetRequestsLogsService();
     }
-    async getLogs(userInfo) {
+    async getLogs(userDto) {
         const rows = await this.getRequestsLogsService.getRequestsLogs();
         return {
             rows,
@@ -31,17 +31,16 @@ let GetRequestsLogsController = class GetRequestsLogsController {
 };
 exports.GetRequestsLogsController = GetRequestsLogsController;
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.GetDec)(_systemRoutes_1.SYSTEM_ROUTES.osRequestsInfo.index),
-    __param(0, _decorators_1.DashboardAccessDec),
+    (0, _decorators_1.Get)(_systemRoutes_1.SYSTEM_ROUTES.osRequestsInfo.index),
+    __param(0, (0, _decorators_1.DashboardUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], GetRequestsLogsController.prototype, "getLogs", null);
 exports.GetRequestsLogsController = GetRequestsLogsController = __decorate([
-    (0, _decorators_1.ControllerDec)(),
-    __metadata("design:paramtypes", [core_1.GetRequestsLogsService])
+    (0, _decorators_1.Controller)()
 ], GetRequestsLogsController);
 //# sourceMappingURL=GetRequestsLogsController.js.map

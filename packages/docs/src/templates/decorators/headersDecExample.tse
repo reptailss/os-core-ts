@@ -1,0 +1,15 @@
+import {{{Controller}},{{Get}},{{Validator}}} from 'os-core-ts'
+@{{Controller}}()
+export class UserController {
+
+	@{{Get}}('/get-api-key')
+	public getApiKeys(
+		@{{HeadersDec}}({{Validator}}.object({
+			token: {{Validator}}.string(),
+		})) headers: {
+			token: string
+		},
+	): string {
+		return 'some api key...'
+	}
+}

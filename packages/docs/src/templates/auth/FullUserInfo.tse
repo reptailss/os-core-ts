@@ -1,0 +1,28 @@
+export type FullUserInfo = {
+    id: number
+    name: string
+    nickname: string | null
+    profile: string | null
+    picture: string
+    website: string
+    email: string
+    gender: string
+    birthdate: string
+    locale: string
+    address: string | null
+    parent_id: number
+    referral_code: number
+    given_name: string
+    family_name: string
+    middle_name: string
+    preferred_username: any
+    email_verified: 0 | 1
+    phone_number: string
+    phone_number_verified: 0 | 1
+    updated_at: number
+    use_2fa_auth: number
+    use_2fa_sms: number
+    use_2fa_email: number
+    roles: ('ROLE_DASHBOARD_ADMIN' | 'ROLE_USER' | string)[]
+    sub: string
+}

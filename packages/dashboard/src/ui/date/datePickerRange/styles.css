@@ -16,6 +16,8 @@
 .react-multi-date-picker-custom {
     width: 100% !important;
     border: 1px solid grey;
+    max-width: 700px;
+
 
     & .rmdp-range-hover {
         background-color: #121212;
@@ -26,3 +28,16 @@
     background-color: transparent;
     box-shadow: none;
 }
+
+
+@media(min-width: 1024px) {
+    .react-multi-date-picker-custom .rmdp-top-class{
+        min-height: 310px;
+    }
+    .rmdp-day-picker{
+        gap: 50px;
+    }
+
+}
+
+

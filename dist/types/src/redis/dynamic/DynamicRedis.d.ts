@@ -9,6 +9,7 @@ export declare class RedisDynamicService {
     static deleteMapValue(key: string, fieldKey: string): Promise<number>;
     static getClient(): Promise<Redis>;
     static checkConnection(): Promise<boolean>;
+    static close(): Promise<void>;
     private static getRedisDynamicClient;
     private static getNewRedisClient;
 }

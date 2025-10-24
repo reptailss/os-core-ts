@@ -1,0 +1,127 @@
+export interface IModelSql<
+    Row extends object,
+    Includes extends Record<string, {{SqlAssociation}}> = {}
+> {
+    create(
+        row: Row
+    ): Promise<Row>
+
+    update(
+        row: Partial<Row>,
+        options: {
+            where?:WhereParams<Row>
+            filters?:SqlFilters<Row>
+            returning?:boolean
+        },
+    ): Promise<void | Row>
+
+    updateMany>(
+        row: Partial<Row>,
+        options: {
+                 where?:WhereParams<Row>
+                 filters?:SqlFilters<Row>
+                 returning?:boolean
+             }
+    ):  Promise<void | number>
+
+    destroy(
+        options: {
+                 where?:WhereParams<Row>
+                 filters?:SqlFilters<Row>
+             }
+    ): Promise<number>
+
+
+    count(
+        options: {
+                 where?:WhereParams<Row>
+                 filters?:SqlFilters<Row>
+                 include?:Array<{{SqlAssociationRow}}>>
+                 group?:Array<keyof Row>
+             }
+    ): Promise<number>
+
+
+    findAll(
+        options?: {
+                 where?:WhereParams<Row>
+                 filters?:SqlFilters<Row>
+                 order?:OrderParams<Row>
+                 orderAggregate?:OrderWithAggregate
+                 offset?:number
+                 limit?:number
+                 attributes?:Array<keyof Row>
+                 include?:Array<{{SqlAssociationRow}}>>
+                 aggregates?:Record<string, SqlAggregate<Row>>
+                 group?:Array<keyof Row>
+             }
+    ): Promise<Row[]>
+
+    findOne(
+       options: {
+                  where?:WhereParams<Row>
+                  filters?:SqlFilters<Row>
+                  attributes?:Array<keyof Row>
+                  aggregates?:Record<string, SqlAggregate<Row>>
+              },
+    ): Promise<Row | null>
+
+    findByPk(
+        id: number,
+        options: {
+                  aggregates?:Record<string, SqlAggregate<Row>>
+              },
+        >): Promise<Row | null>
+
+
+    pagination(
+        params?: PaginationQueryParams<Row>,
+        options?: {
+                 where?:WhereParams<Row>
+                 filters?:SqlFilters<Row>
+                 order?:OrderParams<Row>
+                 orderAggregate?:OrderWithAggregate
+                 offset?:number
+                 limit?:number
+                 attributes?:Array<keyof Row>
+                 include?:Array<{{SqlAssociationRow}}>>
+                 aggregates?:Record<string, SqlAggregate<Row>>
+                 group?:Array<keyof Row>
+             }
+    ): Promise<PaginationValues<Row>,
+
+    getConfig(): ConfigModelSql
+
+    hasOne(model: IModelSql<object>, options: {
+        foreignKey: string
+        as: string
+        onDelete?:'RESTRICT' | 'SET_NULL' | 'CASCADE'
+    }): this
+
+    hasMany(model: IModelSql<object>, options: {
+        foreignKey: string
+        as: string
+        onDelete?:'RESTRICT' | 'SET_NULL' | 'CASCADE'
+    }): this
+
+    belongsTo(model: IModelSql<object>, options: {
+        foreignKey: string
+        as: string
+    }): this
+
+    getColumns(): ModelSqlColumns<Row>
+
+    query<Row extends object>(
+        value: string,
+        options?: {
+            replacements?: Record<string, string | number | string[] | number[] | undefined>
+        },
+    ): Promise<Row[]>
+
+    syncModel(): Promise<void>
+
+    saveExtraData(key: string, value: string): this
+
+    getExtraData(key: string): string | null
+
+}

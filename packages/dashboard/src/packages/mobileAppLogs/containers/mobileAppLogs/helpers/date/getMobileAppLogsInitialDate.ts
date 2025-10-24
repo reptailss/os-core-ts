@@ -1,10 +1,9 @@
-export function getMobileAppLogsInitialDate(): { initialDateStart: string, initialDateEnd: string } {
-    const now = new Date();
-    const initialDate = new Date();
-    initialDate.setDate(initialDate.getDate() + 1);
-    const initialDateEnd = initialDate.toLocaleDateString('en-GB');
-    now.setDate(now.getDate() - 1);
-    const initialDateStart = now.toLocaleDateString('en-GB');
-
-    return {initialDateStart, initialDateEnd};
+export function getMobileAppLogsInitialDate(): { initialDateStart: Date, initialDateEnd: Date } {
+	const now = new Date()
+	const initialDate = new Date()
+	initialDate.setDate(initialDate.getDate() + 1)
+	const initialDateEnd = initialDate
+	now.setDate(now.getDate() - 1)
+	
+	return {initialDateStart: new Date(), initialDateEnd}
 }

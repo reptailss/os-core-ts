@@ -1,5 +1,5 @@
 export type OnSaveDatePickerRangeCB = (data: {
-    dateStart: string,
-    dateEnd: string,
+    dateStart: Date
+    dateEnd: Date
     showTime: boolean
 }) => Promise<void>

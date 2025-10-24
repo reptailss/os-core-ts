@@ -1,0 +1,39 @@
+import {{{StructureAccessService}}} from 'os-core-ts'
+async function verifyUserAccess(openUserId: number, legalEntityId: number): Promise<void> {
+    await {{StructureAccessService}}.checkAccess({
+        service: 'documents',
+        endpoint: '/generate-pdf',
+        legalEntityId,
+        openUserId,
+    })
+    console.log(`User ${openUserId} has access to /generate-pdf for legal entity ${legalEntityId}`)
+}
+
+async function verifyPluginAccess(pluginKey: string, legalEntityId: number): Promise<void> {
+    await {{StructureAccessService}}.checkAccessByPluginApiKey({
+        service: 'analytics',
+        endpoint: '/get-insights',
+        legalEntityId,
+        pluginApiKey: pluginKey,
+    })
+    console.log(`Plugin with API key has access to /get-insights for legal entity ${legalEntityId}`)
+}
+
+async function verifyMixedAccess({
+                                     userId,
+                                     pluginKey,
+                                     legalEntityId,
+                                 }: {
+    userId?: number
+    pluginKey?: string
+    legalEntityId: number
+}): Promise<void> {
+    await {{StructureAccessService}}.checkAccessByPluginApiKeyOrUserId({
+        service: 'inventory',
+        endpoint: '/update-stock',
+        legalEntityId,
+        openUserId: userId,
+        pluginApiKey: pluginKey,
+    })
+    console.log(`Access granted to /update-stock for entity ${legalEntityId} via ${userId ? 'user' : 'plugin'}`)
+}

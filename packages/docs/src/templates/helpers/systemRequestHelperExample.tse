@@ -1,0 +1,15 @@
+async function saveUserToApi(userName: string): Promise<boolean> {
+	const {
+		success,
+	} = await {{SystemRequestHelper}}.post<{
+		success: boolean
+	}>({
+		url: 'http://api.con/users/save',
+		serviceKey: 'users',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({name: userName, active: 1}),
+	})
+	return success
+}

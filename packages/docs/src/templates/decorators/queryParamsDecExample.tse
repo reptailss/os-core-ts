@@ -1,0 +1,25 @@
+import {{{SchemaValidator}},{{Validator}},{{Controller}},{{Post}},{{QueryParamsDec}}} from 'os-core-ts'
+type User = {
+	name: string
+	age: number
+	roles: string[]
+}
+
+const schema: {{SchemaValidator}}<User> = {{Validator}}.object({
+	name: {{Validator}}.string(),
+	age: {{Validator}}.number(),
+	roles: {{Validator}}.array({{Validator}}.string()),
+})
+const users: User[] = []
+
+@{{Controller}}()
+export class UserController {
+
+	@{{Post}}('/add')
+	public addUser(
+		@{{QueryParamsDec}}(schema) queryParams: User,
+	): User {
+		users.push(queryParams)
+		return queryParams
+	}
+}

@@ -1,0 +1,9 @@
+import {{{Controller}},{{Get}}} from 'os-core-ts'
+@{{Controller}}()
+class TimeController {
+    
+    @{{Get}}('/get-time')
+    public getTime():string{
+        return new Date().toISOString()
+    }
+}

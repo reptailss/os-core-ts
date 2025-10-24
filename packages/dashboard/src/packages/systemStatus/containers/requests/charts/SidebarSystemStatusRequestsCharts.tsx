@@ -5,15 +5,18 @@ import SystemStatusSidebarRequestList
     from "@packages/systemStatus/containers/requests/sidebar/SystemStatusSidebarRequestList";
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
+import {SystemEndpoint} from "@packages/systemStatus/containers/endpoints/types";
 
 interface Props {
     getRequests: GetSystemStatusRequest,
     requestsListState: RequestsListState,
+    systemEndpoints: SystemEndpoint[],
 }
 
 const SidebarSystemStatusRequestsCharts = ({
                                                getRequests,
                                                requestsListState,
+                                               systemEndpoints,
                                            }: Props) => {
     return (
         <Stack
@@ -22,6 +25,7 @@ const SidebarSystemStatusRequestsCharts = ({
             <SystemStatusSidebarRequestList
                 getRequests={getRequests}
                 requestsListState={requestsListState}
+                systemEndpoints={systemEndpoints}
             />
 
             <Divider

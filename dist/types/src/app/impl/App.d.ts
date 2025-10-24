@@ -7,6 +7,7 @@ import { IRouterBuilder } from "../../routerBuilder";
 import { AppRequest } from "../../appRequest";
 import { AppResponse } from "../../appResponse";
 import { AppRouterRequestHandler } from "../../appRouter";
+import { DiFactory, DiLifetime, DiToken } from "../../di";
 export declare class App implements IApp {
     private readonly expressApp;
     readonly routerBuilder: IRouterBuilder;
@@ -14,6 +15,8 @@ export declare class App implements IApp {
     private readonly appModules;
     private readonly modulesConfig;
     private notFoundAppRouterRequestHandler;
+    private serviceEndpoints;
+    private importStructureServiceEndpoints;
     listen(port?: number, callback?: () => void): http.Server;
     useModule(appModule: IAppModule): this;
     useStatic(dirPath: string): this;
@@ -35,9 +38,13 @@ export declare class App implements IApp {
         defaultLocale: string;
     }): this;
     useNotFoundRoute(appRouterRequestHandler: AppRouterRequestHandler): this;
-    private getServiceEndpointsFromAppModules;
+    overrideProvider<T>(target: DiToken<T>, options?: {
+        lifetime?: DiLifetime;
+        useClass?: any;
+        useValue?: any;
+        useFactory?: DiFactory;
+    }): this;
     private initStatics;
-    private getServiceEndpointsFromAppModule;
     private initAppModule;
     private initSystemAppModule;
 }

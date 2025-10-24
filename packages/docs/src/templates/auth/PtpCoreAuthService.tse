@@ -1,0 +1,7 @@
+import {{{PtpCoreUserInfo}}} from 'os-core-ts'
+export class PtpCoreAuthService {
+    static async checkTokenAndGetUserInfo( props: {
+        token: string
+        roles?: Array<'admin'>
+    }): Promise<{{PtpCoreUserInfo}}>
+}

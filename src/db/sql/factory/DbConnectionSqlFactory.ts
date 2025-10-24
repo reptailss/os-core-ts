@@ -1,71 +1,112 @@
-import {DbSqlOptions, IDbConnectionSql} from '@db'
+import {IDbConnectionSql} from '@db'
+import {
+    DbConnectionSqKeepConnectionAlive,
+    DbConnectionSql,
+    DbConnectionSqlCashManager,
+    LoaderDbConnectionSqlConfigByDomain,
+    LoaderDbConnectionSqlConfigByLeId,
+    LoaderDbConnectionSqlConfigStatic,
+} from '@db/core'
+import {DiContainer} from '@di'
+import {APP_CONFIG_OS_CORE} from '@appConfig'
 import {AppError} from '@appError'
-import {DomainService} from '@domain'
-import {DbConnectionSql, DbConnectionSqlHelper} from '@db/core'
-import {appLogger} from '@logger'
 
-
-const connections: Record<string, IDbConnectionSql> = {}
 
 export class DbConnectionSqlFactory {
-
-	static async getDynamicByDomain(props: {
-		domain: string,
-		optionsDb?: Partial<Omit<DbSqlOptions, 'dbDatabase'>>
-	}): Promise<IDbConnectionSql> {
-
-		const databaseName = await DomainService.getDatabaseNameByDomain(props.domain)
-
-		return this.getDynamicByDatabaseName({
-			databaseName,
-			optionsDb: props.optionsDb,
-		})
-	}
-
-	static getDynamicByDatabaseName(props: {
-		databaseName: string
-		optionsDb?: Partial<Omit<DbSqlOptions, 'dbDatabase'>>
-	}): IDbConnectionSql {
-		try {
-			if (props.databaseName in connections) {
-				return connections[props.databaseName]
-			}
-
-			const targetOptionsDb = DbConnectionSqlHelper.getTargetDynamicDbSqlOptions({
-				options: props.optionsDb,
-				databaseName: props.databaseName,
-			})
-
-			const connection = new DbConnectionSql({
-				...targetOptionsDb,
-				dbDatabase: props.databaseName,
-			})
-
-			DbConnectionSqlHelper.keepConnectionAlive(connection)
-
-			connections[props.databaseName] = connection
-
-			return connection
-		} catch (error) {
-			appLogger.error('os-core:Error connecting to dynamic sequelize database', error)
-			throw new AppError('os-core:Error connecting to dynamic sequelize database', {
-				errorKey: 'CONNECT_TO_DB_ERROR',
-			})
-		}
-	}
-
-	static getStatic(options?: Partial<DbSqlOptions>): IDbConnectionSql {
-		try {
-			const db = new DbConnectionSql(DbConnectionSqlHelper.getTargetStaticDbSqlOptions(options))
-			DbConnectionSqlHelper.keepConnectionAlive(db)
-			return db
-		} catch (error) {
-			appLogger.error('os-core:Error connecting to dynamic database', error)
-			throw new AppError('os-core:Error connecting to dynamic database', {
-				errorKey: 'CONNECT_TO_DB_ERROR',
-			})
-		}
-	}
-
-
+    
+    static async getDynamicByLeId(legalEntityId: number): Promise<IDbConnectionSql> {
+        
+        const configLoader = DiContainer.resolve(LoaderDbConnectionSqlConfigByLeId)
+        
+        const config = await configLoader.getConfig(legalEntityId)
+        
+        const key = 'dbDatabase' in config ? config.dbDatabase : config.cashedKey
+        
+        const dbConnectionFromCash = DbConnectionSqlCashManager.getFromCash(key)
+        
+        if (dbConnectionFromCash) {
+            return dbConnectionFromCash
+        }
+        
+        const connection = new DbConnectionSql(config)
+        
+        DbConnectionSqlCashManager.saveToCash(key, connection)
+        
+        if (config.hasKeepConnectionAlive) {
+            DbConnectionSqKeepConnectionAlive.keepConnectionAlive(connection)
+        }
+        
+        return connection
+    }
+    
+    static async getDynamicByDomain(domain: string): Promise<IDbConnectionSql> {
+        
+        const configLoader = DiContainer.resolve(LoaderDbConnectionSqlConfigByDomain)
+        
+        const config = await configLoader.getConfig(domain)
+        
+        const key = 'dbDatabase' in config ? config.dbDatabase : config.cashedKey
+        
+        const dbConnectionFromCash = DbConnectionSqlCashManager.getFromCash(key)
+        
+        if (dbConnectionFromCash) {
+            return dbConnectionFromCash
+        }
+        
+        const connection = new DbConnectionSql(config)
+        
+        DbConnectionSqlCashManager.saveToCash(key, connection)
+        
+        if (config.hasKeepConnectionAlive) {
+            DbConnectionSqKeepConnectionAlive.keepConnectionAlive(connection)
+        }
+        
+        return connection
+    }
+    
+    static getStatic(): IDbConnectionSql {
+        
+        const configLoader = DiContainer.resolve(LoaderDbConnectionSqlConfigStatic)
+        
+        const config = configLoader.getConfig()
+        
+        const key = 'dbDatabase' in config ? config.dbDatabase : config.cashedKey
+        
+        const dbConnectionFromCash = DbConnectionSqlCashManager.getFromCash(key)
+        
+        if (dbConnectionFromCash) {
+            return dbConnectionFromCash
+        }
+        
+        const connection = new DbConnectionSql(config)
+        
+        if (config.hasKeepConnectionAlive) {
+            DbConnectionSqKeepConnectionAlive.keepConnectionAlive(connection)
+        }
+        
+        DbConnectionSqlCashManager.saveToCash(key, connection)
+        
+        return connection
+    }
+    
+    static getForCheckReadiness(): IDbConnectionSql {
+        if (!APP_CONFIG_OS_CORE.sql.readinessDynamicSqlDatabaseName) {
+            throw new AppError('Not found readiness dynamic sql database name in env')
+        }
+        
+        return new DbConnectionSql({
+            dialect: APP_CONFIG_OS_CORE.sql.dynamicDbDialect,
+            host: APP_CONFIG_OS_CORE.sql.dynamicDbHost,
+            port: APP_CONFIG_OS_CORE.sql.dynamicDbPort,
+            charset: APP_CONFIG_OS_CORE.sql.dynamicDbCharset,
+            dbDatabase: APP_CONFIG_OS_CORE.sql.readinessDynamicSqlDatabaseName,
+            timezone: APP_CONFIG_OS_CORE.sql.dynamicDbTimezone,
+            logging: false,
+            dbUsername: APP_CONFIG_OS_CORE.sql.dynamicDbUsername,
+            dbPassword: APP_CONFIG_OS_CORE.sql.dynamicDbPassword,
+            hasKeepConnectionAlive: false,
+        })
+    }
+    
+    
 }

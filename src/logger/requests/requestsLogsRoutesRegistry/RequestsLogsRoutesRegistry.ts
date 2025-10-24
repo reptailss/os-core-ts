@@ -1,18 +1,18 @@
-import {Controller} from '@controllers'
+import {ControllerMeta} from '@controllers'
 
 const routePaths: string[] = []
 
 export class RequestsLogsRoutesRegistry {
-    static addFromControllers(controllers: Controller[]): void {
+    static addFromControllers(controllers: ControllerMeta[]): void {
        if(!controllers.length){
            return
        }
-       controllers.forEach((controller: Controller) => {
+       controllers.forEach((controller: ControllerMeta) => {
            this.add(controller)
        })
     }
 
-    static add(controller: Controller): void {
+    static add(controller: ControllerMeta): void {
         if (!controller.endpoints?.length) {
             return
         }

@@ -1,0 +1,4 @@
+export class SystemEndpointsHelper {
+
+    public static buildSystemEndpointUrl(url: string):string
+}

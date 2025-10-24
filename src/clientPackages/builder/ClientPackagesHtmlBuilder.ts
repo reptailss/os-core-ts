@@ -16,7 +16,9 @@ export class ClientPackagesHtmlBuilder {
     }
     
     public addServicePrefixToScriptsBundle(): this {
-        if (!APP_CONFIG_OS_CORE.servicePrefix) {
+        if (
+            !APP_CONFIG_OS_CORE.servicePrefix
+        ) {
             return this
         }
         this.html = this.html.replace(`src="/${this.packageName}/main.js"`, `src="/${APP_CONFIG_OS_CORE.servicePrefix}/${this.packageName}/main.js"`)
@@ -26,7 +28,9 @@ export class ClientPackagesHtmlBuilder {
     }
     
     public addServicePrefixToWindow(): this {
-        if (!APP_CONFIG_OS_CORE.servicePrefix) {
+        if (
+            !APP_CONFIG_OS_CORE.servicePrefix
+        ) {
             return this
         }
         this.html = this.html.replace(`</body>`, `<script>window._servicePrefix = "${APP_CONFIG_OS_CORE.servicePrefix}"</script></body>`)
@@ -35,7 +39,9 @@ export class ClientPackagesHtmlBuilder {
     }
     
     public addServiceNameToTitle(): this {
-        if (!APP_CONFIG_OS_CORE.serviceKey) {
+        if (
+            !APP_CONFIG_OS_CORE.serviceKey
+        ) {
             return this
         }
         this.html = this.html.replace(`<title>OneSoft ${this.packageName}</title>`, `<title>OneSoft ${APP_CONFIG_OS_CORE.serviceKey} ${this.packageName}</title>`)

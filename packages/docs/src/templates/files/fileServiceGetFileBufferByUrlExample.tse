@@ -1,0 +1,29 @@
+import {{{Controller}}, {{FileHelper}}, {{FileService}}, {{ParamDec}}, {{Post}}} from 'os-core-ts'
+
+
+@{{Controller}}()
+export class FilesController {
+	@{{Post}}('/save-file-form-url/:url')
+	public async saveFileFromUrl(
+		@{{ParamDec}}('url') url: string,
+	): Promise<string> {
+		const {
+			buffer,
+			mimetype,
+			format,
+		} = await {{FileService}}.getFileBufferByUrl(url)
+
+		const {filePath} = await FileService.save({
+			fileName: {{FileHelper}}.getUniqName({
+				format,
+				subPathStart: 'images',
+			}),
+			dirPathLocal: 'files',
+			buffer,
+			mimetype,
+		})
+		return filePath
+	}
+
+
+}

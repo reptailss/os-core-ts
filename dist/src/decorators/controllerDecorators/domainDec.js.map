@@ -1,1 +1,0 @@
-{"version":3,"file":"domainDec.js","sourceRoot":"","sources":["../../../../src/decorators/controllerDecorators/domainDec.ts"],"names":[],"mappings":";;;AAAA,kCAA4E;AAErE,MAAM,SAAS,GAA2B,CAC7C,MAAM,EACN,YAAY,EACZ,eAAe,EACjB,EAAE;IACA,kCAA2B,CAAC,cAAc,CAAC;QACvC,MAAM;QACN,YAAY;QACZ,GAAG,EAAE;YACD,eAAe;YACf,GAAG,EAAE,QAAQ;SAChB;KACJ,CAAC,CAAA;AACN,CAAC,CAAA;AAbY,QAAA,SAAS,aAarB"}

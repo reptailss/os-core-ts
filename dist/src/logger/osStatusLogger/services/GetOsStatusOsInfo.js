@@ -4,8 +4,8 @@ exports.GetOsStatusOsInfoService = void 0;
 const _health_1 = require("../../../health");
 const _appConfig_1 = require("../../../appConfig");
 class GetOsStatusOsInfoService {
-    constructor(osInfoService = new _health_1.OsInfoService()) {
-        this.osInfoService = osInfoService;
+    constructor() {
+        this.osInfoService = new _health_1.OsInfoService();
     }
     async getOsInfo() {
         const osInfo = await this.osInfoService.getOsInfo();

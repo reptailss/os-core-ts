@@ -30,8 +30,8 @@ interface IProps {
     children: ReactElement,
     onClose?: () => void,
     refFeatures?: any,
-    dateStart: string,
-    dateEnd: string,
+    dateStart: Date | null,
+    dateEnd: Date | null,
     anchorEl: HTMLButtonElement | null,
     setAnchorEl: SetStateFn<HTMLButtonElement | null>,
     disabled?: boolean,
@@ -48,7 +48,6 @@ const DatePickerModalWithInput = ({
                                        dateStart,
                                        disabled,
                                        inputFormat,
-                                       format,
                                    }: IProps) => {
 
 
@@ -66,8 +65,8 @@ const DatePickerModalWithInput = ({
         onClose && onClose()
     };
 
-    const currentDateStart = inputFormat ? moment(dateStart, format).format(inputFormat) : dateStart;
-    const currentDateEnd = inputFormat ? moment(dateEnd, format).format(inputFormat) : dateEnd;
+    const currentDateStart = dateStart ?  inputFormat ? moment(dateStart).format(inputFormat) : dateStart : '';
+    const currentDateEnd = dateEnd ? inputFormat ? moment(dateEnd).format(inputFormat) : dateEnd : '';
 
     return (
         <>

@@ -1,0 +1,10 @@
+import {{{Controller}}, {{Get}}, {{SetHeaderDec}}} from 'os-core-ts'
+
+@{{Controller}}()
+export class ClientController {
+    @{{SetHeaderDec}}('Content-type', 'application/javascript')
+    @{{Get}}('/main.js')
+    public getBundle(): string {
+        return '<scrpipt>console.log("init")</scrpipt>'
+    }
+}

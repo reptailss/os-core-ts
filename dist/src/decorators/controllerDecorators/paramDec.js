@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ParamOptionalDec = exports.ParamDec = void 0;
+exports.ParamOptional = exports.Param = void 0;
 const core_1 = require("../core");
-const ParamDec = (key, schema) => {
+const Param = (key, schema) => {
     return function (target, _propertyKey, _parameterIndex) {
         core_1.ControllerDecoratorsBuilder.addArgToMethod({
             target,
@@ -17,8 +17,8 @@ const ParamDec = (key, schema) => {
         });
     };
 };
-exports.ParamDec = ParamDec;
-const ParamOptionalDec = (key, schema) => {
+exports.Param = Param;
+const ParamOptional = (key, schema) => {
     return function (target, _propertyKey, _parameterIndex) {
         core_1.ControllerDecoratorsBuilder.addArgToMethod({
             target,
@@ -33,5 +33,5 @@ const ParamOptionalDec = (key, schema) => {
         });
     };
 };
-exports.ParamOptionalDec = ParamOptionalDec;
+exports.ParamOptional = ParamOptional;
 //# sourceMappingURL=paramDec.js.map

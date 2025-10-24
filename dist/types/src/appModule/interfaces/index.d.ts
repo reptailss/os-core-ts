@@ -1,8 +1,16 @@
-import { Controller } from "../../controllers";
+import { DiFactory, DiLifetime, DiProviderRecord, DiToken } from "../../di";
 export interface IAppModule {
-    controllers: Controller[];
-    appModules: IAppModule[];
+    controllers: {
+        new (...props: any): any;
+    }[];
     swaggerInfo?: SwaggerInfoAppModule;
+    overrideProvider<T>(target: DiToken<T>, options: {
+        lifetime?: DiLifetime;
+        useClass?: any;
+        useValue?: any;
+        useFactory?: DiFactory;
+    }): this;
+    getProviders(): Map<DiToken, DiProviderRecord> | null;
 }
 export type SwaggerInfoAppModule = {
     tag?: string;

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>OneSoft dashboard</title>
+    <link rel="icon" href="/dashboard/favicon.ico">
+    <script defer="defer" src="/dashboard/main.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>

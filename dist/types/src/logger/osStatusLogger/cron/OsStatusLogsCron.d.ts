@@ -1,10 +1,9 @@
-import { ImportOsStatusInfoLogsService, ImportOsStatusRequestLogsService } from "../../core";
 export declare class OsStatusLogsCron {
+    private readonly importOsStatusRequestLogsJob;
+    private readonly importOsStatusInfoLogsJob;
     private readonly importOsStatusRequestLogsService;
     private readonly importOsStatusInfoLogsService;
-    private importOsStatusRequestLogsJob;
-    private importOsStatusInfoLogsJob;
-    constructor(importOsStatusRequestLogsService?: ImportOsStatusRequestLogsService, importOsStatusInfoLogsService?: ImportOsStatusInfoLogsService);
+    constructor();
     start(): void;
     stop(): void;
 }

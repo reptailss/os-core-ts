@@ -19,5 +19,6 @@ __exportStar(require("./types/args"), exports);
 __exportStar(require("./endpointsArgs/interfaces"), exports);
 __exportStar(require("./helper/ControllersHelper"), exports);
 __exportStar(require("./endpointsArgs/impl/FormDataArgsEndpointsHandler"), exports);
+__exportStar(require("./endpointsArgs/impl/ArgResolver"), exports);
 __exportStar(require("./endpointsArgs/impl/ArgEndpointsHandler"), exports);
 //# sourceMappingURL=index.js.map

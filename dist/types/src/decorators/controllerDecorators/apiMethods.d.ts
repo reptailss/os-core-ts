@@ -1,14 +1,14 @@
-export declare function PostDec(path: string): (target: any, propertyKey: string) => void;
-export declare function PutDec(path: string): (target: any, propertyKey: string) => void;
-export declare function GetDec(path: string): (target: any, propertyKey: string) => void;
-export declare function DeleteDec(path: string): (target: any, propertyKey: string) => void;
-export declare function SystemPostDec(path: string): (target: any, propertyKey: string) => void;
-export declare function SystemPutDec(path: string): (target: any, propertyKey: string) => void;
-export declare function SystemGetDec(path: string): (target: any, propertyKey: string) => void;
-export declare function SystemDeleteDec(path: string): (target: any, propertyKey: string) => void;
-export declare function SendFileByPathDec(path: string, options?: {
+export declare function Post(path: string): (target: any, propertyKey: string) => void;
+export declare function Put(path: string): (target: any, propertyKey: string) => void;
+export declare function Get(path: string): (target: any, propertyKey: string) => void;
+export declare function Delete(path: string): (target: any, propertyKey: string) => void;
+export declare function SystemPost(path: string): (target: any, propertyKey: string) => void;
+export declare function SystemPut(path: string): (target: any, propertyKey: string) => void;
+export declare function SystemGet(path: string): (target: any, propertyKey: string) => void;
+export declare function SystemDelete(path: string): (target: any, propertyKey: string) => void;
+export declare function SendFileByPath(path: string, options?: {
     root?: string;
 }): (target: any, propertyKey: string) => void;
-export declare function SendFileDec(path: string, options?: {
+export declare function SendFile(path: string, options?: {
     root?: string;
 }): (target: any, propertyKey: string) => void;

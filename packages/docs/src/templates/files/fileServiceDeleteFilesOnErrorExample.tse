@@ -1,0 +1,44 @@
+import {{{AppError}}, {{AppFile}}, {{AppFileDec}}, {{Controller}}, {{FileHelper}}, {{FileService}}, {{Post}}} from 'os-core-ts'
+
+const images: string[] = []
+
+@{{Controller}}()
+export class FilesController {
+	@Post('/save-file')
+	public async saveFile(
+		@AppFileDec({
+			fileKey: 'image',
+			required: true,
+		}) appFile: {{AppFile}},
+	): Promise<string> {
+
+		const {filePath} = await {{FileService}}.save({
+			fileName: {{FileHelper}}.getUniqName({
+				originalName: appFile.originalname,
+				subPathStart: 'images',
+			}),
+			dirPathLocal: 'files',
+			buffer: appFile.buffer,
+			mimetype: appFile.mimetype,
+		})
+
+		return {{FileService}}.deleteFilesOnError({
+			cb: async () => {
+				return this.saveImageFileUrl(filePath)
+			},
+			filePaths: [filePath],
+		})
+	}
+
+	private async saveImageFileUrl(filePath: string): Promise<string> {
+		if (filePath.length > 50) {
+			throw new {{AppError}}('Error save..', {
+				errorKey: 'SERVER_SIDE_ERROR',
+			})
+		}
+		images.push(filePath)
+		return filePath
+	}
+
+
+}

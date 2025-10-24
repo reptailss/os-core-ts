@@ -3,35 +3,35 @@ import {ReadinessInfo, ReadinessStatus} from '@health'
 import {DbConnectionSqlFactory} from '@db'
 import {RedisDynamicService, RedisStaticService} from '@redis'
 import {FileService} from '@files'
-
+import {appLogger} from '@logger'
 
 
 export class ReadinessService {
-
+    
     public async getReadiness(): Promise<{
         code: 200 | 500
         status: 'ok' | 'bad'
         info: ReadinessInfo
     }> {
-
-        let readinessDto: ReadinessInfo = {}
-
+        
+        let readinessInfo: ReadinessInfo = {}
+        
         if (APP_CONFIG_OS_CORE.sql.hasSql) {
-            readinessDto.mysql = await this.checkSqlDbReadiness()
+            readinessInfo.mysql = await this.checkSqlDbReadiness()
         }
         if (APP_CONFIG_OS_CORE.redis.hasRedis) {
             const res = await this.checkRedisReadiness()
-            readinessDto = {
-                ...readinessDto,
+            readinessInfo = {
+                ...readinessInfo,
                 ...res,
             }
         }
         if (APP_CONFIG_OS_CORE.noSql.hasNoSql) {
-            readinessDto.mongo_db = 'success'
+            readinessInfo.mongo_db = 'success'
         }
-
+        
         if (APP_CONFIG_OS_CORE.awsS3.hasUploadToS3) {
-            readinessDto.aws = await this.checkAwsS3()
+            readinessInfo.aws = await this.checkAwsS3()
         }
         const response: {
             code: 200 | 500
@@ -40,11 +40,11 @@ export class ReadinessService {
         } = {
             status: 'ok',
             code: 200,
-            info: readinessDto,
+            info: readinessInfo,
         }
-
-        for (const key in readinessDto) {
-            const status = readinessDto[key as keyof ReadinessInfo]
+        
+        for (const key in readinessInfo) {
+            const status = readinessInfo[key as keyof ReadinessInfo]
             if (status === 'error') {
                 response.status = 'bad'
                 response.code = 500
@@ -53,42 +53,42 @@ export class ReadinessService {
         }
         return response
     }
-
-
+    
+    
     private async checkSqlDbReadiness(): Promise<ReadinessStatus> {
-
+        
         if (APP_CONFIG_OS_CORE.sql.sqlDbType === 'mix') {
             const dynamicDb = await this.checkDynamicDbSql()
             const staticDb = await this.checkStaticDbSql()
             return dynamicDb === 'success' && staticDb === 'success' ? 'success' : 'error'
         }
-
+        
         if (APP_CONFIG_OS_CORE.sql.sqlDbType === 'static') {
             return await this.checkStaticDbSql()
         }
-
+        
         if (APP_CONFIG_OS_CORE.sql.sqlDbType === 'dynamic') {
             return await this.checkDynamicDbSql()
         }
-
+        
         return 'success'
     };
-
-    private async checkDynamicDbSql(databaseName?: string): Promise<ReadinessStatus> {
+    
+    private async checkDynamicDbSql(): Promise<ReadinessStatus> {
+        if (!APP_CONFIG_OS_CORE.sql.readinessDynamicSqlDatabaseName) {
+            appLogger.error('Not found readiness dynamic sql database name in env')
+            return 'error'
+        }
         try {
-            const connection = DbConnectionSqlFactory.getDynamicByDatabaseName({
-                databaseName: databaseName || APP_CONFIG_OS_CORE.sql.readinessDynamicSqlDatabaseName,
-            })
-            if (!connection) {
-                return 'error'
-            }
+            const connection = DbConnectionSqlFactory.getForCheckReadiness()
             await connection.checkConnection()
+            await connection.close()
             return 'success'
         } catch (e) {
             return 'error'
         }
     }
-
+    
     private async checkStaticDbSql(): Promise<ReadinessStatus> {
         try {
             const dbConnection = DbConnectionSqlFactory.getStatic()
@@ -98,8 +98,8 @@ export class ReadinessService {
             return 'error'
         }
     }
-
-
+    
+    
     private async checkRedisReadiness(): Promise<{
         redis_db?: ReadinessStatus,
         redis?: ReadinessStatus,
@@ -108,17 +108,17 @@ export class ReadinessService {
             redis_db?: ReadinessStatus,
             redis?: ReadinessStatus,
         } = {}
-
+        
         if (APP_CONFIG_OS_CORE.redis.redisType === 'static' || APP_CONFIG_OS_CORE.redis.redisType === 'mix') {
             res.redis_db = await this.checkRedisStaticReadiness()
         }
         if (APP_CONFIG_OS_CORE.redis.redisType === 'dynamic' || APP_CONFIG_OS_CORE.redis.redisType === 'mix') {
             res.redis_db = await this.checkRedisDynamicReadiness()
         }
-
+        
         return res
     }
-
+    
     private async checkRedisDynamicReadiness(): Promise<ReadinessStatus> {
         try {
             const hasConnection = await RedisDynamicService.checkConnection()
@@ -130,7 +130,7 @@ export class ReadinessService {
             return 'error'
         }
     };
-
+    
     private async checkRedisStaticReadiness(): Promise<ReadinessStatus> {
         try {
             const hasConnection = await RedisStaticService.checkConnection()
@@ -142,11 +142,11 @@ export class ReadinessService {
             return 'error'
         }
     };
-
+    
     private async checkAwsS3(): Promise<ReadinessStatus> {
         try {
             const hasConnection = await FileService.checkAwsS3()
-
+            
             if (!hasConnection) {
                 return 'error'
             }
@@ -155,6 +155,6 @@ export class ReadinessService {
             return 'error'
         }
     }
-
-
+    
+    
 }

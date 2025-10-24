@@ -97,7 +97,7 @@ export function groupByEndpointAndDays(requests: TransformServerMeta[]): Grouped
     return {
         groupedRequests,
         grandTotal,
-        overallAverageResponseTime, // Загальний середній час
+        overallAverageResponseTime,
         allDays,
     };
 }

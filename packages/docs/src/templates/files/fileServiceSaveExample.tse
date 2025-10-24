@@ -1,0 +1,25 @@
+import {{{AppFile}}, {{AppFileDec}}, {{Controller}}, {{FileService}}, {{Post}},{{FileHelper}}} from 'os-core-ts'
+
+
+@{{Controller}}()
+export class FilesController {
+	@{{Post}}('/save')
+	public async saveFile(
+		@{{AppFileDec}}({
+			fileKey: 'image',
+			required: true,
+		}) appFile: {{AppFile}},
+	): Promise<string> {
+		const {filePath} = await {{FileService}}.save({
+			fileName: {{FileHelper}}.getUniqName({
+				originalName:appFile.originalname,
+				subPathStart:'images',
+			}),
+			dirPathLocal:'files',
+			buffer: appFile.buffer,
+			mimetype: appFile.mimetype,
+		})
+		return filePath
+	}
+
+}

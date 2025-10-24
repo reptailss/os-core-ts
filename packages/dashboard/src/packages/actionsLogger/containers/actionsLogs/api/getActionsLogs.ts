@@ -5,12 +5,8 @@ import {ActionsLogsResponse, GetActionsLogsParams} from "@packages/actionsLogger
 import {
     buildActionsLogsFilters
 } from "@packages/actionsLogger/containers/actionsLogs/api/helpers/buildActionsLogsFilters";
+import moment from 'moment';
 
-
-function transformDateFormat(dateStr: string): string {
-    const [day, month, year] = dateStr.split('/');
-    return `${year}-${month}-${day}`
-}
 
 export const getActionsLogsApi = async ({
                                          dateStart,
@@ -29,8 +25,8 @@ export const getActionsLogsApi = async ({
                                      }: GetActionsLogsParams): Promise<ActionsLogsResponse> => {
     return await apiRequestWithAuth<ActionsLogsResponse>({
         url: `${getRootApiUrl()}system-logs/list?` + serialize({
-            date_start: transformDateFormat(dateStart),
-            date_end: transformDateFormat(dateEnd),
+            date_start: moment(dateStart).format('YYYY-MM-DD'),
+            date_end: moment(dateEnd).format('YYYY-MM-DD'),
             page,
             per_page: perPage,
             order: {

@@ -35,9 +35,9 @@ const DEFAULT_ARGS_BUILD_SWAGGER = {
     constAsEnum: false,
 };
 class SwaggerTSBuilder {
-    constructor(swaggerConfigBuilder = new core_1.SwaggerConfigBuilder(), swaggerTSControllersBuilder = new core_1.SwaggerTSControllersBuilder()) {
-        this.swaggerConfigBuilder = swaggerConfigBuilder;
-        this.swaggerTSControllersBuilder = swaggerTSControllersBuilder;
+    constructor() {
+        this.swaggerConfigBuilder = new core_1.SwaggerConfigBuilder();
+        this.swaggerTSControllersBuilder = new core_1.SwaggerTSControllersBuilder();
         this.saveToFile = (res) => {
             const { filePath, dirPath } = core_1.SwaggerHelper.getTSSchemaPaths();
             if (!fs_1.default.existsSync(dirPath)) {
@@ -54,7 +54,7 @@ class SwaggerTSBuilder {
         const swaggerConfig = await this.swaggerConfigBuilder.getOrCreateSwaggerConfig();
         this.swaggerConfig = swaggerConfig;
         this.swaggerConfigBuilder.saveToBuildFile(swaggerConfig);
-        this.swaggerTSControllersBuilder.buildAndSaveToFile(swaggerConfig === null || swaggerConfig === void 0 ? void 0 : swaggerConfig.appDir);
+        this.swaggerTSControllersBuilder.buildAndSaveToFile(swaggerConfig === null || swaggerConfig === void 0 ? void 0 : swaggerConfig.appDir, swaggerConfig === null || swaggerConfig === void 0 ? void 0 : swaggerConfig.modulesDir);
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 this.buildAndSaveSchema(swaggerConfig === null || swaggerConfig === void 0 ? void 0 : swaggerConfig.appDir);

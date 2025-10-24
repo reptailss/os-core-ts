@@ -1,0 +1,5 @@
+class AppLogger {
+    public error(...args: any[]): void
+
+    public info(...args: any[]): void
+}

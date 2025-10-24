@@ -1,1 +1,1 @@
-export * from './services/ImportStructureServiceEndpointsByAppModulesService'
+export  * from './services/ImportStructureServices'

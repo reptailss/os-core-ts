@@ -25,5 +25,4 @@ export declare class BuildResponseFormat {
         errors?: ErrorValue[];
         problemData?: T[];
     }): ImportResult<T>;
-    static custom<T>(data: T): T;
 }

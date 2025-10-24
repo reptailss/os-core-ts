@@ -1,0 +1,19 @@
+export class RedisStaticService {
+    static async deleteValue(key: string): Promise<number>
+
+    static async getValue(key: string): Promise<string | null>
+
+    static async setValue(key: string, value: string): Promise<void>
+
+    static async getMapValue(key: string): Promise<Record<string, string> | {}>
+
+    static async setMapValue(key: string, value: Record<string, string>): Promise<void>
+
+    static async getMapValueByFieldKey(key: string, fieldKey: string): Promise<string | null>
+
+    static async deleteMapValue(key: string, fieldKey: string): Promise<number>
+
+    static async getClient(): Promise<Redis>
+
+    static async checkConnection(): Promise<boolean>
+}

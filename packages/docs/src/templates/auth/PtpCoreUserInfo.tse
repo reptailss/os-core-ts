@@ -1,0 +1,5 @@
+import {{{UserInfo}}} from 'os-core-ts'
+
+export type PtpCoreUserInfo = {{UserInfo}} & {
+    is_admin: boolean
+}

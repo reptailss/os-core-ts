@@ -4,7 +4,7 @@ export const getTreeEndpoints = (routes: string[]):EndpointNode[]=>{
     const root: EndpointNode[] = [];
 
     for (const route of routes) {
-        const parts = route.split('/').filter((part) => part && !part.startsWith(':'));
+        const parts = route.split('/').filter((part) => !!part);
         let currentLevel = root;
         let fullPath = '';
 

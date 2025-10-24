@@ -1,8 +1,0 @@
-import { GmImport, IGmModuleClassMethodDecorator } from "../../core";
-export declare class GmPostDec implements IGmModuleClassMethodDecorator {
-    private readonly url;
-    constructor(url: string);
-    getDecoratorName(): string;
-    getProps(): string[];
-    getImport(): GmImport;
-}

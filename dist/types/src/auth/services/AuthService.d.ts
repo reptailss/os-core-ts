@@ -1,8 +1,19 @@
-import { FullUserInfo, UserInfo } from "..";
+import { FullUserDto, UserDto } from "..";
 export declare class AuthService {
-    static checkTokenAndGetUserInfo(token: string): Promise<UserInfo>;
-    static checkSystemTokenAndGetUserInfo(token: string): Promise<UserInfo>;
-    static getFullUserInfoByToken(accessToken: string): Promise<FullUserInfo>;
+    static checkTokenAndGetUser(token: string): Promise<UserDto>;
+    static checkSystemTokenAndGetUser(token: string): Promise<UserDto>;
+    static getFullUserByToken(accessToken: string): Promise<FullUserDto>;
+    static systemGetUserByOpenUserId(openUserId: number): Promise<{
+        id: number;
+        family_name: string;
+        given_name: string;
+        middle_name: string | null;
+        email: string | null;
+        birthdate: string | null;
+        picture: string | null;
+        parent_id: number | null;
+        gender: 'male' | 'female' | null;
+    } | null>;
     static introspect(token: string): Promise<{
         userId?: number;
         active: boolean;
@@ -14,4 +25,5 @@ export declare class AuthService {
         scope: string;
         system_token?: 0 | 1;
     }>;
+    private static requestApi;
 }

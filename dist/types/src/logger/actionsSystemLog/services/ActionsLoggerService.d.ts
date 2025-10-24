@@ -1,5 +1,6 @@
 import { DbSystemLogType } from "../../core";
-export declare class ActionsLoggerService {
+import { IActionsLoggerService } from "../..";
+export declare class ActionsLoggerService implements IActionsLoggerService {
     logCreateAction({ value, openUserId, config, rowId, }: {
         value: Record<string, unknown>;
         openUserId: number;

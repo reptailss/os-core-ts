@@ -14,7 +14,6 @@ export interface AppResponse extends http.ServerResponse {
     locals: Record<string, any>;
     responseTime?: number;
 }
-export type SetResponseStatus = (status: number) => void;
 type SendFileOptions = {
     acceptRanges?: boolean | undefined;
     cacheControl?: boolean | undefined;

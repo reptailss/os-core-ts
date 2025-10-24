@@ -1,0 +1,10 @@
+import {{{Controller}}, {{FileService}}, {{Get}}} from 'os-core-ts'
+
+@{{Controller}}()
+export class FilesController {
+	@{{Get}}('/check-s3')
+	public async checkS3(): Promise<boolean> {
+		return await {{FileService}}.checkAwsS3()
+	}
+
+}

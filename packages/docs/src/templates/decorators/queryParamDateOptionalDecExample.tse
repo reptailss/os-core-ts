@@ -1,0 +1,24 @@
+import {{{Controller}},{{Get}},{{QueryParamDateDec}},{{QueryParamDateOptionalDec}}} from 'os-core-ts'
+type Event = {
+	date_start: Date
+	date_end: Date
+}
+
+const events: Event[] = []
+
+@{{Controller}}()
+export class EventsController {
+	@{{Get}}('/get-list')
+	public createEvent(
+		@{{QueryParamDateDec}}('date_start') dateStart: Date,
+		@{{QueryParamDateOptionalDec}}('date_end') dateEnd: Date | undefined,
+	): Event[] {
+
+		return events.filter((event) => {
+			if (dateEnd) {
+				return event.date_start > dateStart && event.date_end < dateEnd
+			}
+			return event.date_start > dateStart
+		})
+	}
+}

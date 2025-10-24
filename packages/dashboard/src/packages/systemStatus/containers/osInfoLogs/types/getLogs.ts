@@ -1,12 +1,12 @@
 import {SystemOsLog} from "@packages/systemStatus/containers/osInfoLogs/types/index";
 
 export type GetSystemStatusOsLogsProps  = {
-    dateStart: string,
-    dateEnd: string,
+    dateStart: Date
+    dateEnd: Date
     page: number
     perPage: number
-    order: 'asc' | 'desc',
-    orderBy: keyof SystemOsLog,
+    order: 'asc' | 'desc'
+    orderBy: keyof SystemOsLog
     serviceKeys: string[]
 };
 

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SendFileDec = exports.SendFileByPathDec = exports.SystemDeleteDec = exports.SystemGetDec = exports.SystemPutDec = exports.SystemPostDec = exports.DeleteDec = exports.GetDec = exports.PutDec = exports.PostDec = void 0;
+exports.SendFile = exports.SendFileByPath = exports.SystemDelete = exports.SystemGet = exports.SystemPut = exports.SystemPost = exports.Delete = exports.Get = exports.Put = exports.Post = void 0;
 const core_1 = require("../core");
-function PostDec(path) {
+function Post(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -13,8 +13,8 @@ function PostDec(path) {
         });
     };
 }
-exports.PostDec = PostDec;
-function PutDec(path) {
+exports.Post = Post;
+function Put(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -25,8 +25,8 @@ function PutDec(path) {
         });
     };
 }
-exports.PutDec = PutDec;
-function GetDec(path) {
+exports.Put = Put;
+function Get(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -37,8 +37,8 @@ function GetDec(path) {
         });
     };
 }
-exports.GetDec = GetDec;
-function DeleteDec(path) {
+exports.Get = Get;
+function Delete(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -49,8 +49,8 @@ function DeleteDec(path) {
         });
     };
 }
-exports.DeleteDec = DeleteDec;
-function SystemPostDec(path) {
+exports.Delete = Delete;
+function SystemPost(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -61,8 +61,8 @@ function SystemPostDec(path) {
         });
     };
 }
-exports.SystemPostDec = SystemPostDec;
-function SystemPutDec(path) {
+exports.SystemPost = SystemPost;
+function SystemPut(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -73,8 +73,8 @@ function SystemPutDec(path) {
         });
     };
 }
-exports.SystemPutDec = SystemPutDec;
-function SystemGetDec(path) {
+exports.SystemPut = SystemPut;
+function SystemGet(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -85,8 +85,8 @@ function SystemGetDec(path) {
         });
     };
 }
-exports.SystemGetDec = SystemGetDec;
-function SystemDeleteDec(path) {
+exports.SystemGet = SystemGet;
+function SystemDelete(path) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -97,8 +97,8 @@ function SystemDeleteDec(path) {
         });
     };
 }
-exports.SystemDeleteDec = SystemDeleteDec;
-function SendFileByPathDec(path, options = {}) {
+exports.SystemDelete = SystemDelete;
+function SendFileByPath(path, options = {}) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -106,11 +106,12 @@ function SendFileByPathDec(path, options = {}) {
             target,
             propertyKey,
             type: 'sendFileByPath',
+            options,
         });
     };
 }
-exports.SendFileByPathDec = SendFileByPathDec;
-function SendFileDec(path, options = {}) {
+exports.SendFileByPath = SendFileByPath;
+function SendFile(path, options = {}) {
     return function (target, propertyKey) {
         core_1.RegisterApiMethodsDecorators.registerMethodDecorator({
             path,
@@ -118,8 +119,9 @@ function SendFileDec(path, options = {}) {
             target,
             propertyKey,
             type: 'sendFile',
+            options,
         });
     };
 }
-exports.SendFileDec = SendFileDec;
+exports.SendFile = SendFile;
 //# sourceMappingURL=apiMethods.js.map

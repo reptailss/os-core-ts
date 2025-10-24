@@ -6,15 +6,13 @@ import {ImportResult} from '@responseFormat'
 
 
 export class ImportOsStatusRequestLogsService {
+    
+    private readonly getRequestsLogsService: GetRequestsLogsService = new GetRequestsLogsService()
+    private readonly clearRequestsLogsService: ClearRequestsLogsService = new ClearRequestsLogsService()
+    private readonly createRequestLogsService: CreateRequestLogsService = new CreateRequestLogsService()
+    
     private readonly BATCH_SIZE = 150
-
-    constructor(
-        private readonly getRequestsLogsService: GetRequestsLogsService = new GetRequestsLogsService(),
-        private readonly clearRequestsLogsService: ClearRequestsLogsService = new ClearRequestsLogsService(),
-        private readonly createRequestLogsService: CreateRequestLogsService = new CreateRequestLogsService(),
-    ) {
-    }
-
+    
     public async import(): Promise<{
         count: number,
         importCount: number
@@ -26,7 +24,7 @@ export class ImportOsStatusRequestLogsService {
                 importCount: 0,
             }
         }
-
+        
         try {
             const logs = this.getRequestsLogsService.getSyncRequests()
             if (!logs?.length) {
@@ -35,7 +33,7 @@ export class ImportOsStatusRequestLogsService {
                     importCount: 0,
                 }
             }
-
+            
             this.clearRequestsLogsService.clearRequests()
             let totalImportCount = 0
             let totalCount = 0
@@ -70,7 +68,7 @@ export class ImportOsStatusRequestLogsService {
             }
         }
     }
-
+    
     private async importLogs(requestLogs: ServerMeta[]): Promise<ImportResult> {
         return await SystemRequestHelper.post<ImportResult>({
             url: APP_CONFIG_OS_CORE.urls.osStatusServiceUrl + SystemEndpointsHelper.buildSystemEndpointUrl('/request-logs/import'),
@@ -83,7 +81,7 @@ export class ImportOsStatusRequestLogsService {
             serviceKey: 'os-status',
         })
     }
-
+    
     private saveLogsToFile(logsList: ServerMeta[][]) {
         for (const logs of logsList) {
             this.createRequestLogsService.addLogsToFile(logs)

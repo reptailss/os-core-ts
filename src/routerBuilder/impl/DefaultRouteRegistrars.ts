@@ -3,7 +3,7 @@ import {
     AppFileArgControllerEndpoint,
     AppFilesArgControllerEndpoint,
     ArgEndpointsHandler,
-    Controller,
+    ControllerMeta,
     ControllerEndpoint,
     ControllersHelper,
     FormDataArgsEndpointsHandler,
@@ -101,7 +101,7 @@ export class DefaultRouteRegistrars {
     
     private getDefaultControllerHandler(
         endpoint: ControllerEndpoint | SystemControllerEndpoint | SendFileControllerEndpoint,
-        controller: Controller,
+        controller: ControllerMeta,
     ): AppRouterRequestHandler {
         const args = controller.args[endpoint._propertyKey]
         
@@ -142,11 +142,11 @@ export class DefaultRouteRegistrars {
             res,
             next,
         ): Promise<void> => {
-            const errors = await formDataArgsEndpointsHandler.handleFormDataArgs({
-                fileArgs: args,
+            const errors = await formDataArgsEndpointsHandler.handleFormDataArgs(
+                args,
                 req,
                 res,
-            })
+            )
             if (errors) {
                 const errorProps = AppErrorHelper.getAppErrorCodeAndStatus({
                     errorCode: errors.errorKey,
@@ -184,7 +184,7 @@ export class DefaultRouteRegistrars {
     }
     
     private setHeadersControllerMethod(
-        controller: Controller,
+        controller: ControllerMeta,
         methodName: string,
         res: AppResponse,
     ): void {

@@ -32,6 +32,18 @@ export class BuildResponseFormat {
             errors?: ErrorValue[],
             customFields?: CustomFields,
         } = {}): PaginationResult<Row, CustomFields> {
+        if(!customFields){
+            return {
+                page: paginationValues?.page,
+                all_pages: paginationValues?.all_pages,
+                all_rows: paginationValues?.all_rows,
+                per_page: paginationValues?.per_page,
+                rows: paginationValues?.rows,
+                error: false,
+                errors: errors || [],
+                
+            } as PaginationResult<Row, CustomFields>
+        }
         return {
             page: paginationValues?.page,
             all_pages: paginationValues?.all_pages,
@@ -40,7 +52,7 @@ export class BuildResponseFormat {
             rows: paginationValues?.rows,
             error: false,
             errors: errors || [],
-            ...(customFields || {}),
+            ...customFields,
 
         } as PaginationResult<Row, CustomFields>
     }
@@ -96,9 +108,5 @@ export class BuildResponseFormat {
             count,
             import_count: importCount,
         }
-    }
-
-    static custom<T>(data: T): T {
-        return data
     }
 }

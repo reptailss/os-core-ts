@@ -70,7 +70,6 @@ export class SwaggerPathsBuilder {
                 
             })
         })
-        
         return paths
     }
     
@@ -95,6 +94,7 @@ export class SwaggerPathsBuilder {
             return []
         }
         const params: ParameterSwagger[] = []
+        const bodyParams: ParameterSwagger[] = []
         args.forEach((arg, index) => {
             const paramsByArg = this.getParamsByArgSwaggerByControllers({
                 tsSchema,
@@ -105,10 +105,37 @@ export class SwaggerPathsBuilder {
                 index,
             })
             if (paramsByArg.length >= 1) {
-                params.push(...paramsByArg)
+                paramsByArg.forEach((arg) => {
+                    if (arg.in === 'body') {
+                        bodyParams.push(arg)
+                        return
+                    }
+                    params.push(arg)
+                })
             }
         })
-        
+        if (bodyParams.length >= 1) {
+            if (bodyParams.length === 1) {
+                params.push(bodyParams[0])
+            } else {
+                const allOf: ParameterSwagger[] = []
+                bodyParams.forEach((param) => {
+                    if (param.schema) {
+                        allOf.push(param.schema)
+                    }
+                })
+                params.push({
+                    in: 'body',
+                    name: 'body',
+                    required: true,
+                    schema: {
+                        allOf,
+                    },
+                })
+            }
+            
+            
+        }
         return params
     }
     
@@ -207,7 +234,7 @@ export class SwaggerPathsBuilder {
                 })
             }
             default : {
-                return  {}
+                return {}
             }
         }
     }
@@ -390,6 +417,9 @@ export class SwaggerPathsBuilder {
             tsSchema,
             methodName,
         })
+        if(!paramsSchemas.length){
+            return  []
+        }
         const schema = paramsSchemas[index]
         switch (arg.key) {
             case 'Param':
@@ -412,6 +442,61 @@ export class SwaggerPathsBuilder {
                     {
                         ...(schema as any),
                         in: 'path',
+                        name: arg.fieldKey,
+                        required: typeof arg.required !== 'undefined' ? arg.required : true,
+                    },
+                ]
+            case 'BodyParamNum':
+                return [
+                    {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                [arg.fieldKey]: schema,
+                            },
+                            required: arg.required ? [arg.fieldKey] : [],
+                        } as any,
+                        in: 'body',
+                        name: 'body',
+                    },
+                ]
+            case 'AppFormDataParamNum':
+                if (!schema) {
+                    return []
+                }
+                return [
+                    {
+                        ...(schema as any),
+                        in: 'formData',
+                        name: arg.fieldKey,
+                        required: typeof arg.required !== 'undefined' ? arg.required : true,
+                    },
+                ]
+            case 'BodyParam':
+                if (!schema) {
+                    return []
+                }
+                return [
+                    {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                [arg.fieldKey]: schema,
+                            },
+                            required: arg.required ? [arg.fieldKey] : [],
+                        } as any,
+                        in: 'body',
+                        name: 'body',
+                    },
+                ]
+            case 'AppFormDataParam':
+                if (!schema) {
+                    return []
+                }
+                return [
+                    {
+                        ...(schema as any),
+                        in: 'formData',
                         name: arg.fieldKey,
                         required: typeof arg.required !== 'undefined' ? arg.required : true,
                     },
@@ -459,7 +544,7 @@ export class SwaggerPathsBuilder {
                 return [{
                     in: 'body',
                     name: 'body',
-                    schema,
+                    schema: schema as any,
                     required: true,
                 }]
             case 'QueryParams':
@@ -469,15 +554,6 @@ export class SwaggerPathsBuilder {
                 return this.transformQueryParamsSwagger({
                     params: schema as ParameterSwagger,
                     type: 'query',
-                    definitions: tsSchema as DefinitionsSwagger,
-                })
-            case 'Headers':
-                if (!schema) {
-                    return []
-                }
-                return this.transformQueryParamsSwagger({
-                    params: schema as ParameterSwagger,
-                    type: 'header',
                     definitions: tsSchema as DefinitionsSwagger,
                 })
             case 'FormData':
@@ -523,7 +599,7 @@ export class SwaggerPathsBuilder {
                     return [{
                         in: 'body',
                         name: 'body',
-                        schema,
+                        schema: schema as any,
                         required: true,
                     }]
                 }
@@ -532,8 +608,7 @@ export class SwaggerPathsBuilder {
                     type: 'query',
                     definitions: tsSchema as DefinitionsSwagger,
                 })
-            
-            case 'Header':
+            case 'HeaderParam':
                 if (!schema) {
                     return []
                 }
@@ -810,19 +885,19 @@ export class SwaggerPathsBuilder {
                         haSaveFile = true
                         break
                     }
-                    case 'Auth': {
+                    case 'User': {
                         hasAuth = true
                         break
                     }
-                    case 'PtpClientAuth': {
+                    case 'PtpClientUser': {
                         hasAuth = true
                         break
                     }
-                    case 'PtpCoreAuth': {
+                    case 'PtpCoreUser': {
                         hasAuth = true
                         break
                     }
-                    case 'SystemAuth': {
+                    case 'SystemUser': {
                         hasAuth = true
                         break
                     }
@@ -830,7 +905,7 @@ export class SwaggerPathsBuilder {
                         hasDomainDb = true
                         break
                     }
-                    case 'DashboardAccessDec': {
+                    case 'DashboardUser': {
                         hasAuth = true
                         break
                     }

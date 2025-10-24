@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import {IRouterBuilder, RouterBuilderEndpointRegistrar} from '@routerBuilder'
-import {Controller} from '@controllers'
+import {ControllerMeta} from '@controllers'
 import {AppError} from '@appError'
 import {AppRouter} from '@appRouter'
 import {DefaultRouteRegistrars} from './DefaultRouteRegistrars'
@@ -17,7 +17,7 @@ export class RouterBuilder implements IRouterBuilder {
         this.registerRouteHandler('DELETE', this.defaultRouteRegistrars.getDeleteHandler())
     }
     
-    public buildRoute(controllers: Controller[]): AppRouter {
+    public buildRoute(controllers: ControllerMeta[]): AppRouter {
         const router: AppRouter = Router() as AppRouter
         controllers.forEach(controller => {
             if (!controller?.endpoints?.length) {

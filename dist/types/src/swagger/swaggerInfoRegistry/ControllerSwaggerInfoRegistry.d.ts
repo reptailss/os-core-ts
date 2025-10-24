@@ -1,12 +1,12 @@
 import { ControllerSwaggerInfo } from "../core";
-import { Controller } from "../../controllers";
+import { ControllerMeta } from "../../controllers";
 export declare class ControllerSwaggerInfoRegistry {
     static addFromControllers({ controllers, baseSwaggerTag, }: {
-        controllers: Controller[];
+        controllers: ControllerMeta[];
         baseSwaggerTag?: string;
     }): void;
     static add({ controller, baseSwaggerTag, }: {
-        controller: Controller;
+        controller: ControllerMeta;
         baseSwaggerTag?: string;
     }): void;
     static getSwaggerInfoList(): ControllerSwaggerInfo[];

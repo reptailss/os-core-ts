@@ -17,4 +17,9 @@ export type OsInfo = {
         os_used: number;
         pr_used: number;
     };
+    server_time: {
+        utc: string;
+        local: string;
+        timezone: string;
+    };
 };

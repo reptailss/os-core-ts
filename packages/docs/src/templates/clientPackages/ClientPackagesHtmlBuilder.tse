@@ -1,0 +1,12 @@
+export class ClientPackagesHtmlBuilder {
+    constructor(props: {
+        html: string,
+        packageName: string
+    })
+
+    public addServicePrefixToScriptsBundle(): this
+
+    public addServiceNameToTitle(): this
+
+    public getHtml():string
+}

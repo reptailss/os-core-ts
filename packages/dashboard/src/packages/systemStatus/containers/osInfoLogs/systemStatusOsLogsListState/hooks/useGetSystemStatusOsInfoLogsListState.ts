@@ -24,8 +24,8 @@ export function useGetSystemStatusOsInfoLogsState({perPage}: {
     const [orderBy, setOrderBy] = React.useState<keyof SystemOsLog>(() => getInitialOrderByParamOsSystemOsInfoLogsList());
     const [page, setPage] = React.useState(() => getInitialPageParamOsSystemOsInfoLogsList());
     const [serviceKeys, setServiceKeys] = useState<string[]>([])
-    const [dateStart, setDateStart] = useState<string>(initialDateStart)
-    const [dateEnd, setDateEnd] = useState<string>(initialDateEnd)
+    const [dateStart, setDateStart] = useState<Date>(initialDateStart)
+    const [dateEnd, setDateEnd] = useState<Date>(initialDateEnd)
 
 
     return {

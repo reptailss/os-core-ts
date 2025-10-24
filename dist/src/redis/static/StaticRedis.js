@@ -92,6 +92,13 @@ class RedisStaticService {
             return false;
         }
     }
+    static async close() {
+        if (!redisClient) {
+            return;
+        }
+        redisClient.disconnect();
+        redisClient = null;
+    }
     static async getRedisStaticClient() {
         if (!redisClient) {
             const newRedisClient = await this.getNewRedisClient();

@@ -1,12 +1,13 @@
 /// <reference types="node" />
 import http from 'http';
-import { AppModule } from "../../appModule";
+import { IAppModule } from "../../appModule";
 import { IRouterBuilder } from "../../routerBuilder";
 import { AppRequest } from "../../appRequest";
 import { AppResponse } from "../../appResponse";
 import { AppRouterRequestHandler } from "../../appRouter";
+import { DiFactory, DiLifetime, DiToken } from "../../di";
 export interface IApp {
-    useModule(module: AppModule): this;
+    useModule(module: IAppModule): this;
     useCors(): this;
     useStatic(dirPath: string): this;
     useHealth(): this;
@@ -24,6 +25,12 @@ export interface IApp {
      */
     enableSystemModulesFromEnv(): this;
     useMiddleware(middleware: (req: AppRequest, res: AppResponse, next: () => void) => void): this;
+    overrideProvider<T>(target: DiToken<T>, options: {
+        lifetime?: DiLifetime;
+        useClass?: any;
+        useValue?: any;
+        useFactory?: DiFactory;
+    }): this;
     initModules(): this;
     listen(port?: number, callback?: () => void): http.Server;
     routerBuilder: IRouterBuilder;

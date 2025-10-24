@@ -11,9 +11,9 @@ export interface SystemOsLogsListState {
     serviceKeys: string[],
     setServiceKeys: (serviceKeys: string[]) => void,
     perPage: number
-    dateStart: string
-    dateEnd: string
-    setDateStart: SetStateFn<string>
-    setDateEnd: SetStateFn<string>
+    dateStart: Date
+    dateEnd: Date
+    setDateStart: SetStateFn<Date>
+    setDateEnd: SetStateFn<Date>
 
 }

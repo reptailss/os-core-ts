@@ -1,7 +1,7 @@
-import {SchemaValidator} from '@validator'
+import {SchemaValidator, SchemaValidatorRefineEffect} from '@validator'
 
 export interface ArrayValidator<
-    T extends SchemaValidator,
+    T extends SchemaValidator | SchemaValidatorRefineEffect,
 > extends SchemaValidator<
     T['_value'][]
 > {

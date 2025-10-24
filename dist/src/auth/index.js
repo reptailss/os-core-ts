@@ -18,6 +18,6 @@ __exportStar(require("./types"), exports);
 __exportStar(require("./types/ptp"), exports);
 __exportStar(require("./helper/AuthHelper"), exports);
 __exportStar(require("./services/AuthService"), exports);
-__exportStar(require("./services/PtpClientAuthService"), exports);
-__exportStar(require("./services/PtpCoreAuthService"), exports);
+__exportStar(require("./services/PtpClientUserService"), exports);
+__exportStar(require("./services/PtpCoreUserService"), exports);
 //# sourceMappingURL=index.js.map

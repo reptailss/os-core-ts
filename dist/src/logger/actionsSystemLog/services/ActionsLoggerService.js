@@ -1,11 +1,18 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ActionsLoggerService = void 0;
 const _appConfig_1 = require("../../../appConfig");
 const _helpers_1 = require("../../../helpers");
 const _logger_1 = require("../..");
 const _appError_1 = require("../../../appError");
-class ActionsLoggerService {
+const _decorators_1 = require("../../../decorators");
+let ActionsLoggerService = class ActionsLoggerService {
     async logCreateAction({ value, openUserId, config, rowId, }) {
         return await this.sendActionSystemLog({
             database: config.database,
@@ -136,6 +143,9 @@ class ActionsLoggerService {
         }
         return before !== after;
     }
-}
+};
 exports.ActionsLoggerService = ActionsLoggerService;
+exports.ActionsLoggerService = ActionsLoggerService = __decorate([
+    (0, _decorators_1.Injectable)()
+], ActionsLoggerService);
 //# sourceMappingURL=ActionsLoggerService.js.map

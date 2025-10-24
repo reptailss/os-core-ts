@@ -14,10 +14,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./controllerDecorators/controllerDec"), exports);
+__exportStar(require("./controllerDecorators/controller"), exports);
 __exportStar(require("./controllerDecorators/apiMethods"), exports);
-__exportStar(require("./controllerDecorators/queryParamDec"), exports);
-__exportStar(require("./controllerDecorators/swaggerInfoDec"), exports);
-__exportStar(require("./controllerDecorators/dashboardAccessDec"), exports);
-__exportStar(require("./controllerDecorators/setHeaderDec"), exports);
+__exportStar(require("./controllerDecorators/queryParam"), exports);
+__exportStar(require("./controllerDecorators/swaggerInfo"), exports);
+__exportStar(require("./controllerDecorators/dashboardUser"), exports);
+__exportStar(require("./controllerDecorators/setHeader"), exports);
+__exportStar(require("./diDecorators/injectable"), exports);
 //# sourceMappingURL=index.js.map

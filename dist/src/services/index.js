@@ -15,10 +15,4 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./legalEntity/OsCoreLegalEntityService"), exports);
-__exportStar(require("./currency/OsCoreCurrencyService"), exports);
-__exportStar(require("./measurementUnits/OsCoreMeasurementUnitsService"), exports);
-__exportStar(require("./bmsUsers/OsCoreBmsUsersService"), exports);
-__exportStar(require("./ptpClientUsers/OsCorePtpClientUsersService"), exports);
-__exportStar(require("./ptpCoreUsers/OsCorePtpCoreUsersService"), exports);
-__exportStar(require("./ptpCoreGroups/OsCorePtpCoreGroupsService"), exports);
 //# sourceMappingURL=index.js.map

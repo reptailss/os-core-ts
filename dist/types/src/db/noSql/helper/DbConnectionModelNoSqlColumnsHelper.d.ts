@@ -24,11 +24,12 @@
 /// <reference types="mongoose/types/inferschematype" />
 /// <reference types="mongoose/types/inferrawdoctype" />
 import { Schema, SchemaDefinitionProperty } from 'mongoose';
-import { ModelNoSqlColumn, ModelNoSqlColumns, SettingsLoadModelNoSql } from "../../../model";
+import { Entity, EntityColumn } from "../../../entity";
 export declare class DbConnectionModelNoSqlColumnsHelper {
-    static transformBaseColumnToMongoose<Row extends object, RowDateAddKey extends (string | null) = 'date_add', RowDateUpdateKey extends (string | null) = 'date_update'>({ columns, options, }: {
-        columns: ModelNoSqlColumns<Row, RowDateAddKey, RowDateUpdateKey>;
-        options?: SettingsLoadModelNoSql<RowDateAddKey, RowDateUpdateKey>;
-    }): Schema<Row>;
-    static getCurrentSchemaMongoose: (column: ModelNoSqlColumn<any, any>) => SchemaDefinitionProperty<any>;
+    static transformBaseColumnToMongoose<ClassEntity extends object>(columns: Record<keyof ClassEntity, EntityColumn>, options?: {
+        primaryKey?: string | null;
+        dateAdd?: string | null;
+        dateUpdate?: string | null;
+    }): Schema<Entity<ClassEntity>>;
+    static getCurrentSchemaMongoose: (column: EntityColumn) => SchemaDefinitionProperty<any>;
 }

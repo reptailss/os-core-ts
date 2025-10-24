@@ -13,6 +13,7 @@ export declare class RedisStaticService {
     static deleteMultipleValues(keys: string[]): Promise<void>;
     static deleteMapFieldsPipeline(map: Record<string, string[]>): Promise<void>;
     static checkConnection(): Promise<boolean>;
+    static close(): Promise<void>;
     private static getRedisStaticClient;
     private static getNewRedisClient;
 }

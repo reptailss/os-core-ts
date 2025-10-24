@@ -1,0 +1,13 @@
+import {{{Controller}},{{Get}},{{QueryParamNumOptionalDec}}} from 'os-core-ts'
+@{{Controller}}()
+export class UsersController {
+	@Get('/users')
+	public getUserInfo(
+		@QueryParamNumOptionalDec('user_name') userId: number | undefined,
+	): string {
+		if (!userId) {
+			return 'not found user'
+		}
+		return `user id: ${userId}`
+	}
+}

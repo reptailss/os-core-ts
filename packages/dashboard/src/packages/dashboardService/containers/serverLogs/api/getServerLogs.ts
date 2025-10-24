@@ -3,26 +3,23 @@ import {serialize} from '@helpers/query/serialize'
 import {ServerLog} from '@containers/serverLogs/types'
 import {getRandomString} from '@helpers/string/getRandomString'
 import {getRootApiUrl} from '@helpers/apiUrl/getRootApiUrl'
+import moment from 'moment'
 
 
-function parseDateToISO(dateStr: string): string {
-    const [day, month, year] = dateStr.split('/').map(Number)
-    const date = new Date(Date.UTC(year, month - 1, day))
-    return date.toISOString()
-}
+
 
 export const getDashboardServiceServerLogs = async ({
                                         dateStart,
                                         dateEnd,
                                     }: {
-    dateStart: string,
-    dateEnd: string
+    dateStart: Date,
+    dateEnd: Date
 }): Promise<ServerLog[]> => {
 
     const res = await apiRequestWithAuth<string[]>({
         url: `${getRootApiUrl()}os-logs?` + serialize({
-            date_start: parseDateToISO(dateStart),
-            date_end: parseDateToISO(dateEnd),
+            date_start: moment(dateStart).format('YYYY-MM-DD'),
+            date_end: moment(dateEnd).format('YYYY-MM-DD'),
         }),
         options: {
             method: 'GET',

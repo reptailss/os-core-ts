@@ -8,16 +8,17 @@ import {useGetSystemStatusRequests} from "@packages/systemStatus/containers/requ
 import Spinner from '@ui/spinner/Spinner';
 import SidebarSystemStatusRequestsCharts
     from "@packages/systemStatus/containers/requests/charts/SidebarSystemStatusRequestsCharts";
+import {useGetSystemEndpoints} from "@packages/systemStatus/containers/endpoints/hooks/useGetSystemEndpoints";
 
 const SystemStatusRequestsCharts = () => {
 
     const requestsListState = useGetRequestsListState()
-
+    const {systemEndpoints} = useGetSystemEndpoints()
     const {
         requests,
         getRequests,
         isLoading
-    } = useGetSystemStatusRequests()
+    } = useGetSystemStatusRequests(systemEndpoints)
 
     return (
         <Stack
@@ -31,6 +32,7 @@ const SystemStatusRequestsCharts = () => {
                 sidebarChildren={<SidebarSystemStatusRequestsCharts
                     getRequests={getRequests}
                     requestsListState={requestsListState}
+                    systemEndpoints={systemEndpoints}
                 />}
                 disableStickyBtn
             />

@@ -1,0 +1,9 @@
+import {{{UserInfo}}} from 'os-core-ts'
+export class AuthService {
+    static async checkTokenAndGetUserInfo(token: string): Promise<{{UserInfo}}>
+
+    static async checkSystemTokenAndGetUserInfo(token: string): Promise<{{UserInfo}}>
+
+    static async getFullUserInfoByToken(accessToken: string): Promise<{{FullUserInfo}}>
+
+}

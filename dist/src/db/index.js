@@ -19,6 +19,7 @@ __exportStar(require("./sql/interfaces"), exports);
 __exportStar(require("./sql/factory/DbConnectionSqlFactory"), exports);
 __exportStar(require("./sql/migration/interfaces"), exports);
 __exportStar(require("./sql/migration/impl/SqlMigrations"), exports);
+__exportStar(require("./sql/inMemory/LoaderDbConnectionSqlConfigIMemory"), exports);
 __exportStar(require("./noSql/types/options"), exports);
 __exportStar(require("./noSql/interfaces"), exports);
 __exportStar(require("./noSql/factory/DbConnectionNoSqlFactory"), exports);

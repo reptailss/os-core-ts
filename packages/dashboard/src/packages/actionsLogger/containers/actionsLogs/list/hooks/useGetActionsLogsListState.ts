@@ -9,8 +9,8 @@ import {ActionsLogsListState} from "@packages/actionsLogger/containers/actionsLo
 const {initialDateStart, initialDateEnd} = getActionsLogsInitialDate()
 
 export function useGetActionsLogsListState(): ActionsLogsListState {
-    const [dateStart, setDateStart] = useState<string>(initialDateStart)
-    const [dateEnd, setDateEnd] = useState<string>(initialDateEnd)
+    const [dateStart, setDateStart] = useState<Date>(initialDateStart)
+    const [dateEnd, setDateEnd] = useState<Date>(initialDateEnd)
 
     const [order, setOrder] = React.useState<'asc' | 'desc'>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof ActionLog>('date_add');

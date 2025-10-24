@@ -1,11 +1,13 @@
 import {ActionsSystemLogType, DbSystemLogType} from '@logger/core'
 import {APP_CONFIG_OS_CORE} from '@appConfig'
 import {SystemEndpointsHelper, SystemRequestHelper} from '@helpers'
-import {appLogger} from '@logger'
+import {appLogger, IActionsLoggerService} from '@logger'
 import {AppError} from '@appError'
+import {Injectable} from '@decorators'
 
-export class ActionsLoggerService {
-
+@Injectable()
+export class ActionsLoggerService implements IActionsLoggerService {
+    
     public async logCreateAction({
                                      value,
                                      openUserId,
@@ -31,8 +33,8 @@ export class ActionsLoggerService {
             rowId,
         })
     }
-
-
+    
+    
     public async logUpdateAction({
                                      newValue,
                                      oldValue,
@@ -61,7 +63,7 @@ export class ActionsLoggerService {
             rowId,
         })
     }
-
+    
     public async logDeleteAction({
                                      oldValue,
                                      openUserId,
@@ -87,8 +89,8 @@ export class ActionsLoggerService {
             rowId,
         })
     }
-
-
+    
+    
     private async sendActionSystemLog({
                                           openUserId,
                                           database,
@@ -149,13 +151,13 @@ export class ActionsLoggerService {
                     'content-type': 'application/json',
                 },
             })
-
+            
         } catch (error) {
             appLogger.error('os-core:Error send api system log', error)
         }
     }
-
-
+    
+    
     private buildAfterAndBeforeData({
                                         after,
                                         before,
@@ -186,18 +188,18 @@ export class ActionsLoggerService {
                 transformAfter: after || {},
             }
         }
-
+        
         if (!after) {
             return {
                 transformBefore: before || {},
                 transformAfter: {},
             }
         }
-
-
+        
+        
         const transformBefore: Record<string, unknown> = {}
         const transformAfter: Record<string, unknown> = {}
-
+        
         for (const key in after) {
             if (
                 key === 'date_update' ||
@@ -211,13 +213,13 @@ export class ActionsLoggerService {
             transformBefore[key] = before[key]
             transformAfter[key] = after[key]
         }
-
+        
         return {
             transformBefore,
             transformAfter,
         }
     }
-
+    
     private checkHasChange(
         before: unknown,
         after: unknown,
@@ -231,5 +233,5 @@ export class ActionsLoggerService {
         }
         return before !== after
     }
-
+    
 }

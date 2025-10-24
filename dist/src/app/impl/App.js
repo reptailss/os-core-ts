@@ -36,8 +36,9 @@ const _logger_1 = require("../../logger");
 const _health_1 = require("../../health");
 const _dashboard_1 = require("../../dashboard");
 const _swagger_1 = require("../../swagger");
-const _structureServiceEndpoints_1 = require("../../structureServiceEndpoints");
 const _controllers_1 = require("../../controllers");
+const _di_1 = require("../../di");
+const _structureServiceEndpoints_1 = require("../../structureServiceEndpoints");
 class App {
     constructor() {
         this.expressApp = (0, express_1.default)();
@@ -59,6 +60,8 @@ class App {
             enableSystemModulesFromEnv: false,
         };
         this.notFoundAppRouterRequestHandler = null;
+        this.serviceEndpoints = [];
+        this.importStructureServiceEndpoints = [];
     }
     listen(port, callback) {
         const currentPort = port || _appConfig_1.APP_CONFIG_OS_CORE.servicePort;
@@ -150,7 +153,7 @@ class App {
             this.initSystemAppModule(_logger_1.osStatusLoggerAppModule);
             _logger_1.SaveOsStatusServicesRegistryService.saveServicesRegistry({
                 serviceKey: _appConfig_1.APP_CONFIG_OS_CORE.serviceKey,
-                endpoints: this.getServiceEndpointsFromAppModules(),
+                endpoints: this.serviceEndpoints,
             }).then(() => {
                 _logger_1.appLogger.info('Success save api key to os-status api');
             }).catch(() => {
@@ -168,8 +171,12 @@ class App {
         for (const appModule of this.appModules) {
             this.initAppModule(appModule);
         }
-        if (this.modulesConfig.importStructureServiceEndpoints) {
-            new _structureServiceEndpoints_1.ImportStructureServiceEndpointsByAppModulesService().importByAppModules(this.appModules, this.modulesConfig.importStructureServiceEndpoints.type).then(() => {
+        if (this.modulesConfig.importStructureServiceEndpoints.active) {
+            _structureServiceEndpoints_1.ImportStructureServicesService.importServices({
+                service_key: _appConfig_1.APP_CONFIG_OS_CORE.serviceKey,
+                endpoints: this.importStructureServiceEndpoints,
+                type: this.modulesConfig.importStructureServiceEndpoints.type,
+            }).then(() => {
                 _logger_1.appLogger.info('Success import api endpoints');
             }).catch((error) => {
                 _logger_1.appLogger.error('Error save api endpoints', error);
@@ -198,70 +205,59 @@ class App {
         this.notFoundAppRouterRequestHandler = appRouterRequestHandler;
         return this;
     }
-    getServiceEndpointsFromAppModules() {
-        if (!this.appModules.length) {
-            return [];
-        }
-        const res = [];
-        this.appModules.forEach(appModule => {
-            const endpoints = this.getServiceEndpointsFromAppModule(appModule);
-            if (endpoints.length) {
-                res.push(...endpoints);
-            }
-        });
-        return res;
+    overrideProvider(target, options = {}) {
+        _di_1.DiContainer.register(target, options);
+        return this;
     }
     initStatics() {
         for (const dirPath in this.modulesConfig.static) {
             this.expressApp.use(express_1.default.static(dirPath));
         }
     }
-    getServiceEndpointsFromAppModule(appModule) {
-        const res = [];
-        if (appModule.controllers.length) {
-            appModule.controllers.forEach(controller => {
-                if (controller.endpoints.length) {
-                    controller.endpoints.forEach(endpoint => {
-                        res.push(_controllers_1.ControllersHelper.buildEndpointUrl({
-                            endpointPath: endpoint.path,
-                            isSystemEndpoint: endpoint.type === 'system',
-                        }));
-                    });
-                }
-            });
-        }
-        if (appModule.appModules.length) {
-            appModule.appModules.forEach(childAppModule => {
-                const childRes = this.getServiceEndpointsFromAppModule(childAppModule);
-                if (childRes.length) {
-                    res.push(...childRes);
-                }
-            });
-        }
-        return res;
-    }
     initAppModule(appModule) {
         var _a;
         if (appModule.controllers.length) {
-            this.expressApp.use(this.routerBuilder.buildRoute(appModule.controllers));
+            const controllers = [];
+            appModule.controllers.forEach((Controller) => {
+                const instance = _di_1.DiContainer.resolve(Controller, appModule.getProviders());
+                controllers.push(instance);
+                if (instance.endpoints.length) {
+                    instance.endpoints.forEach(endpoint => {
+                        this.serviceEndpoints.push(_controllers_1.ControllersHelper.buildEndpointUrl({
+                            endpointPath: endpoint.path,
+                            isSystemEndpoint: endpoint.type === 'system',
+                        }));
+                        if (this.modulesConfig.importStructureServiceEndpoints.active) {
+                            if (!instance.importStructureServiceEndpoints ||
+                                !(endpoint._propertyKey in instance.importStructureServiceEndpoints)) {
+                                return;
+                            }
+                            const data = instance.importStructureServiceEndpoints[endpoint._propertyKey];
+                            this.importStructureServiceEndpoints.push({
+                                name: (data === null || data === void 0 ? void 0 : data.name) || '',
+                                key: (data === null || data === void 0 ? void 0 : data.key) || endpoint.path,
+                            });
+                        }
+                    });
+                }
+            });
+            this.expressApp.use(this.routerBuilder.buildRoute(controllers));
             if (this.modulesConfig.swagger) {
                 _swagger_1.ControllerSwaggerInfoRegistry.addFromControllers({
-                    controllers: appModule.controllers,
+                    controllers: controllers,
                     baseSwaggerTag: (_a = appModule.swaggerInfo) === null || _a === void 0 ? void 0 : _a.tag,
                 });
             }
             if (this.modulesConfig.requestLogger) {
-                _logger_1.RequestsLogsRoutesRegistry.addFromControllers(appModule.controllers);
+                _logger_1.RequestsLogsRoutesRegistry.addFromControllers(controllers);
             }
-        }
-        if (appModule.appModules.length) {
-            appModule.appModules.forEach(childAppModule => {
-                this.initAppModule(childAppModule);
-            });
         }
     }
     initSystemAppModule(appModule) {
-        this.expressApp.use(this.routerBuilder.buildRoute(appModule.controllers));
+        const controllers = appModule.controllers.map((Controller) => {
+            return _di_1.DiContainer.resolve(Controller, appModule.getProviders());
+        });
+        this.expressApp.use(this.routerBuilder.buildRoute(controllers));
     }
 }
 exports.App = App;

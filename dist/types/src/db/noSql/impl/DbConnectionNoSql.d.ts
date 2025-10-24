@@ -1,15 +1,34 @@
-import { ModelNoSqlColumns, IModelNoSql, NoSqlIndexes, SettingsLoadModelNoSql } from "../../../model";
-import { DbNoSqlOptions, IDbConnectionNoSql } from "../..";
+/// <reference types="mongoose/types/aggregate" />
+/// <reference types="mongoose/types/callback" />
+/// <reference types="mongoose/types/collection" />
+/// <reference types="mongoose/types/connection" />
+/// <reference types="mongoose/types/cursor" />
+/// <reference types="mongoose/types/document" />
+/// <reference types="mongoose/types/error" />
+/// <reference types="mongoose/types/expressions" />
+/// <reference types="mongoose/types/helpers" />
+/// <reference types="mongoose/types/middlewares" />
+/// <reference types="mongoose/types/indexes" />
+/// <reference types="mongoose/types/models" />
+/// <reference types="mongoose/types/mongooseoptions" />
+/// <reference types="mongoose/types/pipelinestage" />
+/// <reference types="mongoose/types/populate" />
+/// <reference types="mongoose/types/query" />
+/// <reference types="mongoose/types/schemaoptions" />
+/// <reference types="mongoose/types/schematypes" />
+/// <reference types="mongoose/types/session" />
+/// <reference types="mongoose/types/types" />
+/// <reference types="mongoose/types/utility" />
+/// <reference types="mongoose/types/validation" />
+/// <reference types="mongoose/types/virtuals" />
+/// <reference types="mongoose/types/inferschematype" />
+/// <reference types="mongoose/types/inferrawdoctype" />
+import { IDbConnectionNoSql } from "../..";
+import { Connection } from 'mongoose';
 export declare class DbConnectionNoSql implements IDbConnectionNoSql {
-    private dbConnectionMongoose;
-    private databaseName;
-    private optionsDb?;
-    constructor(databaseName: string, optionsDb?: Partial<DbNoSqlOptions>);
-    init(): Promise<void>;
-    defineModel<Row extends object, RowDateAddKey extends (string | null) = 'date_add', RowDateUpdateKey extends (string | null) = 'date_update'>({ columns, collectionName, options, indexes, }: {
-        collectionName: string;
-        columns: ModelNoSqlColumns<Row, RowDateAddKey, RowDateUpdateKey>;
-        options?: SettingsLoadModelNoSql<RowDateAddKey, RowDateUpdateKey>;
-        indexes?: NoSqlIndexes<Row, RowDateAddKey, RowDateUpdateKey>;
-    }): IModelNoSql<Row, RowDateAddKey, RowDateUpdateKey>;
+    cashedKey: string;
+    mongoose: Connection;
+    databaseName: string;
+    constructor(databaseName: string);
+    connect(): Promise<void>;
 }

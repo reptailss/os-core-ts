@@ -6,23 +6,23 @@ import * as ts from 'typescript'
 
 
 const DECORATOR_METHODS_NAMES = [
-    'PostDec',
-    'GetDec',
-    'DeleteDec',
-    'PutDec',
-    'SystemPostDec',
-    'SystemGetDec',
-    'SystemDeleteDec',
-    'SystemPutDec',
+    'Post',
+    'Get',
+    'Delete',
+    'Put',
+    'SystemPost',
+    'SystemGet',
+    'SystemDelete',
+    'SystemPut',
 ]
 
 
 export class SwaggerTSControllersBuilder {
     
     
-    public buildAndSaveToFile(appDirPath?: string) {
+    public buildAndSaveToFile(appDirPath?: string,modulesDir?:string) {
         this.saveResponseAndParamsToFile(
-            this.getResponseAndParams(appDirPath),
+            this.getResponseAndParams(appDirPath,modulesDir),
             appDirPath,
         )
     }
@@ -36,16 +36,17 @@ export class SwaggerTSControllersBuilder {
         }
     }
     
-    private getResponseAndParams(appDirPath?: string) {
+    private getResponseAndParams(appDirPath?: string,modulesDir?:string) {
         const rootDir = appDirPath || 'src'
         return this.generateFileByMethods(this.extractControllersBuildTsSchema(
-            this.getFilePaths(appDirPath),
-            path.join(process.cwd(), ...rootDir.split('/'), 'modules')),
+            this.getFilePaths(appDirPath,modulesDir),
+            path.join(process.cwd(), ...rootDir.split('/'), modulesDir || 'modules')),
         )
     }
     
-    private getFilePaths(appDirPath?: string) {
-        const controllersFilesPattern = appDirPath ? [`${appDirPath}/modules/**/controllers/**/*.ts`] : ['src/modules/**/controllers/**/*.ts']
+    private getFilePaths(appDirPath?: string,modulesDir?:string) {
+        const modules = modulesDir || 'modules'
+        const controllersFilesPattern = appDirPath ? [`${appDirPath}/${modules}/**/controllers/**/*.ts`] : [`src/${modules}/**/controllers/**/*.ts`]
         return ([] as string[]).concat(
             ...controllersFilesPattern.map((f) => glob.sync(f)),
         ).map((value) => {
@@ -71,8 +72,8 @@ export class SwaggerTSControllersBuilder {
                     const className = node.name.text
                     const classDecorators = ts.getDecorators(node) || []
                     const hasControllerDec = classDecorators.some((decorator) => {
-                        return this.isDecoratorNamed(decorator, 'ControllerDec') ||
-                            this.isDecoratorNamed(decorator, 'SystemControllerDec')
+                        return this.isDecoratorNamed(decorator, 'Controller') ||
+                            this.isDecoratorNamed(decorator, 'SystemController')
                     })
                     
                     if (hasControllerDec) {

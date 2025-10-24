@@ -113,7 +113,14 @@ export class RedisStaticService {
 			return false
 		}
 	}
-
+	
+	static async close(): Promise<void> {
+		if (!redisClient) {
+			return
+		}
+		redisClient.disconnect()
+		redisClient = null
+	}
 
 	private static async getRedisStaticClient(): Promise<Redis> {
 

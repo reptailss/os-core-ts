@@ -1,9 +1,7 @@
-import { SwaggerConfigBuilder, SwaggerTSControllersBuilder } from "../core";
 export declare class SwaggerTSBuilder {
+    private swaggerConfig;
     private readonly swaggerConfigBuilder;
     private readonly swaggerTSControllersBuilder;
-    private swaggerConfig;
-    constructor(swaggerConfigBuilder?: SwaggerConfigBuilder, swaggerTSControllersBuilder?: SwaggerTSControllersBuilder);
     buildFromControllers(): Promise<boolean>;
     private buildAndSaveSchema;
     private getFilePaths;

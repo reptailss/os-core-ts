@@ -1,9 +1,9 @@
-export type UserInfo = {
+export type UserDto = {
     open_user_id: number;
     user_name: string;
     is_system?: boolean;
 };
-export type FullUserInfo = {
+export type FullUserDto = {
     id: number;
     name: string;
     nickname: string | null;

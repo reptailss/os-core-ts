@@ -22,11 +22,12 @@ import {
 import {healthAppModule} from '@health'
 import {dashboardAppModule} from '@dashboard'
 import {ControllerSwaggerInfoRegistry, swaggerAppModule} from '@swagger'
-import {ImportStructureServiceEndpointsByAppModulesService} from '@structureServiceEndpoints'
-import {ControllersHelper} from '@controllers'
+import {ControllerMeta, ControllersHelper} from '@controllers'
 import {AppRequest} from '@appRequest'
 import {AppResponse} from '@appResponse'
 import {AppRouterRequestHandler} from '@appRouter'
+import {DiContainer, DiFactory, DiLifetime, DiToken} from '@di'
+import {ImportStructureServicesService} from '@structureServiceEndpoints'
 
 
 type ModulesConfig = {
@@ -68,6 +69,11 @@ export class App implements IApp {
         enableSystemModulesFromEnv: false,
     }
     private notFoundAppRouterRequestHandler: AppRouterRequestHandler | null = null
+    private serviceEndpoints: string[] = []
+    private importStructureServiceEndpoints: {
+        key: string
+        name: string
+    } [] = []
     
     public listen(port?: number, callback?: () => void): http.Server {
         const currentPort = port || APP_CONFIG_OS_CORE.servicePort
@@ -173,7 +179,7 @@ export class App implements IApp {
             this.initSystemAppModule(osStatusLoggerAppModule)
             SaveOsStatusServicesRegistryService.saveServicesRegistry({
                 serviceKey: APP_CONFIG_OS_CORE.serviceKey,
-                endpoints: this.getServiceEndpointsFromAppModules(),
+                endpoints: this.serviceEndpoints,
             }).then(() => {
                 appLogger.info('Success save api key to os-status api')
             }).catch(() => {
@@ -192,11 +198,12 @@ export class App implements IApp {
         for (const appModule of this.appModules) {
             this.initAppModule(appModule)
         }
-        if (this.modulesConfig.importStructureServiceEndpoints) {
-            new ImportStructureServiceEndpointsByAppModulesService().importByAppModules(
-                this.appModules,
-                this.modulesConfig.importStructureServiceEndpoints.type,
-            ).then(() => {
+        if (this.modulesConfig.importStructureServiceEndpoints.active) {
+            ImportStructureServicesService.importServices({
+                service_key: APP_CONFIG_OS_CORE.serviceKey,
+                endpoints: this.importStructureServiceEndpoints,
+                type: this.modulesConfig.importStructureServiceEndpoints.type,
+            }).then(() => {
                 appLogger.info('Success import api endpoints')
             }).catch((error) => {
                 appLogger.error('Error save api endpoints', error)
@@ -236,19 +243,14 @@ export class App implements IApp {
         return this
     }
     
-    private getServiceEndpointsFromAppModules(): string[] {
-        if (!this.appModules.length) {
-            return []
-        }
-        const res: string[] = []
-        this.appModules.forEach(appModule => {
-            const endpoints = this.getServiceEndpointsFromAppModule(appModule)
-            if (endpoints.length) {
-                res.push(...endpoints)
-            }
-        })
-        
-        return res
+    public overrideProvider<T>(target: DiToken<T>, options: {
+        lifetime?: DiLifetime
+        useClass?: any
+        useValue?: any
+        useFactory?: DiFactory
+    } = {}): this {
+        DiContainer.register(target, options)
+        return this
     }
     
     private initStatics(): void {
@@ -257,53 +259,60 @@ export class App implements IApp {
         }
     }
     
-    private getServiceEndpointsFromAppModule(appModule: AppModule): string[] {
-        const res: string[] = []
+    
+    private initAppModule(appModule: IAppModule): void {
         if (appModule.controllers.length) {
-            appModule.controllers.forEach(controller => {
-                if (controller.endpoints.length) {
-                    controller.endpoints.forEach(endpoint => {
-                        res.push(ControllersHelper.buildEndpointUrl({
+            const controllers: ControllerMeta[] = []
+            appModule.controllers.forEach((Controller) => {
+                const instance: ControllerMeta = DiContainer.resolve(
+                    Controller,
+                    appModule.getProviders(),
+                )
+                controllers.push(instance)
+                if (instance.endpoints.length) {
+                    instance.endpoints.forEach(endpoint => {
+                        
+                        this.serviceEndpoints.push(ControllersHelper.buildEndpointUrl({
                             endpointPath: endpoint.path,
                             isSystemEndpoint: endpoint.type === 'system',
                         }))
+                        
+                        if (this.modulesConfig.importStructureServiceEndpoints.active) {
+                            if (
+                                !instance.importStructureServiceEndpoints ||
+                                !(endpoint._propertyKey in instance.importStructureServiceEndpoints)) {
+                                return
+                            }
+                            const data = instance.importStructureServiceEndpoints[endpoint._propertyKey]
+                            this.importStructureServiceEndpoints.push({
+                                name: data?.name || '',
+                                key: data?.key || endpoint.path,
+                            })
+                        }
                     })
                 }
             })
-        }
-        if (appModule.appModules.length) {
-            appModule.appModules.forEach(childAppModule => {
-                const childRes = this.getServiceEndpointsFromAppModule(childAppModule)
-                if (childRes.length) {
-                    res.push(...childRes)
-                }
-            })
-        }
-        return res
-    }
-    
-    private initAppModule(appModule: AppModule): void {
-        if (appModule.controllers.length) {
-            this.expressApp.use(this.routerBuilder.buildRoute(appModule.controllers) as any)
+            this.expressApp.use(this.routerBuilder.buildRoute(controllers) as any)
             if (this.modulesConfig.swagger) {
                 ControllerSwaggerInfoRegistry.addFromControllers({
-                    controllers: appModule.controllers,
+                    controllers: controllers,
                     baseSwaggerTag: appModule.swaggerInfo?.tag,
                 })
             }
             if (this.modulesConfig.requestLogger) {
-                RequestsLogsRoutesRegistry.addFromControllers(appModule.controllers)
+                RequestsLogsRoutesRegistry.addFromControllers(controllers)
             }
-        }
-        
-        if (appModule.appModules.length) {
-            appModule.appModules.forEach(childAppModule => {
-                this.initAppModule(childAppModule)
-            })
         }
     }
     
+    
     private initSystemAppModule(appModule: AppModule): void {
-        this.expressApp.use(this.routerBuilder.buildRoute(appModule.controllers) as any)
+        const controllers = appModule.controllers.map((Controller) => {
+            return DiContainer.resolve(
+                Controller,
+                appModule.getProviders(),
+            )
+        })
+        this.expressApp.use(this.routerBuilder.buildRoute(controllers) as any)
     }
 }

@@ -1,0 +1,2 @@
+import {{{appLogger}}} from 'os-core-ts'
+{{appLogger}}.info('hello world')

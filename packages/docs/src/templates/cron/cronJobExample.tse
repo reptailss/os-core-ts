@@ -1,0 +1,11 @@
+import { {{CronJob}} } from 'os-core-ts'
+
+const job = new {{CronJob}}({
+  cronTime: '0 9 * * *',       // кожного дня о 09:00
+  onTick: () => {
+    console.log('Задача виконується щодня о 9:00 ранку');
+  },
+  start: false,
+})
+
+job.start();

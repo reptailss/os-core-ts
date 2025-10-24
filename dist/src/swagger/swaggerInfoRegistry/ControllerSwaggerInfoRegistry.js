@@ -42,7 +42,7 @@ class ControllerSwaggerInfoRegistry {
         });
         swaggerInfo.push({
             methods,
-            className: controller.name,
+            className: controller.constructor.name,
         });
     }
     static getSwaggerInfoList() {

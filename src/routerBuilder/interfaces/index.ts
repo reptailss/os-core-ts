@@ -1,4 +1,4 @@
-import {Controller, ControllerEndpoint, SendFileControllerEndpoint, SystemControllerEndpoint} from '@controllers'
+import {ControllerMeta, ControllerEndpoint, SendFileControllerEndpoint, SystemControllerEndpoint} from '@controllers'
 import {AppRouter} from '@appRouter'
 
 
@@ -8,12 +8,12 @@ export type RouterBuilderEndpointRegistrar = (
         ControllerEndpoint |
         SystemControllerEndpoint |
         SendFileControllerEndpoint,
-    controller: Controller,
+    controller: ControllerMeta,
 ) => void
 
 export interface IRouterBuilder {
     
-    buildRoute(controllers: Controller[]): AppRouter
+    buildRoute(controllers: ControllerMeta[]): AppRouter
     
     registerRouteHandler(method: string, registrar: RouterBuilderEndpointRegistrar): void
     

@@ -1,4 +1,4 @@
-export type DbSqlOptions = {
+export type DbConnectionSqlConfig = {
     dbDatabase: string
     dbUsername: string
     dbPassword: string
@@ -8,4 +8,6 @@ export type DbSqlOptions = {
     host: string
     logging: boolean
     dialect: 'mysql' | 'mariadb'
+    storage?:string
+    hasKeepConnectionAlive:boolean
 }

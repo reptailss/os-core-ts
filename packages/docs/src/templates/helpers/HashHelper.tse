@@ -1,0 +1,3 @@
+export class HashHelper {
+    static generateHash(value: string | number[] | Buffer): string
+}

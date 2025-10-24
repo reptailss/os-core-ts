@@ -1,16 +1,14 @@
-import { FullUserInfo } from "../../auth";
-import { ReadinessService } from "../core";
-import { OsInfo, OsInfoService, ReadinessInfo } from "..";
+import { FullUserDto } from "../../auth";
+import { OsInfo, ReadinessInfo } from "..";
 export declare class HealthController {
     private readonly osInfoService;
     private readonly readinessService;
-    constructor(osInfoService?: OsInfoService, readinessService?: ReadinessService);
-    liveness(user: FullUserInfo): {
+    liveness(userDto: FullUserDto): {
         status: 'ok';
         code: 200;
     };
-    osStatus(user: FullUserInfo): Promise<OsInfo>;
-    readiness(user: FullUserInfo): Promise<{
+    osStatus(userDto: FullUserDto): Promise<OsInfo>;
+    readiness(userDto: FullUserDto): Promise<{
         code: 200 | 500;
         status: 'ok' | 'bad';
         info: ReadinessInfo;

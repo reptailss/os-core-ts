@@ -1,0 +1,3 @@
+import {App,{{IApp}}} from 'os-core-ts'
+
+const app:{{IApp}} = new App()

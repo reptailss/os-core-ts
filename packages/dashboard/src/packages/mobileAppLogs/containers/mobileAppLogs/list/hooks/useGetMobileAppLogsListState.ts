@@ -9,8 +9,8 @@ import {MobileAppLogsListState} from "@packages/mobileAppLogs/containers/mobileA
 const {initialDateStart, initialDateEnd} = getMobileAppLogsInitialDate()
 
 export function useGetMobileAppLogsListState(): MobileAppLogsListState {
-	const [dateStart, setDateStart] = useState<string>(initialDateStart)
-	const [dateEnd, setDateEnd] = useState<string>(initialDateEnd)
+	const [dateStart, setDateStart] = useState<Date>(initialDateStart)
+	const [dateEnd, setDateEnd] = useState<Date>(initialDateEnd)
 	
 	const [order, setOrder] = React.useState<'asc' | 'desc'>('asc');
 	const [orderBy, setOrderBy] = React.useState<keyof MobileAppLog | null>(null);

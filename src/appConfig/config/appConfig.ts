@@ -69,19 +69,7 @@ type AppConfigOSCore = {
         authServiceUrl: string | null
         structureAccessServiceUrl: string | null
         actionsSystemLoggerServiceUrl: string | null
-        warehouseSettingsServiceUrl: string | null
-        ordersServiceUrl: string | null
         osStatusServiceUrl: string | null
-        structureBmsServiceUrl: string | null
-        sociumUsersServiceUrl: string | null
-        bmsUsersServiceUrl: string | null
-        cashbackProgramServiceUrl: string | null
-        mobAppSettingsServiceUrl: string | null
-        paymentMethodsServiceUrl: string | null
-        warehouseProductsServiceUrl: string | null
-        ptpUsersServiceUrl: string | null
-        ptpCoreUsersServiceUrl: string | null
-        ptpCoreGroupsServiceUrl: string | null
     },
     awsS3: {
         hasUploadToS3: boolean,
@@ -135,37 +123,20 @@ declare var process: {
         INIT_REDIS_STATIC_PASSWORD: string
 
         INIT_USE_SWAGGER: '0' | '1'
-        INIT_SWAGGER_VERSION: string
-        INIT_SWAGGER_URL: string
-        INIT_SWAGGER_TITLE: string
-        INIT_SWAGGER_DESCRIPTION: string,
-        INIT_SWAGGER_PATHS: string
-        INIT_SWAGGER_DEFAULT_AUTH_TOKEN: string
-
+        INIT_SWAGGER_DEFAULT_AUTH_TOKEN:string
+        
         INIT_SYSTEM_AUTH_TOKEN: string
         INIT_USE_STRUCTURE_ACCESS: '0' | '1'
         INIT_URL_STRUCTURE_ACCESS_SERVICE: string
         INIT_URL_STRUCTURE_SERVICE: string
-        INIT_URL_WAREHOUSE_SETTINGS_SERVICE: string
-        INIT_URL_OS_STATUS_SERVICE: string
-        INIT_URL_SOCIUM_USERS_SERVICE: string
-        INIT_URL_BMS_USERS_SERVICE: string
-        INIT_URL_CASHBACK_PROGRAM_SERVICE: string
-        INIT_URL_ORDERS_SERVICE: string
-        INIT_URL_PAYMENT_METHODS_SERVICE: string
-        INIT_URL_WAREHOUSE_PRODUCTS_SERVICE: string
-        INIT_URL_MOB_APP_SETTINGS_SERVICE: string
-        INIT_URL_PTP_USERS_SERVICE: string
-        INIT_URL_PTP_CORE_USERS_SERVICE: string
-        INIT_URL_PTP_CORE_GROUPS_SERVICE: string
-
+        
         INIT_HAS_CONSOLE_LOGGER_REQUESTS: '0' | '1'
         INIT_HAS_SEND_ACTION_SYSTEM_LOGGER: '0' | '1'
 
         INIT_URL_FOR_CHECK_AUTH: string
         INIT_URL_AUTH_SERVICE: string
         INIT_URL_TO_ACTIONS_SYSTEM_LOGGER_SERVICE: string
-
+        INIT_URL_OS_STATUS_SERVICE: string
 
         INIT_HAS_AWS_S3_UPLOAD: string
         INIT_AWS_S3_BUCKET: string
@@ -233,7 +204,7 @@ export const APP_CONFIG_OS_CORE: AppConfigOSCore = {
     },
     logger: {
         hasRequestConsoleLogger: process.env.INIT_HAS_CONSOLE_LOGGER_REQUESTS === '1',
-        hasSendActionSystemLogger: process.env.INIT_HAS_SEND_ACTION_SYSTEM_LOGGER !== '0',
+        hasSendActionSystemLogger: process.env.INIT_HAS_SEND_ACTION_SYSTEM_LOGGER === '1',
         hasSendOsStatusLogs: process.env.INIT_URL_OS_STATUS_SERVICE?.length >= 1,
     },
     urls: {
@@ -241,19 +212,7 @@ export const APP_CONFIG_OS_CORE: AppConfigOSCore = {
         authServiceUrl: process.env.INIT_URL_AUTH_SERVICE || null,
         actionsSystemLoggerServiceUrl: process.env.INIT_URL_TO_ACTIONS_SYSTEM_LOGGER_SERVICE || null,
         structureAccessServiceUrl: process.env.INIT_URL_STRUCTURE_ACCESS_SERVICE || null,
-        structureBmsServiceUrl: process.env.INIT_URL_STRUCTURE_SERVICE || null,
-        warehouseSettingsServiceUrl: process.env.INIT_URL_WAREHOUSE_SETTINGS_SERVICE || null,
-        ordersServiceUrl: process.env.INIT_URL_ORDERS_SERVICE || null,
         osStatusServiceUrl: process.env.INIT_URL_OS_STATUS_SERVICE || null,
-        sociumUsersServiceUrl: process.env.INIT_URL_SOCIUM_USERS_SERVICE || null,
-        bmsUsersServiceUrl: process.env.INIT_URL_BMS_USERS_SERVICE || null,
-        cashbackProgramServiceUrl: process.env.INIT_URL_CASHBACK_PROGRAM_SERVICE || null,
-        paymentMethodsServiceUrl: process.env.INIT_URL_PAYMENT_METHODS_SERVICE || null,
-        warehouseProductsServiceUrl: process.env.INIT_URL_WAREHOUSE_PRODUCTS_SERVICE || null,
-        mobAppSettingsServiceUrl: process.env.INIT_URL_MOB_APP_SETTINGS_SERVICE || null,
-        ptpUsersServiceUrl:process.env.INIT_URL_PTP_USERS_SERVICE || null,
-        ptpCoreUsersServiceUrl:process.env.INIT_URL_PTP_CORE_USERS_SERVICE || null,
-        ptpCoreGroupsServiceUrl:process.env.INIT_URL_PTP_CORE_GROUPS_SERVICE || null,
     },
     awsS3: {
         bucket: process.env.INIT_AWS_S3_BUCKET || '',

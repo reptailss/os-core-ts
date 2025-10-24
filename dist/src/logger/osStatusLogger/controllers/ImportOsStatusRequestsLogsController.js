@@ -18,8 +18,8 @@ const core_1 = require("../../core");
 const _systemRoutes_1 = require("../../../systemRoutes");
 const _responseFormat_1 = require("../../../responseFormat");
 let ImportOsStatusRequestsLogsController = class ImportOsStatusRequestsLogsController {
-    constructor(importOsStatusRequestLogsService = new core_1.ImportOsStatusRequestLogsService()) {
-        this.importOsStatusRequestLogsService = importOsStatusRequestLogsService;
+    constructor() {
+        this.importOsStatusRequestLogsService = new core_1.ImportOsStatusRequestLogsService();
     }
     async import(user) {
         const { importCount, count } = await this.importOsStatusRequestLogsService.import();
@@ -31,17 +31,16 @@ let ImportOsStatusRequestsLogsController = class ImportOsStatusRequestsLogsContr
 };
 exports.ImportOsStatusRequestsLogsController = ImportOsStatusRequestsLogsController;
 __decorate([
-    (0, _decorators_1.SwaggerInfoDec)({
+    (0, _decorators_1.SwaggerInfo)({
         disable: true,
     }),
-    (0, _decorators_1.PostDec)(_systemRoutes_1.SYSTEM_ROUTES.osImportOsStatusRequestsLogs.index),
-    __param(0, _decorators_1.DashboardAccessDec),
+    (0, _decorators_1.Post)(_systemRoutes_1.SYSTEM_ROUTES.osImportOsStatusRequestsLogs.index),
+    __param(0, (0, _decorators_1.DashboardUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ImportOsStatusRequestsLogsController.prototype, "import", null);
 exports.ImportOsStatusRequestsLogsController = ImportOsStatusRequestsLogsController = __decorate([
-    (0, _decorators_1.ControllerDec)(),
-    __metadata("design:paramtypes", [core_1.ImportOsStatusRequestLogsService])
+    (0, _decorators_1.Controller)()
 ], ImportOsStatusRequestsLogsController);
 //# sourceMappingURL=ImportOsStatusRequestsLogsController.js.map

@@ -9,13 +9,13 @@ import {SetStateFn} from "@baseTypes/state";
 
 interface Props {
     sx?: SxStyle,
-    dateStart: string
-    dateEnd: string
-    setDateStart: SetStateFn<string>
-    setDateEnd: SetStateFn<string>
+    dateStart: Date
+    dateEnd: Date
+    setDateStart: SetStateFn<Date>
+    setDateEnd: SetStateFn<Date>
     refetchRequests: (props: {
-        dateStart: string,
-        dateEnd: string,
+        dateStart: Date,
+        dateEnd: Date,
     }) => Promise<void>
 }
 
@@ -61,7 +61,6 @@ const RefetchRequests = ({
                 initialDateStart={dateStart}
                 initialDateEnd={dateEnd}
                 onSave={onSave}
-                format={'DD/MM/YYYY'}
             />
             <IconButton
                 onClick={onRefetch}

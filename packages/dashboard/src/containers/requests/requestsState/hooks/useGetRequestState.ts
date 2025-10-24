@@ -5,12 +5,12 @@ export function useGetRequestState({
                                        initialDateStart,
                                        initialDateEnd,
                                    }: {
-    initialDateStart: string,
-    initialDateEnd: string,
+    initialDateStart: Date,
+    initialDateEnd: Date,
 }): RequestsState {
     const [targetEndpoints, setTargetEndpoints] = useState<string[]>([])
-    const [dateStartRequests, setDateStartRequests] = useState<string>(initialDateStart)
-    const [dateEndRequests, setDateEndRequests] = useState<string>(initialDateEnd)
+    const [dateStartRequests, setDateStartRequests] = useState<Date>(initialDateStart)
+    const [dateEndRequests, setDateEndRequests] = useState<Date>(initialDateEnd)
 
 
     return {

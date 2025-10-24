@@ -7,12 +7,14 @@ export class RegisterApiMethodsDecorators {
             method,
             target,
             propertyKey,
+            options,
         }: {
             path: string,
             type: 'default' | 'system' | 'sendFileByPath' | 'sendFile',
             method: 'GET' | 'POST' | 'PUT' | 'DELETE' | string,
             target: any,
             propertyKey: string,
+            options?: unknown
         },
     ) {
         if (!target.constructor.endpoints) {
@@ -24,6 +26,7 @@ export class RegisterApiMethodsDecorators {
                 path,
                 _propertyKey: propertyKey,
                 type,
+                options,
             },
         )
     }

@@ -8,29 +8,27 @@ import {
 } from '@swagger/core'
 
 import {APP_CONFIG_OS_CORE} from '@appConfig'
-
+import {Injectable} from '@decorators'
 
 export class GetSwaggerService {
-
-    constructor(
-        private readonly getSwaggerTSService: GetSwaggerTSService = new GetSwaggerTSService(),
-        private readonly swaggerPathsBuilder: SwaggerPathsBuilder = new SwaggerPathsBuilder(),
-        private readonly swaggerConfigBuilder: SwaggerConfigBuilder = new SwaggerConfigBuilder(),
-    ) {
-    }
-
+    
+    private readonly getSwaggerTSService: GetSwaggerTSService = new GetSwaggerTSService()
+    private readonly swaggerPathsBuilder: SwaggerPathsBuilder = new SwaggerPathsBuilder()
+    private readonly swaggerConfigBuilder: SwaggerConfigBuilder = new SwaggerConfigBuilder()
+    
+    
     public async getSwagger(): Promise<Swagger> {
-
-        const swaggerConfig =  this.swaggerConfigBuilder.getFromBuildFile()
-
+        
+        const swaggerConfig = this.swaggerConfigBuilder.getFromBuildFile()
+        
         const {
             host,
             schemes,
             url,
         } = SwaggerHelper.getSwaggerUrlProps()
-
+        
         const tsSchemas = this.getSwaggerTSService.getFromFile()
-
+        
         return {
             swagger: '2.0',
             info: {
@@ -49,6 +47,6 @@ export class GetSwaggerService {
             defaultAuthToken: APP_CONFIG_OS_CORE.swagger.defaultAuthToken,
         }
     }
-
-
+    
+    
 }

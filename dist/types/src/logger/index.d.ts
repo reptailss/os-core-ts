@@ -7,3 +7,4 @@ export * from './osStatusLogger/appModules/osStatusLoggerAppModule';
 export * from './osStatusLogger/cron/OsStatusLogsCron';
 export * from './osStatusLogger/services/SaveOsStatusServicesRegistryService';
 export * from './actionsSystemLog/services/SaveActionSystemServicesRegistryService';
+export * from './actionsSystemLog/interfaces';

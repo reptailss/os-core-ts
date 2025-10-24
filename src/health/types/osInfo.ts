@@ -3,18 +3,23 @@ export type OsInfo = {
         name: string
         ips: string[]
         machine: string
-    };
+    }
     cpu: {
         model: string
         cores: number
         speed: number
         os_used: number
         pr_used: number
-    };
+    }
     ram: {
         os_total: number
         os_free: number
         os_used: number
         pr_used: number
-    };
+    }
+    server_time:{
+        utc:string
+        local:string
+        timezone:string
+    }
 }

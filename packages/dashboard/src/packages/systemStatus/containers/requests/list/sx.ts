@@ -6,6 +6,7 @@ export const sx: SxStyle = {
         maxHeight: {
             lg: 'calc(100vh - 30px)'
         },
-        overflowY: 'auto'
+        overflowY: 'auto',
+        
     }
 }

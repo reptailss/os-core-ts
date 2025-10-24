@@ -6,19 +6,18 @@ import moment from "moment/moment";
 import {OnSaveDatePickerRangeCB} from "@ui/date/datePickerRange/types";
 
 interface IProps {
-    initialDateStart?: string,
-    initialDateEnd?: string,
-    onSave: OnSaveDatePickerRangeCB,
-    format?: string,
-    disabled?: boolean,
-    hasTime?: boolean,
-    hasShowTimeToggle?: boolean,
-    onChangeShowTime?: (value: boolean) => void,
-    initialShowTime?: boolean,
-    hasSeconds?: boolean,
-    inputFormat?: string,
-    resetTimeStart?: string,
-    resetTimeEnd?: string,
+    initialDateStart?: Date
+    initialDateEnd?: Date
+    onSave: OnSaveDatePickerRangeCB
+    inputFormat?: string
+    disabled?: boolean
+    hasTime?: boolean
+    hasShowTimeToggle?: boolean
+    onChangeShowTime?: (value: boolean) => void
+    initialShowTime?: boolean
+    hasSeconds?: boolean
+    resetTimeStart?: string
+    resetTimeEnd?: string
     hasResetTimeOnChangeHasTime?: boolean
 }
 
@@ -26,46 +25,43 @@ const DatePickerRangeSidebar = ({
                                     initialDateStart,
                                     initialDateEnd,
                                     onSave,
-                                    format = 'DD/MM/YYYY',
                                     disabled,
                                     hasTime,
                                     hasShowTimeToggle,
                                     onChangeShowTime,
                                     initialShowTime,
-                                    inputFormat,
+                                    inputFormat='DD/MM/YYYY',
                                     hasSeconds,
                                     resetTimeStart = '00:00:00',
                                     resetTimeEnd = '23:59:59',
                                     hasResetTimeOnChangeHasTime = true,
                                 }: IProps) => {
 
-    const [localDateStart, setLocalDateStart] = useState<string>(initialDateStart || '')
-    const [localDateEnd, setLocalDateEnd] = useState<string>(initialDateEnd || '')
+    const [localDateStart, setLocalDateStart] = useState<Date | null>(initialDateStart || null)
+    const [localDateEnd, setLocalDateEnd] = useState<Date | null>(initialDateEnd || null)
     const [showTime, setShowTime] = useState<boolean>(!!initialShowTime)
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
     const [value, setValue] = useState([
         new DateObject({
-            format,
             date: initialDateStart
         }),
         new DateObject({
-            format,
             date: initialDateEnd
         }),
     ]);
 
     const onClose = () => {
         setValue([
-            new DateObject(moment(initialDateStart, format).format()),
-            new DateObject(moment(initialDateEnd, format).format()),
+            new DateObject(moment(initialDateStart).format()),
+            new DateObject(moment(initialDateEnd).format()),
         ])
         setAnchorEl(null);
     }
 
     const handleSave: OnSaveDatePickerRangeCB = async (data: {
-        dateStart: string,
-        dateEnd: string,
+        dateStart: Date,
+        dateEnd: Date,
         showTime: boolean
     }) => {
         setAnchorEl(null);
@@ -84,13 +80,11 @@ const DatePickerRangeSidebar = ({
             dateEnd={localDateEnd}
             disabled={disabled}
             inputFormat={inputFormat}
-            format={format}
         >
             <DatePickerRange
                 value={value}
                 setValue={setValue}
                 onSave={handleSave}
-                format={format}
                 onClose={onClose}
                 hasTime={hasTime}
                 hasShowTimeToggle={hasShowTimeToggle}

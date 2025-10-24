@@ -1,0 +1,22 @@
+import { {{SchemaValidator}},{{Validator}},{{Controller}},{{Get}},{{FormDataDec}}} from 'os-core-ts'
+
+type User = {
+    name:string
+    age:number
+}
+const schema:{{SchemaValidator}}<User> = {{Validator}}.object({
+    name:{{Validator}}.string(),
+    age:{{Validator}}.number()
+})
+
+@{{Controller}}()
+export class UserController {
+    @{{Get}}('/log-user')
+    public logUser(
+        @{{FormDataDec}}(schema) body: User,
+    ): boolean {
+        console.log(`user name:${body.name}`)
+        console.log(`user age:${body.age}`)
+        return true
+    }
+}

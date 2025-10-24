@@ -1,10 +1,9 @@
-export function getRequestsInitialDate(): { initialDateStart: string, initialDateEnd: string } {
+export function getRequestsInitialDate(): { initialDateStart: Date, initialDateEnd: Date } {
     const now = new Date();
     const initialDate = new Date();
     initialDate.setDate(initialDate.getDate() + 1);
-    const initialDateEnd = initialDate.toLocaleDateString('en-GB');
-    now.setDate(now.getDate() - 1);
-    const initialDateStart = now.toLocaleDateString('en-GB');
+    const initialDateEnd = initialDate
+    now.setDate(now.getDate() );
 
-    return {initialDateStart, initialDateEnd};
+    return {initialDateStart:new Date(), initialDateEnd};
 }

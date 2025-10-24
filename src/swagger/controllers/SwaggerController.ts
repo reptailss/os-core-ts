@@ -1,4 +1,4 @@
-import {ControllerDec, GetDec, SendFileByPathDec, SendFileDec, SwaggerInfoDec} from '@decorators'
+import {Controller, Get, SendFile, SendFileByPath, SwaggerInfo} from '@decorators'
 import path from 'path'
 import fs from 'fs/promises'
 import {ClientPackagesHtmlBuilder} from '@clientPackages'
@@ -7,40 +7,39 @@ import {SYSTEM_ROUTES} from '@systemRoutes'
 import {GetSwaggerService, Swagger} from '@swagger/core'
 
 
-@ControllerDec()
+@Controller()
 export class SwaggerController {
     
-    constructor(private readonly getSwaggerService: GetSwaggerService = new GetSwaggerService()) {
-    }
+    private readonly getSwaggerService: GetSwaggerService = new GetSwaggerService()
     
-    @SwaggerInfoDec({
+    @SwaggerInfo({
         disable: true,
     })
-    @GetDec(SYSTEM_ROUTES.swagger.swaggerSpec)
+    @Get(SYSTEM_ROUTES.swagger.swaggerSpec)
     public async getSwagger(): Promise<Swagger> {
         return this.getSwaggerService.getSwagger()
     }
     
-    @SwaggerInfoDec({
+    @SwaggerInfo({
         disable: true,
     })
-    @SendFileByPathDec(SYSTEM_ROUTES.swagger.bundleJs)
+    @SendFileByPath(SYSTEM_ROUTES.swagger.bundleJs)
     public getClientBundle(): string {
         return this.getFilePath('main.js')
     }
     
-    @SwaggerInfoDec({
+    @SwaggerInfo({
         disable: true,
     })
-    @SendFileByPathDec(SYSTEM_ROUTES.swagger.favicon)
+    @SendFileByPath(SYSTEM_ROUTES.swagger.favicon)
     public getClientFavicon(): string {
         return this.getFilePath('favicon.ico')
     }
     
-    @SwaggerInfoDec({
+    @SwaggerInfo({
         disable: true,
     })
-    @SendFileDec(SYSTEM_ROUTES.swagger.index)
+    @SendFile(SYSTEM_ROUTES.swagger.index)
     public async getClientHtml(): Promise<string> {
         const html = await fs.readFile(
             this.getFilePath('index.html'), {

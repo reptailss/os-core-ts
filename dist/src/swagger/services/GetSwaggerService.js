@@ -4,10 +4,10 @@ exports.GetSwaggerService = void 0;
 const core_1 = require("../core");
 const _appConfig_1 = require("../../appConfig");
 class GetSwaggerService {
-    constructor(getSwaggerTSService = new core_1.GetSwaggerTSService(), swaggerPathsBuilder = new core_1.SwaggerPathsBuilder(), swaggerConfigBuilder = new core_1.SwaggerConfigBuilder()) {
-        this.getSwaggerTSService = getSwaggerTSService;
-        this.swaggerPathsBuilder = swaggerPathsBuilder;
-        this.swaggerConfigBuilder = swaggerConfigBuilder;
+    constructor() {
+        this.getSwaggerTSService = new core_1.GetSwaggerTSService();
+        this.swaggerPathsBuilder = new core_1.SwaggerPathsBuilder();
+        this.swaggerConfigBuilder = new core_1.SwaggerConfigBuilder();
     }
     async getSwagger() {
         const swaggerConfig = this.swaggerConfigBuilder.getFromBuildFile();

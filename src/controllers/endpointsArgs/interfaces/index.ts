@@ -2,7 +2,7 @@ import {
     AppFileArgControllerEndpoint,
     AppFilesArgControllerEndpoint,
     ArgControllerEndpoint,
-    Controller,
+    ControllerMeta,
 } from '@controllers'
 import {AppErrorKey, ErrorValue} from '@appError'
 import {AppRequest} from '@appRequest'
@@ -21,28 +21,28 @@ export interface IFormDataArgsEndpointsHandler {
         AppFilesArgControllerEndpoint
     > | null
     
-    handleFormDataArgs(props: {
+    handleFormDataArgs(
         fileArgs: Array<
             AppFileArgControllerEndpoint |
             AppFilesArgControllerEndpoint
-        >
+        >,
         req: AppRequest,
         res: AppResponse,
-    }): Promise<ErrorHandler | null>
+    ): Promise<ErrorHandler | null>
 }
 
 
 export interface IArgEndpointsHandler {
     
-    getDataByArgs(props: {
+    getDataByArgs(
         req: AppRequest,
         res: AppResponse,
-        args: ArgControllerEndpoint[]
-    }): Promise<any[]>
+        args: ArgControllerEndpoint[],
+    ): Promise<any[]>
     
     
     getDataByControllerMethod<Data>(
-        controller: Controller,
+        controller: ControllerMeta,
         methodName: string,
         req: AppRequest,
         res: AppResponse,

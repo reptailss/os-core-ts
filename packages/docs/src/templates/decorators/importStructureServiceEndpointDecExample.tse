@@ -1,0 +1,13 @@
+const users: string[] = []
+
+@{{Controller}}()
+export class UserController {
+	@{{ImportStructureServiceEndpointDec}}('Додати користувача')
+	@Get('/add-user/:user_name')
+	public getDomain(
+		@{{ParamDec}}('user_name') userName: string,
+	): boolean {
+		users.push(userName)
+		return true
+	}
+}

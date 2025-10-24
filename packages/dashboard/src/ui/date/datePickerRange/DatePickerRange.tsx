@@ -36,7 +36,6 @@ const DatePickerRange = ({
                              value,
                              setValue,
                              onSave,
-                             format = 'DD/MM/YYYY',
                              onClose,
                              hasTime,
                              hasShowTimeToggle,
@@ -101,7 +100,6 @@ const DatePickerRange = ({
             position="bottom"
             onSave={onSave}
             onClose={onClose}
-            format={format}
             showTime={showTime}
         />
     ]
@@ -112,7 +110,6 @@ const DatePickerRange = ({
             onChange={handleChange}
             range
             numberOfMonths={isDesktop ? 2 : 1}
-            format={format}
             weekDays={WEEK_DAYS_DATE_PICKER_RANGE}
             months={MONTH_DATE_PICKER_RANGE}
             className={classNames(isDark && 'bg-dark', 'react-multi-date-picker-custom')}

@@ -1,0 +1,21 @@
+import {{{AppFile}}, {{AppFilesDec}}, {{Controller}}, {{Post}}} from 'os-core-ts'
+
+const images: {{AppFile}}[] = []
+
+@{{Controller}}()
+export class ImagesController {
+	@{{Post}}('/save-images')
+	public saveImage(
+		@{{AppFilesDec}}({
+			fileKey: 'images',
+			formats: ['audio/mpeg', 'application/pdf'],
+			minCount: 1,
+			maxCount: 5,
+		}) appFiles: {{AppFile}}[],
+	): boolean {
+		images.push(...appFiles)
+		return true
+	}
+}
+
+

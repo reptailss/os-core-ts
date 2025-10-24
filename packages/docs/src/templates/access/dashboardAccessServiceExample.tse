@@ -1,0 +1,8 @@
+import {{{DashboardAccessService}}} from 'os-core-ts'
+async function getSecretKey(token: string): Promise<string> {
+    const userInfo = await {{DashboardAccessService}}.checkAccessByToken(token)
+
+    console.log(`[ACCESS GRANTED] User "${userInfo.name}" (ID: ${userInfo.id}) accessed the secret key`)
+
+    return 'SOME_SECRET_KEY'
+}

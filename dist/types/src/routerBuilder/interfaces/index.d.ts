@@ -1,7 +1,7 @@
-import { Controller, ControllerEndpoint, SendFileControllerEndpoint, SystemControllerEndpoint } from "../../controllers";
+import { ControllerMeta, ControllerEndpoint, SendFileControllerEndpoint, SystemControllerEndpoint } from "../../controllers";
 import { AppRouter } from "../../appRouter";
-export type RouterBuilderEndpointRegistrar = (router: AppRouter, endpoint: ControllerEndpoint | SystemControllerEndpoint | SendFileControllerEndpoint, controller: Controller) => void;
+export type RouterBuilderEndpointRegistrar = (router: AppRouter, endpoint: ControllerEndpoint | SystemControllerEndpoint | SendFileControllerEndpoint, controller: ControllerMeta) => void;
 export interface IRouterBuilder {
-    buildRoute(controllers: Controller[]): AppRouter;
+    buildRoute(controllers: ControllerMeta[]): AppRouter;
     registerRouteHandler(method: string, registrar: RouterBuilderEndpointRegistrar): void;
 }

@@ -10,7 +10,7 @@ export function useGetSystemStatusOsLogs(): {
     getSystemOsInfoLogs: GetSystemOsLogs,
     totalPage: number
 } {
-    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [systemOsLogs, setSystemOsLogs] = useState<SystemOsLog[]>([])
     const [totalPage, setTotalPage] = useState<number>(1)
 

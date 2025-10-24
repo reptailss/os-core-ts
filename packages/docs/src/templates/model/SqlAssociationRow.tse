@@ -1,0 +1,7 @@
+export type SqlAssociationRow = {
+    modelKey: string
+    require?: boolean
+    where?: {{WhereParams}}
+    filters?: {{SqlFilters}}
+    order?: {{OrderParams}}
+}

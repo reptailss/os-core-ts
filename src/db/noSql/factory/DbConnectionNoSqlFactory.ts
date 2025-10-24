@@ -1,20 +1,17 @@
-import {DbNoSqlOptions, IDbConnectionNoSql} from '@db'
-import {DbConnectionNoSql} from '@db/core'
+import {DbConnectionNoSql, DbConnectionNoSqlCashManager} from '@db/core'
+import {IDbConnectionNoSql} from '@db'
 
 
 export class DbConnectionNoSqlFactory {
-    static async getDynamicByDatabaseName({
-                                              databaseName,
-                                              optionsDb,
-                                          }: {
-        databaseName: string,
-        optionsDb?: Partial<DbNoSqlOptions>
-    }): Promise<IDbConnectionNoSql> {
-
-        const dbConnectionNoSql = new DbConnectionNoSql(databaseName, optionsDb)
-
-        await dbConnectionNoSql.init()
-
-        return dbConnectionNoSql
+    
+    public static getStaticByDatabaseName(databaseName: string): IDbConnectionNoSql {
+        const dbConnectionFromCash = DbConnectionNoSqlCashManager.getFromCash(databaseName)
+        if (dbConnectionFromCash) {
+            return dbConnectionFromCash
+        }
+        const connection = new DbConnectionNoSql(databaseName)
+        DbConnectionNoSqlCashManager.saveToCash(databaseName, connection)
+        return connection
+        
     }
 }

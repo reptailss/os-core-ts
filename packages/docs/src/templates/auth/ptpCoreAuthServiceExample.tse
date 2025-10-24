@@ -1,0 +1,11 @@
+import {{{PtpCoreAuthService}}} from 'os-core-ts'
+async function getUserNameFromToken(userToken:string,initiatorUserToken:string):Promise<string>{
+    await {{PtpCoreAuthService}}.checkTokenAndGetUserInfo({
+        token:initiatorUserToken,
+        roles:['admin']
+    })
+    const userInfo =  await {{PtpCoreAuthService}}.checkTokenAndGetUserInfo({
+        token:userToken,
+    })
+    return  userInfo.user_name
+}

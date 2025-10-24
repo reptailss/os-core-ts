@@ -1,1 +1,0 @@
-{"version":3,"file":"GmRenderModule.js","sourceRoot":"","sources":["../../../../src/gm/render/GmRenderModule.ts"],"names":[],"mappings":";;;AAEA,MAAa,cAAc;IAKvB,YAAY,MAAiB;QACzB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAA;IACxB,CAAC;IAEM,kBAAkB;QACrB,OAAO,IAAI,CAAC,MAAM,CAAC,eAAe,EAAE,CAAA;IACxC,CAAC;CAGJ;AAdD,wCAcC"}
