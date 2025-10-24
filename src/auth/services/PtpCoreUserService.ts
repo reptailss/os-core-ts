@@ -13,7 +13,7 @@ export class PtpCoreUserService {
         
         return {
             open_user_id: 1,
-            user_name: '',
+            user_name: 'pubma',
             is_admin: true,
             is_system: false,
         }

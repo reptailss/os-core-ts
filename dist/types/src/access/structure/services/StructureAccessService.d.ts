@@ -14,5 +14,4 @@ export declare class StructureAccessService {
         openUserId?: number;
         pluginApiKey?: string;
     }): Promise<void>;
-    private static getStructureResponse;
 }

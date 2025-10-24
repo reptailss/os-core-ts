@@ -28,37 +28,4 @@ import {modelSqlDocModule} from '@appDocs/modules/modelSql'
 
 
 export const appDocsJson = new Docs()
-    .appendModule(envDocModule)
-    .appendModule(appConfigDocModule)
-    .appendModule(appDocModule)
-    .appendModule(appModuleDocModule)
-    
-    .appendModule(apiDecoratorsDocModule)
-    .appendModule(requestDecoratorsDocModule)
-    .appendModule(authDecoratorsDocModule)
-    .appendModule(accessDecoratorsDocModule)
-    .appendModule(domainDecoratorsDocModule)
-    .appendModule(structureDecoratorsDocModule)
-    
-    .appendModule(accessDocModule)
-    .appendModule(authDocModule)
-    .appendModule(userInfoDocModule)
-    
-    .appendModule(validatorDocModule)
-    
-    .appendModule(appErrorDocModule)
-    .appendModule(domainDocModule)
-    
-    .appendModule(dbDocModule)
-    .appendModule(modelSqlDocModule)
-    
-    .appendModule(loggerDocModule)
-    .appendModule(redisDocModule)
-    .appendModule(cronDocModule)
-    .appendModule(clientPackagesDocModule)
-    .appendModule(appResponseDocModule)
-    .appendModule(filesDocModule)
-    .appendModule(helpersDocModule)
-    
-    .appendModule(apiServicesDocModule)
     .getJson()

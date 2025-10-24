@@ -14,16 +14,4 @@ export declare class AuthService {
         parent_id: number | null;
         gender: 'male' | 'female' | null;
     } | null>;
-    static introspect(token: string): Promise<{
-        userId?: number;
-        active: boolean;
-        exp_at: number;
-        exp_in: number;
-        type: 'ACCESS_TOKEN';
-        client_id: string;
-        username: string;
-        scope: string;
-        system_token?: 0 | 1;
-    }>;
-    private static requestApi;
 }
